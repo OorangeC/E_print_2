@@ -1,13 +1,16 @@
 <template>
-  <div class="app-container">
-    <OrderUploader />
-  </div>
-</template>
+  <header class="app-header">
+    <div class="logo">E_Print 印刷派单系统</div>
+    <nav class="nav-links">
+      <RouterLink to="/order-uploader" class="nav-item">订单上传</RouterLink> |
+      <RouterLink to="/work-uploader" class="nav-item">工程单上传</RouterLink>
+    </nav>
+  </header>
 
-<script setup lang="ts">
-// 引入你刚才创建的组件
-import OrderUploader from './views/DataUploader.vue'
-</script>
+  <main class="app-body">
+    <RouterView />
+  </main>
+</template>
 
 <style>
 /* 全局基础样式，确保页面铺满 */
