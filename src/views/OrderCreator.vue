@@ -233,10 +233,10 @@
               <td class="label">MM</td>
             </tr>
             <tr>
-              <td class="label">FSC类型</td>
-              <td><input v-model="orderData.fscType" class="cell-input" /></td>
-              <td class="label">分版说明</td>
-              <td><input v-model="orderData.fenBanShuoMing2" class="cell-input" /></td>
+              <td colspan="2" class="label">FSC类型</td>
+              <td colspan="2"><input v-model="orderData.fscType" class="cell-input" /></td>
+              <!-- <td class="label">分版说明</td>
+              <td><input v-model="orderData.fenBanShuoMing2" class="cell-input" /></td> -->
               <td class="label">跟色指示</td>
               <td colspan="3"><input v-model="orderData.genSeZhiShi" class="cell-input" /></td>
               <td colspan="2" class="label">客来信息</td>
@@ -323,13 +323,10 @@
           <tbody>
             <tr>
               <td class="label" width="100">辅料说明</td>
-
               <td><textarea v-model="orderData.fuLiaoShuoMing" class="cell-input"></textarea></td>
             </tr>
-
             <tr>
               <td class="label" width="100">产品明细特别说明</td>
-
               <td>
                 <textarea
                   v-model="orderData.chanPinMingXiTeBieShuoMing"
@@ -337,10 +334,8 @@
                 ></textarea>
               </td>
             </tr>
-
             <tr>
               <td class="label" width="100">分版说明</td>
-
               <td><textarea v-model="orderData.fenBanShuoMing" class="cell-input"></textarea></td>
             </tr>
 
@@ -431,7 +426,14 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { OrderStatus, type IOrder, type IAttachment } from '@/types/Order'
+import {
+  OrderStatus,
+  type IOrder,
+  type IAttachment,
+  prepareOrderFormData,
+  initializeAuditLog,
+} from '@/types/Order'
+import request from '@/stores/request'
 
 const emit = defineEmits<{ (e: 'close'): void }>()
 const salesman = ref('')
@@ -545,66 +547,36 @@ const removeDetailRow = (index: number) => {
 
 // --- 顶部按钮操作 ---
 const handleSaveDraft = () => console.log('保存草稿', orderData)
+// 定义 loading 状态防止重复点击
+const isSubmitting = ref(false)
 const handleSubmitOrder = async () => {
-  // 1. 基础非空校验
+  // 1. 校验 (略)
   if (!orderData.customer || !orderData.productName) {
-    alert('请填写客户名称和成品名称')
+    alert('请填写必要信息')
     return
   }
 
+  if (isSubmitting.value) return
+  isSubmitting.value = true
+
   try {
-    const formData = new FormData()
+    // 【第一步】生成审计日志和状态变更
+    // 这会直接修改 reactive 响应式对象
+    initializeAuditLog(orderData, salesman.value)
 
-    // 2. 将文件二进制流存入 FormData (供后端存储文件)
-    // 这里的 key 'files' 对应后端接收数组的字段名
-    if (orderData.attachments && orderData.attachments.length > 0) {
-      orderData.attachments.forEach((attr: IAttachment) => {
-        if (attr.file) {
-          formData.append('files', attr.file)
-        }
-      })
-    }
+    // 【第二步】将包含日志的 orderData 打包成 FormData
+    const fd = prepareOrderFormData(orderData, salesman.value)
 
-    // 3. 准备纯净的 JSON 数据 (供后端存入数据库)
-    // 使用解构赋值剔除不可序列化的 file 属性和前端专用的 url 属性
-    // 使用下划线前缀，让 ESLint 闭嘴
-    // 这种方式完全不需要定义 _f 或 _u 变量，直接通过键名过滤
-    // 3. 准备纯净的 JSON 数据
-    const attachmentsMetaData = (orderData.attachments || []).map((attr: IAttachment) => {
-      const filteredEntries = Object.entries(attr).filter(
-        ([key]) => key !== 'file' && key !== 'url',
-      )
-      // 使用 as IAttachment 进行类型断言，告诉 TS 这依然是附件对象
-      return Object.fromEntries(filteredEntries) as IAttachment
-    })
-
-    // 组合成最终的 IOrder 传输对象
-    const orderInfo: Partial<IOrder> = {
-      ...orderData,
-      attachments: attachmentsMetaData, // 现在类型匹配了：IAttachment[]
-    }
-
-    // 4. 装载到 FormData
-    // 将整个 IOrder 对象转为字符串存储在 'orderData' key 中
-    formData.append('orderData', JSON.stringify(orderInfo))
-
-    // 业务员通常是独立字段，也可以放在 orderInfo 里，这里按你之前的习惯独立列出
-    formData.append('salesman', salesman.value)
-
-    // 5. 执行提交 (这里展示逻辑结构)
-    console.log('--- 提交数据预览 ---')
-    console.log('JSON部分:', orderInfo)
-    console.log('文件数量:', formData.getAll('files').length)
-
-    // TODO: 调用你的 Api 接口
-    // const res = await yourApi.createOrder(formData);
+    // 【第三步】发送到后端
+    await request.post('/orders/create', fd)
 
     alert('订单已成功提交审核！')
-    // emit('close'); // 提交成功后关闭窗口
-  } catch (error) {
-    // 错误处理
-    console.error('提交订单时发生错误:', error)
-    alert('提交失败，请检查网络或联系管理员')
+    emit('close')
+  } catch (err: unknown) {
+    // 错误处理 (略)
+    console.error(err)
+  } finally {
+    isSubmitting.value = false
   }
 }
 const handleClose = () => {

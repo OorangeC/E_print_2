@@ -81,7 +81,7 @@ export interface IOrder {
   //表格上没有的
   orderstatus: OrderStatus //订单状态
   auditLogs?: IAuditLog[] // 审批日志：记录“单子是怎么过的” (用于查看审核记录), OrderState不是Audit的时候不再更新
-  attachments?: IAttachment[] //创建订单时杀那个穿的附件
+  attachments?: IAttachment[] //创建订单时上传的附件
 }
 
 //审核记录
@@ -89,7 +89,7 @@ export interface IAuditLog {
   time: string
   operator: string //业务员或者审核人，后期以工号替代
   action: string
-  comment: string
+  comment?: string
 }
 
 // ============ 订单状态枚举 ============
@@ -126,4 +126,81 @@ export interface IProduct {
   biaoMianChuLi?: string //表面处理
   zhuangDingGongYi?: string //装订工艺
   beiZhu?: string //备注
+}
+
+/**
+ * 专门用于在提交审核前初始化第一条审计日志
+ */
+export function initializeAuditLog(orderData: Partial<IOrder>, operatorName: string): void {
+  // 获取当前时间并格式化为: YYYY-MM-DD HH:mm:ss
+  const now = new Date()
+  const timeStr =
+    now.getFullYear() +
+    '-' +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    '-' +
+    String(now.getDate()).padStart(2, '0') +
+    ' ' +
+    String(now.getHours()).padStart(2, '0') +
+    ':' +
+    String(now.getMinutes()).padStart(2, '0') +
+    ':' +
+    String(now.getSeconds()).padStart(2, '0')
+
+  const firstLog: IAuditLog = {
+    time: timeStr,
+    operator: operatorName || '未知业务员',
+    action: 'submit', // 明确要求为 submit
+    comment: '业务员提交订单，发起审核流程',
+  }
+
+  // 初始化数组并注入
+  if (!orderData.auditLogs) {
+    orderData.auditLogs = []
+  }
+  orderData.auditLogs.push(firstLog)
+
+  // 顺便变更订单状态为“待审核”
+  orderData.orderstatus = OrderStatus.PENDING_REVIEW
+}
+
+/**
+ * 将 IOrder 转换为发送给后端所需的 FormData
+ */
+/**
+ * 转换助手：将订单对象转换为可传输的 FormData
+ * 解决了 File 对象不能被 JSON.stringify 的问题
+ */
+export function prepareOrderFormData(orderData: Partial<IOrder>, salesmanName: string): FormData {
+  const formData = new FormData()
+
+  // 1. 处理附件：提取二进制文件流
+  if (orderData.attachments) {
+    orderData.attachments.forEach((attr) => {
+      if (attr.file) {
+        // 'files' 是后端接收文件数组的字段名
+        formData.append('files', attr.file)
+      }
+    })
+  }
+
+  // 2. 清洗数据：创建一个不包含 File 和 URL 的纯净对象用于 JSON 传输
+  // 印刷行业的订单字段非常多，我们通过 map 确保只传输元数据
+  const cleanedAttachments = (orderData.attachments || []).map((attr) => ({
+    category: attr.category,
+    fileName: attr.fileName,
+    // 注意：这里故意漏掉了 file 和 url，因为它们无法序列化
+  }))
+
+  const orderPayload = {
+    ...orderData,
+    attachments: cleanedAttachments,
+  }
+
+  // 3. 装载到 FormData
+  // 后端通常通过一个 key (如 'orderData') 接收整个 JSON 字符串
+  formData.append('orderData', JSON.stringify(orderPayload))
+  formData.append('salesman', salesmanName)
+
+  return formData
 }
