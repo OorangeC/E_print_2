@@ -94,10 +94,10 @@
             <td><textarea v-model="workOrder.customerPO"></textarea></td>
             <td><textarea v-model="workOrder.productName"></textarea></td>
             <td><textarea v-model="workOrder.chanPinGuiGe"></textarea></td>
-            <td><input type="number" v-model="workOrder.dingDanShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.chuYangShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.chaoBiLiShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.benChangFangSun" /></td>
+            <td><input type="number" v-model.number="workOrder.dingDanShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.chuYangShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.chaoBiLiShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.benChangFangSun" /></td>
             <td><input type="date" v-model="workOrder.chuYangRiqiRequired" /></td>
             <td><input type="date" v-model="workOrder.chuHuoRiqiRequired" /></td>
           </tr>

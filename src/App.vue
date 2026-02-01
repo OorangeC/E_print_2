@@ -2,8 +2,9 @@
   <header class="app-header">
     <div class="logo">E_Print 印刷派单系统</div>
     <nav class="nav-links">
-      <RouterLink to="/order-uploader" class="nav-item">订单上传</RouterLink> |
-      <RouterLink to="/work-uploader" class="nav-item">工程单上传</RouterLink>
+      | <RouterLink to="/order-uploader" class="nav-item">订单上传</RouterLink> |
+      <RouterLink to="/order-reviewer" class="nav-item">订单审核</RouterLink> |
+      <RouterLink to="/work-uploader" class="nav-item">工程单上传</RouterLink> |
     </nav>
   </header>
 

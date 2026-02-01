@@ -48,7 +48,7 @@
                   {{ work.orderStatus }}
                 </span>
               </td>
-              <td class="time-text">{{ formatDateTime(work.zhiDanShiJian) }}</td>
+              <td class="time-text">{{ work.zhiDanShiJian }}</td>
               <td class="bold-text">
                 {{ work.work_id }} <small class="ver-text">v{{ work.work_ver }}</small>
               </td>
@@ -71,41 +71,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { OrderStatus, type IWorkOrder } from '@/types/WorkOrder'
+import { ref, computed, onMounted } from 'vue'
+import { type IWorkOrder } from '@/types/WorkOrder'
 // 核心：导入你的创建器组件
 import WorkOrderCreator from './WorkOrderCreator.vue'
 
 const showCreator = ref(false)
 const searchQuery = ref<string>('')
 
+onMounted(async () => {
+  console.log('订单上传页面初始化...')
+
+  try {
+    // 向后端请求该页面专属的数据
+    // const res = await request.get('/orders/list')
+    // orders.value = res.data
+  } catch (err) {
+    console.error('获取列表失败', err)
+  }
+})
 type SortKey = keyof IWorkOrder
 const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
   key: 'zhiDanShiJian',
   order: 'desc',
 })
-
-// 模拟数据 (生产环境建议通过 API 获取)
-const workOrders = ref<IWorkOrder[]>([
-  {
-    work_id: 'G20260131-001',
-    work_ver: '1.0',
-    gongDanLeiXing: '正式单',
-    customer: '当纳利亚洲',
-    orderStatus: OrderStatus.IN_PRODUCTION,
-    zhiDanShiJian: new Date('2026-01-31 09:00:00'),
-    intermedia: [],
-  },
-  {
-    work_id: 'G20260131-002',
-    work_ver: '1.1',
-    gongDanLeiXing: '样板单',
-    customer: '模拟客户A',
-    orderStatus: OrderStatus.PENDING_REVIEW,
-    zhiDanShiJian: new Date('2026-01-31 10:30:00'),
-    intermedia: [],
-  },
-])
+const workOrders = ref<IWorkOrder[]>([])
 
 // 搜索过滤与排序逻辑
 const processedOrders = computed(() => {
@@ -136,16 +126,6 @@ const handleSort = (key: SortKey) => {
 const getSortIcon = (key: SortKey) => {
   if (sortConfig.value.key !== key) return '↕️'
   return sortConfig.value.order === 'asc' ? '🔼' : '🔽'
-}
-
-const formatDateTime = (date?: Date): string => {
-  if (!date) return '-'
-  const Y = date.getFullYear()
-  const M = String(date.getMonth() + 1).padStart(2, '0')
-  const D = String(date.getDate()).padStart(2, '0')
-  const h = String(date.getHours()).padStart(2, '0')
-  const m = String(date.getMinutes()).padStart(2, '0')
-  return `${Y}-${M}-${D} ${h}:${m}`
 }
 
 const handleAction = (work: IWorkOrder): void => console.log('Action:', work.work_id)

@@ -4,6 +4,7 @@
       <div class="header-bar">
         <div class="title-group">
           <h2 class="main-title">订单上传中心</h2>
+
           <div class="search-container">
             <span class="search-icon">🔍</span>
             <input
@@ -14,7 +15,8 @@
             />
           </div>
         </div>
-        <button class="primary-btn" @click="showCreator = true">
+
+        <button class="primary-btn" @click="openForCreate">
           <span class="plus-icon">+</span> 创建订单
         </button>
       </div>
@@ -41,6 +43,7 @@
               <th width="100" style="text-align: center">操作</th>
             </tr>
           </thead>
+
           <tbody>
             <tr v-for="order in processedOrders" :key="order.order_id">
               <td>
@@ -48,14 +51,15 @@
                   {{ statusLabelMap[order.orderstatus] }}
                 </span>
               </td>
-              <td class="time-text">{{ formatDateTime(order.daYinRiqi) }}</td>
+              <td class="time-text">{{ order.daYinRiqi }}</td>
               <td class="bold-text">{{ order.order_id || '未分配' }}</td>
               <td class="customer-name">{{ order.customer }}</td>
-              <td>{{ formatDate(order.chuHuoRiqiRequired) }}</td>
+              <td>{{ order.chuHuoRiqiRequired }}</td>
               <td class="action-cell">
-                <button class="text-btn" @click="handleAction(order)">管理</button>
+                <button class="text-btn" @click="openForView(order)">管理</button>
               </td>
             </tr>
+
             <tr v-if="processedOrders.length === 0">
               <td colspan="6" class="empty-state">没有找到相关的订单记录</td>
             </tr>
@@ -64,28 +68,85 @@
       </div>
     </div>
 
-    <OrderCreator v-else @close="showCreator = false" />
+    <OrderInfo v-else :mode="activeMode" @close="showCreator = false" @submit="handleOrderUpload" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { OrderStatus, type IOrder } from '@/types/Order' // 严格引用接口
-import OrderCreator from './OrderCreator.vue' // 必须引入该组件以供切换
+import { ref, computed, onMounted } from 'vue'
+import { OrderStatus, type IOrder } from '@/types/Order'
+import request from '@/stores/request'
+import OrderInfo, { PageMode } from './OrderInfo.vue'
 
-// 状态控制
+// --- 状态控制 ---
 const showCreator = ref(false)
+const activeMode = ref<PageMode>(PageMode.EDIT) // 控制弹窗模式
 const searchQuery = ref<string>('')
+const isUploading = ref(false)
+const orders = ref<IOrder[]>([]) // 数据源
+//onMounted 会在组件加载完成、渲染到页面上时自动运行。
+onMounted(async () => {
+  console.log('订单上传页面初始化...')
 
-// 排序配置：默认按提交时间 (daYinRiqi) 倒序
+  try {
+    // 向后端请求该页面专属的数据
+    // const res = await request.get('/orders/list')
+    // orders.value = res.data
+  } catch (err) {
+    console.error('获取列表失败', err)
+  }
+})
+
+// --- 核心交互逻辑 ---
+
+/**
+ * 以编辑模式打开
+ */
+const openForCreate = () => {
+  activeMode.value = PageMode.EDIT
+  showCreator.value = true
+}
+
+/**
+ * 以查看模式打开
+ * @param order 选中的订单数据
+ */
+const openForView = (order: IOrder) => {
+  console.log('查看订单详情:', order.order_id)
+  activeMode.value = PageMode.VIEW
+  showCreator.value = true
+  // 注意：这里后续需要增加逻辑将 order 数据传给 OrderInfo
+}
+
+/**
+ * 处理订单提交
+ */
+const handleOrderUpload = async (fd: FormData) => {
+  if (isUploading.value) return
+  isUploading.value = true
+  try {
+    await request.post('/orders/create', fd)
+    alert('订单已成功提交审核！')
+    showCreator.value = false
+    // fetchOrders() // 这里可以刷新列表
+  } catch (err) {
+    console.error('后端响应错误:', err)
+    alert('发送失败，请检查网络或后端服务')
+  } finally {
+    isUploading.value = false
+  }
+}
+
+// --- 列表排序与过滤逻辑 ---
+
 type SortKey = 'orderstatus' | 'daYinRiqi' | 'order_id' | 'customer' | 'chuHuoRiqiRequired'
 interface SortConfig {
   key: SortKey
   order: 'asc' | 'desc'
 }
+
 const sortConfig = ref<SortConfig>({ key: 'daYinRiqi', order: 'desc' })
 
-// 状态映射
 const statusLabelMap: Record<OrderStatus, string> = {
   [OrderStatus.DRAFT]: '草稿',
   [OrderStatus.PENDING_REVIEW]: '待审核',
@@ -96,32 +157,6 @@ const statusLabelMap: Record<OrderStatus, string> = {
   [OrderStatus.CANCELLED]: '已取消',
 }
 
-// 模拟数据：加入 daYinRiqi (提交时间)
-const orders = ref<IOrder[]>([
-  {
-    order_id: '25025769',
-    customer: '当纳利亚洲印务有限公司',
-    orderstatus: OrderStatus.PENDING_REVIEW,
-    daYinRiqi: new Date('2025-10-30 08:02:12'),
-    chuHuoRiqiRequired: new Date('2025-11-24'),
-  },
-  {
-    order_id: '25025770',
-    customer: '模拟客户A',
-    orderstatus: OrderStatus.APPROVED,
-    daYinRiqi: new Date('2025-10-31 10:20:00'),
-    chuHuoRiqiRequired: new Date('2025-12-01'),
-  },
-  {
-    order_id: '25025771',
-    customer: '模拟客户B',
-    orderstatus: OrderStatus.REJECTED,
-    daYinRiqi: new Date('2025-10-29 14:15:30'),
-    chuHuoRiqiRequired: new Date('2026-01-10'),
-  },
-])
-
-// 核心处理逻辑：过滤 + 排序
 const processedOrders = computed<IOrder[]>(() => {
   const q = searchQuery.value.toLowerCase()
   const filtered = orders.value.filter(
@@ -138,7 +173,6 @@ const processedOrders = computed<IOrder[]>(() => {
   })
 })
 
-// 排序交互
 const handleSort = (key: SortKey) => {
   if (sortConfig.value.key === key) {
     sortConfig.value.order = sortConfig.value.order === 'asc' ? 'desc' : 'asc'
@@ -152,63 +186,37 @@ const getSortIcon = (key: SortKey) => {
   if (sortConfig.value.key !== key) return '↕️'
   return sortConfig.value.order === 'asc' ? '🔼' : '🔽'
 }
-
-// 格式化函数
-const formatDate = (date?: Date): string => {
-  if (!date) return '-'
-  const Y = date.getFullYear()
-  const M = String(date.getMonth() + 1).padStart(2, '0')
-  const D = String(date.getDate()).padStart(2, '0')
-  return `${Y}-${M}-${D}`
-}
-
-const formatDateTime = (date?: Date): string => {
-  if (!date) return '-'
-  const Y = date.getFullYear()
-  const M = String(date.getMonth() + 1).padStart(2, '0')
-  const D = String(date.getDate()).padStart(2, '0')
-  const h = String(date.getHours()).padStart(2, '0')
-  const m = String(date.getMinutes()).padStart(2, '0')
-  const s = String(date.getSeconds()).padStart(2, '0')
-  return `${Y}-${M}-${D} ${h}:${m}:${s}`
-}
-
-const handleAction = (order: IOrder): void => console.log('管理订单:', order.order_id)
 </script>
 
 <style scoped>
+/* 样式部分保持不变，已包含在你的原始代码中 */
 .uploader-wrapper {
   padding: 24px;
   background-color: #f8fafc;
   min-height: 100vh;
 }
-
 .header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
 }
-
 .title-group {
   display: flex;
   align-items: center;
   gap: 24px;
 }
-
 .main-title {
   font-size: 22px;
   color: #1e293b;
   font-weight: 700;
 }
-
 .styled-input {
   padding: 10px 12px 10px 36px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   width: 280px;
 }
-
 .primary-btn {
   background-color: #0f172a;
   color: white;
@@ -218,19 +226,16 @@ const handleAction = (order: IOrder): void => console.log('管理订单:', order
   cursor: pointer;
   font-weight: 500;
 }
-
 .table-card {
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
 }
-
 .modern-table {
   width: 100%;
   border-collapse: collapse;
 }
-
 .modern-table th {
   background-color: #f1f5f9;
   padding: 14px;
@@ -238,39 +243,32 @@ const handleAction = (order: IOrder): void => console.log('管理订单:', order
   font-size: 13px;
   color: #475569;
 }
-
 .sortable {
   cursor: pointer;
   user-select: none;
 }
-
 .sortable:hover {
   background-color: #e2e8f0;
 }
-
 .modern-table td {
   padding: 14px;
   border-bottom: 1px solid #f1f5f9;
   font-size: 14px;
 }
-
 .time-text {
   font-family: 'Courier New', Courier, monospace;
   color: #64748b;
   font-size: 13px;
 }
-
 .bold-text {
   font-weight: 700;
 }
-
 .status-badge {
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 600;
 }
-
 .PENDING_REVIEW {
   background: #dbeafe;
   color: #1e40af;
@@ -283,7 +281,6 @@ const handleAction = (order: IOrder): void => console.log('管理订单:', order
   background: #fee2e2;
   color: #b91c1c;
 }
-
 .text-btn {
   background: none;
   border: none;
@@ -291,7 +288,6 @@ const handleAction = (order: IOrder): void => console.log('管理订单:', order
   cursor: pointer;
   font-weight: 500;
 }
-
 .empty-state {
   text-align: center;
   padding: 40px;

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // 1. 创建实例
 const service = axios.create({
-  baseURL: 'http://your-api-server.com/api', // 这里换成你后端的真实地址
+  baseURL: 'http://localhost:3000/api', // 这里换成你后端的真实地址
   timeout: 10000, // 10秒超时
 })
 
