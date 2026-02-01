@@ -1,0 +1,37 @@
+{
+  "cpcQueRen": false,
+  "waixiaoFlag": false,
+  "cpsiaYaoqiu": false,
+  "dingZhiBeiZhu": "",
+  "orderstatus": "PENDING_REVIEW",
+  "attachments": [],
+  "chanPinMingXi": [
+    {
+      "neiWen": "",
+      "yongZhiChiCun": "",
+      "houDu": 0,
+      "keZhong": 0,
+      "chanDi": "",
+      "pinPai": "",
+      "zhiLei": "",
+      "FSC": "",
+      "yeShu": 0,
+      "yinSe": "",
+      "zhuanSe": "",
+      "biaoMianChuLi": "",
+      "zhuangDingGongYi": "",
+      "beiZhu": ""
+    }
+  ],
+  "customer": "TestDebug",
+  "productName": "DebugItem",
+  "dingDanShuLiang": 500,
+  "auditLogs": [
+    {
+      "time": "2026-01-31 18:32:45",
+      "operator": "未知业务员",
+      "action": "submit",
+      "comment": "业务员提交订单，发起审核流程"
+    }
+  ]
+}

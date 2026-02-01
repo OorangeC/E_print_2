@@ -14,6 +14,10 @@ const router = createRouter({
       name: 'work-uploader',
       component: WorkUploader,
     },
+    {
+      path: '/',
+      redirect: '/order-uploader',
+    },
   ],
 })
 

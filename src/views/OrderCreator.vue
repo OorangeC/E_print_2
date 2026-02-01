@@ -283,7 +283,7 @@
                 <td><input v-model="item.chanDi" class="cell-input" /></td>
                 <td><input v-model="item.pinPai" class="cell-input" /></td>
                 <td><input v-model="item.zhiLei" class="cell-input" /></td>
-                <td><input v-model="item.FSC" class="cell-input" /></td>
+                <td><input v-model="item.fsc" class="cell-input" /></td>
                 <td><input type="number" v-model="item.yeShu" class="cell-input" /></td>
                 <td><input v-model="item.yinSe" class="cell-input" /></td>
                 <td><input v-model="item.zhuanSe" class="cell-input" /></td>
@@ -455,7 +455,7 @@ const orderData = reactive<Partial<IOrder>>({
       chanDi: '',
       pinPai: '',
       zhiLei: '',
-      FSC: '',
+      fsc: '',
       yeShu: 0,
       yinSe: '',
       zhuanSe: '',
@@ -529,7 +529,7 @@ const addDetailRow = () => {
     chanDi: '',
     pinPai: '',
     zhiLei: '',
-    FSC: '',
+    fsc: '',
     yeShu: 0,
     yinSe: '',
     zhuanSe: '',
@@ -546,13 +546,29 @@ const removeDetailRow = (index: number) => {
 }
 
 // --- 顶部按钮操作 ---
-const handleSaveDraft = () => console.log('保存草稿', orderData)
+const handleSaveDraft = async () => {
+  if (isSubmitting.value) return
+  isSubmitting.value = true
+  try {
+    initializeAuditLog(orderData, salesman.value)
+    const fd = prepareOrderFormData(orderData, salesman.value)
+    // 增加 isDraft=true 参数
+    await request.post('/orders/create?isDraft=true', fd)
+    alert('草稿已成功保存！')
+  } catch (err: any) {
+    console.error('保存草稿失败:', err)
+    alert('保存草稿失败: ' + (err.response?.data?.error || err.message))
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
 // 定义 loading 状态防止重复点击
 const isSubmitting = ref(false)
 const handleSubmitOrder = async () => {
-  // 1. 校验 (略)
+  // 1. 校验
   if (!orderData.customer || !orderData.productName) {
-    alert('请填写必要信息')
+    alert('请填写必要信息（客户、成品名称）')
     return
   }
 
@@ -561,7 +577,6 @@ const handleSubmitOrder = async () => {
 
   try {
     // 【第一步】生成审计日志和状态变更
-    // 这会直接修改 reactive 响应式对象
     initializeAuditLog(orderData, salesman.value)
 
     // 【第二步】将包含日志的 orderData 打包成 FormData
@@ -572,9 +587,9 @@ const handleSubmitOrder = async () => {
 
     alert('订单已成功提交审核！')
     emit('close')
-  } catch (err: unknown) {
-    // 错误处理 (略)
-    console.error(err)
+  } catch (err: any) {
+    console.error('提交订单失败:', err)
+    alert('提交订单失败: ' + (err.response?.data?.error || err.message))
   } finally {
     isSubmitting.value = false
   }

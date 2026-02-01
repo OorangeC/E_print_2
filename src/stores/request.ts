@@ -2,15 +2,14 @@ import axios from 'axios'
 
 // 1. 创建实例
 const service = axios.create({
-  baseURL: 'http://your-api-server.com/api', // 这里换成你后端的真实地址
+  baseURL: 'http://localhost:3000/api', // 指向本地后端
   timeout: 10000, // 10秒超时
 })
 
 // 2. 请求拦截器 (发包裹前检查一下)
 service.interceptors.request.use(
   (config) => {
-    // 比如：如果本地有 Token，就带上
-    // config.headers['Authorization'] = 'Bearer ' + token
+    console.log('🚀 发送请求:', config.method?.toUpperCase(), config.url, config.data)
     return config
   },
   (error) => Promise.reject(error),
