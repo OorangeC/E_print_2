@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { sqlDB, mongoDB } from './db';
 import { draftOrderSchema, submitOrderSchema } from './schemas/orderSchema';
-
-const prisma = new PrismaClient();
 
 /**
  * 后端 OrderService - 处理校验、暂存与提交
@@ -42,7 +40,7 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
     // 4. 执行数据库逻辑
     if (orderNumber) {
         // 检查是否存在订单
-        const existing = await prisma.order.findUnique({ where: { orderNumber } });
+        const existing = await sqlDB.order.findUnique({ where: { orderNumber } });
         if (existing) {
             return await updateExistingOrder(orderNumber, validatedData, isDraft, files);
         }
@@ -58,7 +56,8 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
 async function createNewOrder(orderNumber: string, data: any, salesman: string, isDraft: boolean, files?: any[]) {
     const { chanPinMingXi, ...baseData } = data;
 
-    return await prisma.order.create({
+    // 1. 创建订单 (MySQL)
+    const newOrder = await sqlDB.order.create({
         data: {
             ...baseData,
             orderNumber,
@@ -79,22 +78,30 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
                     fileName: f.originalname,
                     fileUrl: `/uploads/${f.filename}`
                 }))
-            },
-
-            // TODO: 需要先创建 SYSTEM 用户才能添加 audit log
-            // auditLogs: {
-            //     create: {
-            //         action: isDraft ? 'SAVE_DRAFT' : 'SUBMIT',
-            //         actionDescription: isDraft ? '保存为草稿' : '提交至待审核状态',
-            //         userId: 'SYSTEM',
-            //         entityType: 'Order',
-            //         entityId: orderNumber,
-            //         time: new Date()
-            //     }
-            // }
+            }
         },
         include: { orderItems: true }
     });
+
+    // 2. 异步记录审计日志 (MongoDB)
+    try {
+        await mongoDB.auditLog.create({
+            data: {
+                action: isDraft ? 'SAVE_DRAFT' : 'SUBMIT',
+                actionDescription: isDraft ? '保存为草稿' : '提交至待审核状态',
+                userId: 'SYSTEM', // TODO: Replace with actual user ID when auth is ready
+                entityType: 'Order',
+                entityId: orderNumber,
+                orderNumber: orderNumber,
+                time: new Date()
+            }
+        });
+    } catch (logError) {
+        console.error('Failed to create audit log:', logError);
+        // 不阻断主流程
+    }
+
+    return newOrder;
 }
 
 /**
@@ -103,7 +110,7 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
 async function updateExistingOrder(orderNumber: string, data: any, isDraft: boolean, files?: any[]) {
     const { chanPinMingXi, ...baseData } = data;
 
-    return await prisma.$transaction(async (tx) => {
+    const updatedOrder = await sqlDB.$transaction(async (tx) => {
         // 1. 更新主表
         await tx.order.update({
             where: { orderNumber },
@@ -131,15 +138,85 @@ async function updateExistingOrder(orderNumber: string, data: any, isDraft: bool
             include: { orderItems: true }
         });
     });
+
+    // 3. 异步记录审计日志 (MongoDB)
+    try {
+        await mongoDB.auditLog.create({
+            data: {
+                action: isDraft ? 'UPDATE_DRAFT' : 'UPDATE_SUBMIT',
+                actionDescription: '更新订单',
+                userId: 'SYSTEM',
+                entityType: 'Order',
+                entityId: orderNumber,
+                orderNumber: orderNumber,
+                time: new Date()
+            }
+        });
+    } catch (logError) {
+        console.error('Failed to create audit log:', logError);
+    }
+
+    return updatedOrder;
 }
 
 export async function getOrder(orderNumber: string) {
-    return await prisma.order.findUnique({
+    // 聚合查询：从 MySQL 查订单，从 MongoDB 查日志
+    const order = await sqlDB.order.findUnique({
         where: { orderNumber },
-        include: { orderItems: true, documents: true, auditLogs: true }
+        include: { orderItems: true, documents: true }
     });
+
+    if (!order) return null;
+
+    // 获取日志
+    const logs = await mongoDB.auditLog.findMany({
+        where: { orderNumber }
+    });
+
+    return { ...order, auditLogs: logs };
 }
 
 export async function deleteOrder(orderNumber: string) {
-    return await prisma.order.delete({ where: { orderNumber } });
+    return await sqlDB.order.delete({ where: { orderNumber } });
+}
+
+// ============ New Interface Search Functions ============
+
+export async function findOrdersBySales(salesName: string) {
+    return await sqlDB.order.findMany({
+        where: { sales: salesName },
+        include: { orderItems: true }
+    });
+}
+
+export async function findOrdersByAudit(auditName: string) {
+    return await sqlDB.order.findMany({
+        where: { audit: auditName },
+        include: { orderItems: true }
+    });
+}
+
+export async function findOrderByUniqueId(uniqueId: string) {
+    const order = await sqlDB.order.findUnique({
+        where: { orderUnique: uniqueId },
+        include: { orderItems: true, documents: true }
+    });
+
+    if (!order) return null;
+
+    // Fetch AuditLogs from MongoDB
+    const logs = await mongoDB.auditLog.findMany({
+        where: { orderNumber: order.orderNumber }
+    });
+
+    return { ...order, auditLogs: logs };
+}
+
+export async function findPendingOrders() {
+    return await sqlDB.order.findMany({
+        where: {
+            status: 'PENDING_REVIEW' // Matches OrderStatus.PENDING_REVIEW
+        },
+        include: { orderItems: true }
+    });
 }

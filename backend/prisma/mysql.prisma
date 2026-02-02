@@ -1,0 +1,453 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/mysql"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
+
+// ==================== 订单表 (Orders) ====================
+
+model Order {
+  // ============ 主键 ============
+  orderNumber String @id @map("order_id")
+
+  waixiaoFlag Boolean? @map("waixiao_flag") // 外销标识
+  cpsiaYaoqiu String?  @map("cpsia_yaoqiu") // CPSIA 要求
+
+  // ============ Interface Required Fields ============
+  orderVer    String? @map("order_ver")
+  orderUnique String? @unique @map("order_unique")
+  sales       String? @map("sales")
+  audit       String? @map("audit")
+
+  // ============ 排期信息 (Schedule Information) ============
+  xiaZiliaodaiRiqiRequired DateTime?  @map("xia_ziliaodai_riqi_required") // 下资料袋-要求日期
+  xiaZiliaodaiRiqiPromise  DateTime?  @map("xia_ziliaodai_riqi_promise")  // 下资料袋-承诺日期
+  
+  yinzhangRiqiRequired     DateTime?  @map("yinzhang_riqi_required")     // 印张-要求日期
+  yinzhangRiqiPromise      DateTime?  @map("yinzhang_riqi_promise")      // 印张-承诺日期
+  
+  zhepaiRiqiRequired       DateTime?  @map("zhepai_riqi_required")       // 折排-要求日期
+  zhepaiRiqiPromise        DateTime?  @map("zhepai_riqi_promise")        // 折排-承诺日期
+  
+  chuyangRiqiRequired      DateTime?  @map("chuyang_riqi_required")      // 出样-要求日期
+  chuyangRiqiPromise       DateTime?  @map("chuyang_riqi_promise")       // 出样-承诺日期
+
+  // ============ 基本信息 ============
+  customer     String? @map("customer")              // 客户
+  productName  String?  @map("product_name") // 成品名称
+  customerPO   String? @map("customer_po")           // 客户PO
+  baoJiaDanHao String? @map("bao_jia_dan_hao")       // 报价单号
+  jiuBianMa    String? @map("jiu_bian_ma")           // 旧编码
+  isbn         String? @map("isbn")                  // ISBN
+  xiLieDanMing String? @map("xi_lie_dan_ming")       // 系列单名
+  qiTaShiBie   String? @map("qi_ta_shi_bie")         // 其他识别
+
+  // ============ 分类与工艺 ============
+  chanPinDaLei      String? @map("chan_pin_da_lei")      // 产品大类
+  ziLeiXing         String? @map("zi_lei_xing")         // 子类型
+  zhuangDingFangShi String? @map("zhuang_ding_fang_shi") // 装订方式
+  yongTu            String? @map("yong_tu")              // 用途
+  fscType           String? @map("fsc_type")           // FSC类型
+  fenBanShuoMing    String? @map("fen_ban_shuo_ming")    // 分版说明
+  genSeZhiShi       String?  @map("gen_se_zhi_shi") // 跟色指示
+  keLaiXinXi        String?  @map("ke_lai_xin_xi")  // 客来信息
+  baoLiuQianSe      String? @map("bao_liu_qian_se")      // 保留签色
+
+  // ============ 数量及规格 ============
+  dingDanShuLiang   Int? @map("ding_dan_shu_liang")   // 订单数量
+  chuYangShuLiang   Int? @map("chu_yang_shu_liang")   // 出样数量
+  chaoBiLiShuLiang  Int? @map("chao_bi_li_shu_liang") // 超比例数量
+  teShuLiuYangZhang Int? @map("te_shu_liu_yang_zhang")// 特殊留样张
+  beiPinShuLiang    Int? @map("bei_pin_shu_liang")    // 备品数量
+  teShuLiuShuYang   Int? @map("te_shu_liu_shu_yang")  // 特殊留书样
+  zongShuLiang      Int? @map("zong_shu_liang")      // 总数量
+  chuHuoShuLiang    Int? @map("chu_huo_shu_liang")    // 出货数量
+
+  guigeGaoMm  Float? @map("guige_gao_mm")
+  guigeKuanMm Float? @map("guige_kuan_mm")
+  guigeHouMm  Float? @map("guige_hou_mm")
+
+  // ============ 产品明细 ============
+  orderItems OrderItem[]
+
+  // ============ 说明区 ============
+  fuLiaoShuoMing             String?  @map("fu_liao_shuo_ming")
+  chanPinMingXiTeBieShuoMing String?  @map("chan_pin_ming_xi_te_bie_shuo_ming")
+  fenBanShuoMing2            String?  @map("fen_ban_shuo_ming_2")
+  wuLiaoShuoMing             String?  @map("wu_liao_shuo_ming")
+  yinShuaGenSeYaoQiu         String?  @map("yin_shua_gen_se_yao_qiu")
+  zhuangDingShouGongYaoQiu   String?  @map("zhuang_ding_shou_gong_yao_qiu")
+  qiTa                       String?  @map("qi_ta")
+  zhiLiangYaoQiu             String?  @map("zhi_liang_yao_qiu")
+
+  // ============ 客户反馈 ============
+  keHuFanKui           String?  @map("ke_hu_fan_kui")
+  teShuYaoQiu          String?  @map("te_shu_yao_qiu")
+  kongZhiFangFa        String?  @map("kong_zhi_fang_fa")
+  dingDanTeBieShuoMing String?  @map("ding_dan_te_bie_shuo_ming")
+  yangPinPingShenXinXi String?  @map("yang_pin_ping_shen_xin_xi")
+  dingDanPingShenXinXi String?  @map("ding_dan_ping_shen_xin_xi")
+
+  // ============ 经办人员 ============
+  yeWuDaiBiaoFenJi String?   @map("ye_wu_dai_biao_fen_ji")
+  shenHeRen        String?   @map("shen_he_ren")
+  daYinRen         String?   @map("da_yin_ren")
+  yeWuRiqi         DateTime? @map("ye_wu_riqi")   // 业务日期
+  shenHeRiqi       DateTime? @map("shen_he_riqi") // 审核日期
+  daYinRiqi        DateTime? @map("da_yin_riqi")  // 打印日期
+
+  // ============ 版本控制 ============
+  versionNumber       Int     @default(1) @map("version_number")
+  previousOrderNumber String? @map("previous_order_number")
+  previousOrder       Order?   @relation("OrderVersionHistory", fields: [previousOrderNumber], references: [orderNumber])
+  nextVersions        Order[]  @relation("OrderVersionHistory")
+  isLatestVersion Boolean  @default(true) @map("is_latest_version")
+  versionTag      String?  @map("version_tag")
+
+  // ============ 审批流程 ============
+  status         OrderStatus @default(DRAFT)
+  submittedAt    DateTime?   @map("submitted_at")
+  reviewedAt     DateTime?   @map("reviewed_at")
+  reviewedBy     String?     @map("reviewed_by")
+  reviewComments String?      @map("review_comments")
+
+  // ============ 系统关联 ============
+  // auditLogs was removed (moved to MongoDB)
+  documents        Document[]
+  reviewTasks      ReviewTask[]
+  stepPlans        StepPlan[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([customerPO])
+  @@index([status])
+  @@index([previousOrderNumber])
+  @@index([isLatestVersion])
+  @@index([versionNumber])
+  @@map("orders")
+}
+
+// ============ 物料主数据 (Material) ===========
+
+model Material {
+  materialId String @id @default(cuid()) @map("material_id")
+
+  neiWen               String? @map("nei_wen")
+  yongZhiChiCun        String? @map("yong_zhi_chi_cun")
+  houDu                String? @map("hou_du")
+  keZhong              Int?    @map("ke_zhong")
+  chanDi               String? @map("chan_di")
+  pinPai               String? @map("pin_pai")
+  zhiLei               String? @map("zhi_lei")
+  fscInfo              String? @map("fsc_info")
+  yeShu                Int?    @map("ye_shu")
+  yinSeZhengFan        String? @map("yin_se_zheng_fan")
+  zhuanSeZhengFan      String? @map("zhuan_se_zheng_fan")
+  biaoMianChuLi        String?  @map("biao_mian_chu_li")
+  zhuangDingGongYi     String?  @map("zhuang_ding_gong_yi")
+  beiZhu               String?  @map("bei_zhu")
+
+  orderItems       OrderItem[]
+  engineeringLines EngineeringOrderMaterialLine[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("materials")
+}
+
+model OrderItem {
+  orderItemId String @id @default(cuid()) @map("order_item_id")
+
+  orderNumber String @map("order_number")
+  order       Order  @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
+
+  materialId String?   @map("material_id")
+  material   Material? @relation(fields: [materialId], references: [materialId])
+
+  // ============ 冗余/覆盖字段 (用于记录下单时的特定要求) ============
+  // 这些字段可以从 Material 自动填入，也允许用户在订单级别微调
+  neiWen           String? @map("nei_wen")
+  yongZhiChiCun    String? @map("yong_zhi_chi_cun")
+  houDu            String? @map("hou_du")
+  keZhong          Int?    @map("ke_zhong")
+  chanDi           String? @map("chan_di")
+  pinPai           String? @map("pin_pai")
+  zhiLei           String? @map("zhi_lei")
+  FSC              String? @map("FSC")
+  yeShu            Int?    @map("ye_shu")
+  yinSe            String? @map("yin_se")
+  zhuanSe          String? @map("zhuan_se")
+  biaoMianChuLi    String? @map("biao_mian_chu_li")
+  zhuangDingGongYi String? @map("zhuang_ding_gong_yi")
+  beiZhu           String? @map("bei_zhu")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([orderNumber])
+  @@index([materialId])
+  @@map("order_items")
+}
+
+//============ 工程单 (Engineering Orders) ===========
+
+model EngineeringOrder {
+  engineeringOrderId String @id @default(cuid()) @map("engineering_order_id")
+
+  // ============ Interface Required Fields ============
+  workId     String? @map("work_id")
+  workVer    String? @map("work_ver")
+  workUnique String? @unique @map("work_unique")
+  workClerk  String? @map("work_clerk")
+  workAudit  String? @map("work_audit")
+
+  // ============ 表头信息 ============
+  gongSiMingCheng       String? @map("gong_si_ming_cheng")
+  gongChengDanMingCheng String? @map("gong_cheng_dan_ming_cheng")
+
+  gongDanLeiXing String?   @map("gong_dan_lei_xing")
+  caiLiao        String?   @map("cai_liao")
+  chanPinLeiXing String?   @map("chan_pin_lei_xing")
+  zhiDanShiJian  DateTime? @map("zhi_dan_shi_jian")
+
+  // ============ 订单信息备份 ============
+  dingDanXuHao      Int?      @map("ding_dan_xu_hao")
+  keHu              String?   @map("ke_hu")
+  po                String?   @map("po")
+  chengPinMingCheng String?    @map("cheng_pin_ming_cheng")
+  chanPinGuiGe      String?   @map("chan_pin_gui_ge")
+  dingDanShuLiang   Int?      @map("ding_dan_shu_liang")
+  chuYangShu        Int?      @map("chu_yang_shu")
+  chaoBiLi          Int?      @map("chao_bi_li")
+  benChangFangSun   Int?      @map("ben_chang_fang_sun")
+  chuYangRiqi       DateTime?  @map("chu_yang_riqi")
+  chuHuoRiqi        DateTime?  @map("chu_huo_riqi")
+
+  // ============ 产品要求与工序 ============
+  chanPinYaoQiu       String?  @map("chan_pin_yao_qiu")
+  zhiDan              String? @map("zhi_dan")
+  shenHe              String? @map("shen_he")
+  benChangNeiBuGongXu String?  @map("ben_chang_nei_bu_gong_xu")
+  appendix            String?  @map("appendix") // 附件说明
+
+  // ============ 生产跟踪 (Production Tracking) ============
+  renLiRequirement Int?     @map("ren_li_requirement")  // 需投入人力
+  yuJiGongQi       String?  @map("yu_ji_gong_qi")       // 预计工期
+  kaiShiShiJian    DateTime? @map("kai_shi_shi_jian")    // 实际开始时间
+  jieShuShiJian    DateTime? @map("jie_shu_shi_jian")    // 实际结束时间
+  shiFouWanGong    Boolean   @default(false) @map("shi_fou_wan_gong")
+  wanChengJinDu    Float?  @map("wan_cheng_jin_du") // 完成进度 0-100
+
+  // ============ 审批流程 ============
+  reviewStatus   ReviewResult @default(PENDING) @map("review_status")
+  submitted_at   DateTime?    @map("submitted_at")
+  reviewedBy     String?      @map("reviewed_by")
+  reviewedAt     DateTime?    @map("reviewed_at")
+  reviewComments String?       @map("review_comments")
+
+  materialLines EngineeringOrderMaterialLine[]
+  stepPlans     StepPlan[]
+  documents     Document[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("engineering_orders")
+}
+
+model EngineeringOrderMaterialLine {
+  lineId String @id @default(cuid()) @map("line_id")
+
+  engineeringOrderId String           @map("engineering_order_id")
+  engineeringOrder   EngineeringOrder @relation(fields: [engineeringOrderId], references: [engineeringOrderId], onDelete: Cascade)
+
+  lineNo Int @map("line_no")
+
+  materialId String?   @map("material_id")
+  material   Material? @relation(fields: [materialId], references: [materialId])
+
+  buJianMingCheng  String?  @map("bu_jian_ming_cheng")
+  yinShuaYanSe     String?  @map("yin_shua_yan_se")
+  wuLiaoMiaoShu    String?   @map("wu_liao_miao_shu")
+  pinPai           String?  @map("pin_pai")
+  caiLiaoGuiGe     String?  @map("cai_liao_gui_ge")
+  fsc              String?  @map("fsc")
+  kaiShu           Int?     @map("kai_shu")
+  shangJiChiCun    String?  @map("shang_ji_chi_cun")
+  paiBanMoSu       Int?     @map("pai_ban_mo_su")
+  yinChuShu        Float? @map("yin_chu_shu")
+  yinSun           Int?     @map("yin_sun")
+  lingLiaoShuZhang Float? @map("ling_liao_shu_zhang")
+  biaoMianChuLi    String?   @map("biao_mian_chu_li")
+  yinShuaBanShu    Int?     @map("yin_shua_ban_shu")
+  shengChanLuJing  String?   @map("sheng_chan_lu_jing")
+  paiBanFangShi    String?   @map("pai_ban_fang_shi")
+
+  kaiShiShiJian DateTime? @map("kai_shi_shi_jian")
+  shiFouDaoLiao Boolean   @default(false) @map("shi_fou_dao_liao")
+  jieShuShiJian DateTime? @map("jie_shu_shi_jian")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([engineeringOrderId, lineNo])
+  @@index([engineeringOrderId])
+  @@index([materialId])
+  @@index([shiFouDaoLiao])
+  @@map("engineering_order_material_lines")
+}
+
+//============ 用户与控制 (Users & Audit) ===========
+
+model User {
+  userId       String   @id @default(uuid()) @map("user_id")
+  username     String   @unique
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String?  @map("full_name")
+  role         UserRole @default(OPERATOR)
+  isActive     Boolean  @default(true) @map("is_active")
+
+  // auditLogs was removed (moved to MongoDB)
+  todos     Todo[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+//========== 辅助表 (Documents, Tasks, Todos, Plans) ==========
+
+model Document {
+  documentId String   @id @default(uuid()) @map("document_id")
+  orderNumber String?  @map("order_number")
+  eoId       String?  @map("eo_id")
+  category   String
+  fileName   String   @map("file_name")
+  fileUrl    String?  @map("file_url")
+  fileSize   Int?     @map("file_size")
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+
+  order            Order?            @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
+  engineeringOrder EngineeringOrder? @relation(fields: [eoId], references: [engineeringOrderId], onDelete: Cascade)
+
+  @@index([orderNumber])
+  @@index([eoId])
+  @@index([category])
+  @@map("documents")
+}
+
+model ReviewTask {
+  taskId      String       @id @default(uuid()) @map("task_id")
+  orderNumber String       @map("order_number")
+  title       String
+  description String?      
+  assignedTo  String?      @map("assigned_to")
+  result      ReviewResult @default(PENDING)
+  dueDate     DateTime?    @map("due_date")
+  completedAt DateTime?    @map("completed_at")
+  comments    String?      
+
+  order Order @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([orderNumber])
+  @@index([result])
+  @@index([assignedTo])
+  @@map("review_tasks")
+}
+
+model Todo {
+  todoId      String       @id @default(uuid()) @map("todo_id")
+  userId      String       @map("user_id")
+  title       String
+  description String?      
+  priority    TaskPriority @default(NORMAL)
+  isDone      Boolean      @default(false) @map("is_done")
+  dueDate     DateTime?    @map("due_date")
+  completedAt DateTime?    @map("completed_at")
+  entityType  String?      @map("entity_type")
+  entityId    String?      @map("entity_id")
+
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([isDone])
+  @@index([dueDate])
+  @@index([priority])
+  @@map("todos")
+}
+
+model StepPlan {
+  planId      String  @id @default(uuid()) @map("plan_id")
+  orderNumber String  @map("order_number")
+  eoId        String? @map("eo_id")
+  sequence    Int
+  stepName    String? @map("step_name")
+  description String? 
+
+  order            Order             @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
+  engineeringOrder EngineeringOrder? @relation(fields: [eoId], references: [engineeringOrderId], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([orderNumber])
+  @@index([eoId])
+  @@map("step_plans")
+}
+
+// ============ 枚举 (Enums) ===========
+
+enum OrderStatus {
+  DRAFT
+  PENDING_REVIEW
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  IN_PRODUCTION
+  COMPLETED
+  CANCELLED
+}
+
+enum Priority {
+  CRITICAL
+  HIGH
+  NORMAL
+  LOW
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  OPERATOR
+  AUDITOR
+  QC
+  PLANNER
+}
+
+enum ReviewResult {
+  PENDING
+  APPROVED
+  REJECTED
+  NEEDS_REVISION
+}
+
+enum TaskPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}

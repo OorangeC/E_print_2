@@ -6,7 +6,10 @@
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
         "start": "ts-node src/index.ts",
         "db:migrate": "prisma migrate dev",
-        "db:generate": "prisma generate",
+        "db:generate": "prisma generate --schema=./prisma/mysql.prisma && prisma generate --schema=./prisma/mongo.prisma",
+        "db:push:mysql": "prisma db push --schema=./prisma/mysql.prisma",
+        "db:push:mongo": "prisma db push --schema=./prisma/mongo.prisma",
+        "db:push": "npm run db:push:mysql && npm run db:push:mongo",
         "db:studio": "prisma studio"
     },
     "dependencies": {

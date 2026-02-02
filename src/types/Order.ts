@@ -122,7 +122,7 @@ export interface IProduct {
   chanDi?: string //产地
   pinPai?: string //品牌
   zhiLei?: string //纸类
-  fsc?: string //fsc
+  FSC?: string //fsc
   yeShu?: number //页数
   yinSe?: string //印色(正/反)
   zhuanSe?: string //专色(正/反)

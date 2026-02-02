@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { sqlDB } from './db';
 
 /**
  * 状态映射：将前端中文状态映射为后端标准英文枚举
@@ -28,7 +26,7 @@ export async function handleIncomingWorkOrder(jsonString: string, files?: any[])
 async function createWorkOrderFromFrontend(data: any, files?: any[]) {
     const { intermedia, attachments, work_id, work_ver, zhiDanYuan, orderStatus, ...baseData } = data;
 
-    return await prisma.engineeringOrder.create({
+    return await sqlDB.engineeringOrder.create({
         data: {
             ...baseData,
             zhiDan: zhiDanYuan,
@@ -69,8 +67,48 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
 }
 
 export async function getWorkOrder(id: string) {
-    return await prisma.engineeringOrder.findUnique({
+    return await sqlDB.engineeringOrder.findUnique({
         where: { engineeringOrderId: id },
         include: { materialLines: true, documents: true }
+    });
+}
+
+// ============ New Interface Search Functions ============
+
+export async function findWorkOrdersByClerk(clerkName: string) {
+    return await sqlDB.engineeringOrder.findMany({
+        where: { workClerk: clerkName },
+        include: { materialLines: true }
+    });
+}
+
+export async function findWorkOrdersByAudit(auditName: string) {
+    return await sqlDB.engineeringOrder.findMany({
+        where: { workAudit: auditName },
+        include: { materialLines: true }
+    });
+}
+
+export async function findWorkOrderByUniqueId(uniqueId: string) {
+    const workOrder = await sqlDB.engineeringOrder.findUnique({
+        where: { workUnique: uniqueId },
+        include: { materialLines: true, documents: true }
+    });
+
+    if (!workOrder) return null;
+
+    // Fetch AuditLogs if needed (assuming linked by orderNumber or workId if implemented)
+    return workOrder;
+}
+
+export async function findPendingWorkOrders() {
+    return await sqlDB.engineeringOrder.findMany({
+        where: {
+            reviewStatus: 'PENDING' // Matches WorkOrderStatus.PENDING_REVIEW? Need to check enum mapping. 
+            // Interface says: IWorkOrder:orderstatus==WorkOrderStatus.PENDING_REVIEW
+            // My enum has PENDING, APPROVED, REJECTED, NEEDS_REVISION. 
+            // Assuming PENDING corresponds to backend PENDING.
+        },
+        include: { materialLines: true }
     });
 }

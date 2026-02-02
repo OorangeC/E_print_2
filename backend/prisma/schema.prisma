@@ -131,7 +131,7 @@ model Material {
   materialId String @id @default(cuid()) @map("material_id")
 
   neiWen               String? @map("nei_wen")
-  baoJiaYongZhiChiCun String? @map("bao_jia_yong_zhi_chi_cun")
+  yongZhiChiCun        String? @map("yong_zhi_chi_cun")
   houDu                String? @map("hou_du")
   keZhong              Int?    @map("ke_zhong")
   chanDi               String? @map("chan_di")
@@ -165,12 +165,20 @@ model OrderItem {
 
   // ============ 冗余/覆盖字段 (用于记录下单时的特定要求) ============
   // 这些字段可以从 Material 自动填入，也允许用户在订单级别微调
-  neiWen   String? @map("nei_wen")
-  houDu    String? @map("hou_du")
-  keZhong  Int?    @map("ke_zhong")
-  pinPai   String? @map("pin_pai")
-  zhiLei   String? @map("zhi_lei")
-  beiZhu   String?  @map("bei_zhu")
+  neiWen           String? @map("nei_wen")
+  yongZhiChiCun    String? @map("yong_zhi_chi_cun")
+  houDu            String? @map("hou_du")
+  keZhong          Int?    @map("ke_zhong")
+  chanDi           String? @map("chan_di")
+  pinPai           String? @map("pin_pai")
+  zhiLei           String? @map("zhi_lei")
+  FSC              String? @map("FSC")
+  yeShu            Int?    @map("ye_shu")
+  yinSe            String? @map("yin_se")
+  zhuanSe          String? @map("zhuan_se")
+  biaoMianChuLi    String? @map("biao_mian_chu_li")
+  zhuangDingGongYi String? @map("zhuang_ding_gong_yi")
+  beiZhu           String? @map("bei_zhu")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

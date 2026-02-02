@@ -2,8 +2,14 @@ import express = require('express');
 import cors = require('cors');
 import multer = require('multer');
 import path = require('path');
-import { processOrderRequest, getOrder, deleteOrder } from './orderService';
-import { handleIncomingWorkOrder, getWorkOrder } from './workOrderService';
+import {
+    processOrderRequest, getOrder, deleteOrder,
+    findOrdersBySales, findOrdersByAudit, findOrderByUniqueId, findPendingOrders
+} from './orderService';
+import {
+    handleIncomingWorkOrder, getWorkOrder,
+    findWorkOrdersByClerk, findWorkOrdersByAudit, findWorkOrderByUniqueId, findPendingWorkOrders
+} from './workOrderService';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -47,6 +53,49 @@ app.get('/api', (req, res) => {
 // 4. 业务路由定义
 
 // --- 订单 (Orders) ---
+
+// Search Routes (Must be defined BEFORE /:id)
+app.get('/api/orders/pending', async (req, res) => {
+    try {
+        const result = await findPendingOrders();
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/orders/search/sales', async (req, res) => {
+    try {
+        const sales = req.query.sales as string;
+        if (!sales) return res.status(400).json({ error: 'Missing sales parameter' });
+        const result = await findOrdersBySales(sales);
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/orders/search/audit', async (req, res) => {
+    try {
+        const audit = req.query.audit as string;
+        if (!audit) return res.status(400).json({ error: 'Missing audit parameter' });
+        const result = await findOrdersByAudit(audit);
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/orders/unique/:uniqueId', async (req, res) => {
+    try {
+        const result = await findOrderByUniqueId(req.params.uniqueId);
+        if (!result) return res.status(404).json({ error: 'Order not found' });
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // 兼容 RESTful 和前端特定的 /create 路径
 app.post(['/api/orders', '/api/orders/create'], upload.array('files'), async (req, res) => {
     try {
@@ -74,6 +123,49 @@ app.get('/api/orders/:id', async (req, res) => {
 });
 
 // --- 工程单 (WorkOrders) ---
+
+// Search Routes (Must be defined BEFORE /:id)
+app.get('/api/work-orders/pending', async (req, res) => {
+    try {
+        const result = await findPendingWorkOrders();
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/work-orders/search/clerk', async (req, res) => {
+    try {
+        const clerk = req.query.clerk as string;
+        if (!clerk) return res.status(400).json({ error: 'Missing clerk parameter' });
+        const result = await findWorkOrdersByClerk(clerk);
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/work-orders/search/audit', async (req, res) => {
+    try {
+        const audit = req.query.audit as string;
+        if (!audit) return res.status(400).json({ error: 'Missing audit parameter' });
+        const result = await findWorkOrdersByAudit(audit);
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/work-orders/unique/:uniqueId', async (req, res) => {
+    try {
+        const result = await findWorkOrderByUniqueId(req.params.uniqueId);
+        if (!result) return res.status(404).json({ error: 'WorkOrder not found' });
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // 也是如此，支持前端 /work-orders 和可能出现的其他习惯
 app.post(['/api/work-orders', '/api/work-orders/create'], upload.array('files'), async (req, res) => {
     try {
