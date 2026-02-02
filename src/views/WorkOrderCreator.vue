@@ -246,9 +246,8 @@ const submitWorkOrder = async () => {
     emit('submit')
     emit('close')
   } catch (error) {
-    // 错误处理已在 request.ts 的拦截器中统一处理
-    // 这里可以处理组件特有的 loading 状态关闭等
     console.error('提交失败', error)
+    alert('提交失败，请检查网络/后端服务，或查看控制台错误信息')
   }
 }
 </script>

@@ -118,7 +118,7 @@
 import { ref, computed, onMounted } from 'vue'
 
 import { type IOrder, OrderStatus } from '@/types/Order'
-import { findOrdersByAudit } from '@/stores/request'
+import { FindOrdersByAudit } from '@/stores/request'
 
 // --- 状态定义 ---
 
@@ -148,8 +148,8 @@ onMounted(async () => {
  */
 const fetchOrdersData = async () => {
   try {
-    // 调用你在 request.ts 里写的函数，扒拉 admin 的数据
-    const data = await findOrdersByAudit('admin')
+    // 文档接口：根据审核员姓名获取订单数组
+    const data = await FindOrdersByAudit('admin')
 
     // 将拿到的数组赋值给响应式变量 orders
     // processedOrders 会根据这个数据的变化自动重新计算过滤和排序

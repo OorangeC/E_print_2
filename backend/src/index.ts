@@ -4,11 +4,12 @@ import multer = require('multer');
 import path = require('path');
 import {
     processOrderRequest, getOrder, deleteOrder,
-    findOrdersBySales, findOrdersByAudit, findOrderByUniqueId, findPendingOrders
+    FindOrdersBySales, FindOrdersByAudit, FindOrderByID, FindPendingOrders, FindPendingOrdersByStatus, UpdateOrderStatus, findAllOrders
 } from './orderService';
 import {
     handleIncomingWorkOrder, getWorkOrder,
-    findWorkOrdersByClerk, findWorkOrdersByAudit, findWorkOrderByUniqueId, findPendingWorkOrders
+    FindWorkOrdersByClerk, FindWorkOrdersByAudit, FindWorkOrderByID, FindPendingWorkOrders,
+    UpdateWorkOrderStatus, UpdateWorkOrderProcess
 } from './workOrderService';
 
 const app = express();
@@ -57,29 +58,53 @@ app.get('/api', (req, res) => {
 // Search Routes (Must be defined BEFORE /:id)
 app.get('/api/orders/pending', async (req, res) => {
     try {
-        const result = await findPendingOrders();
+        const result = await FindPendingOrders();
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/api/orders/search/sales', async (req, res) => {
+// 新接口：根据前端中文状态查询订单列表（/orders/findPending?orderstatus=待审核）
+app.get('/api/orders/findPending', async (req, res) => {
+    try {
+        const statusText = req.query.orderstatus as string;
+        if (!statusText) return res.status(400).json({ error: 'Missing orderstatus parameter' });
+        const result = await FindPendingOrdersByStatus(statusText);
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// 查询所有订单（不区分业务员），用于简单场景下的统一列表
+app.get('/api/orders/all', async (req, res) => {
+    try {
+        const result = await findAllOrders();
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// 前端使用 /findBySales，保持兼容
+app.get('/api/orders/findBySales', async (req, res) => {
     try {
         const sales = req.query.sales as string;
         if (!sales) return res.status(400).json({ error: 'Missing sales parameter' });
-        const result = await findOrdersBySales(sales);
+        const result = await FindOrdersBySales(sales);
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/api/orders/search/audit', async (req, res) => {
+// 前端使用 /findByAudit，保持兼容
+app.get('/api/orders/findByAudit', async (req, res) => {
     try {
         const audit = req.query.audit as string;
         if (!audit) return res.status(400).json({ error: 'Missing audit parameter' });
-        const result = await findOrdersByAudit(audit);
+        const result = await FindOrdersByAudit(audit);
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -88,7 +113,20 @@ app.get('/api/orders/search/audit', async (req, res) => {
 
 app.get('/api/orders/unique/:uniqueId', async (req, res) => {
     try {
-        const result = await findOrderByUniqueId(req.params.uniqueId);
+        const result = await FindOrderByID(req.params.uniqueId);
+        if (!result) return res.status(404).json({ error: 'Order not found' });
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// 根据唯一索引/ID 查询单个订单（前端：/orders/findById?order_id=...）
+app.get('/api/orders/findById', async (req, res) => {
+    try {
+        const id = req.query.order_id as string;
+        if (!id) return res.status(400).json({ error: 'Missing order_id parameter' });
+        const result = await FindOrderByID(id);
         if (!result) return res.status(404).json({ error: 'Order not found' });
         res.json(result);
     } catch (error: any) {
@@ -112,6 +150,20 @@ app.post(['/api/orders', '/api/orders/create'], upload.array('files'), async (re
     }
 });
 
+// 更新订单状态（前端：/orders/updateStatus，body: { order_unique, orderstatus }）
+app.post('/api/orders/updateStatus', async (req, res) => {
+    try {
+        const { order_unique, orderstatus } = req.body;
+        if (!order_unique || !orderstatus) {
+            return res.status(400).json({ error: 'Missing order_unique or orderstatus in body' });
+        }
+        const result = await UpdateOrderStatus(order_unique, orderstatus);
+        res.json(result);
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 app.get('/api/orders/:id', async (req, res) => {
     try {
         const result = await getOrder(req.params.id);
@@ -127,29 +179,33 @@ app.get('/api/orders/:id', async (req, res) => {
 // Search Routes (Must be defined BEFORE /:id)
 app.get('/api/work-orders/pending', async (req, res) => {
     try {
-        const result = await findPendingWorkOrders();
+        const result = await FindPendingWorkOrders();
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/api/work-orders/search/clerk', async (req, res) => {
+// 前端使用 /workOrders/findByClerk (注意: workOrders 不是 work-orders)
+app.get('/api/workOrders/findByClerk', async (req, res) => {
     try {
-        const clerk = req.query.clerk as string;
-        if (!clerk) return res.status(400).json({ error: 'Missing clerk parameter' });
-        const result = await findWorkOrdersByClerk(clerk);
+        // 兼容两种参数名：旧版 sales，新版 work_clerk
+        const clerk = (req.query.work_clerk as string) || (req.query.sales as string);
+        if (!clerk) return res.status(400).json({ error: 'Missing work_clerk parameter' });
+        const result = await FindWorkOrdersByClerk(clerk);
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/api/work-orders/search/audit', async (req, res) => {
+// 前端使用 /workOrders/findByAudit
+app.get('/api/workOrders/findByAudit', async (req, res) => {
     try {
-        const audit = req.query.audit as string;
-        if (!audit) return res.status(400).json({ error: 'Missing audit parameter' });
-        const result = await findWorkOrdersByAudit(audit);
+        // 兼容两种参数名：旧版 audit，新版 work_audit
+        const audit = (req.query.work_audit as string) || (req.query.audit as string);
+        if (!audit) return res.status(400).json({ error: 'Missing work_audit parameter' });
+        const result = await FindWorkOrdersByAudit(audit);
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -158,11 +214,63 @@ app.get('/api/work-orders/search/audit', async (req, res) => {
 
 app.get('/api/work-orders/unique/:uniqueId', async (req, res) => {
     try {
-        const result = await findWorkOrderByUniqueId(req.params.uniqueId);
+        const result = await FindWorkOrderByID(req.params.uniqueId);
         if (!result) return res.status(404).json({ error: 'WorkOrder not found' });
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// 根据唯一索引查询工程单（前端：/workOrders/findById?work_unique=...）
+app.get('/api/workOrders/findById', async (req, res) => {
+    try {
+        const id = req.query.work_unique as string;
+        if (!id) return res.status(400).json({ error: 'Missing work_unique parameter' });
+        const result = await FindWorkOrderByID(id);
+        if (!result) return res.status(404).json({ error: 'WorkOrder not found' });
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// 所有待处理工程单（前端：/workOrders/pending）
+app.get('/api/workOrders/pending', async (req, res) => {
+    try {
+        const result = await FindPendingWorkOrders();
+        res.json(result);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// 修改工单状态（前端：/workOrders/updateStatus，body: { work_unique, workorderstatus }）
+app.post('/api/workOrders/updateStatus', async (req, res) => {
+    try {
+        const { work_unique, workorderstatus } = req.body;
+        if (!work_unique || !workorderstatus) {
+            return res.status(400).json({ error: 'Missing work_unique or workorderstatus in body' });
+        }
+        const result = await UpdateWorkOrderStatus(work_unique, workorderstatus);
+        res.json(result);
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// 更新工序进度（前端：/workOrders/updateProcess，body: { work_id, process, dangQianJinDu }）
+app.post('/api/workOrders/updateProcess', async (req, res) => {
+    try {
+        const { work_id, process, dangQianJinDu } = req.body;
+        if (!work_id) return res.status(400).json({ error: 'Missing work_id in body' });
+        const p = Number(process);
+        if (Number.isNaN(p)) return res.status(400).json({ error: 'Invalid process value' });
+
+        const result = await UpdateWorkOrderProcess(work_id, p, dangQianJinDu || '');
+        res.json(result);
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
     }
 });
 

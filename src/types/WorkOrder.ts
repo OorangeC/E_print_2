@@ -153,9 +153,9 @@ export const prepareWorkOrderForSubmit = (rawOrder: Partial<IWorkOrder>): FormDa
     })
   }
 
-  // 5. 【关键缺失】：将清洗后的 JSON 数据也塞进 FormData
-  // 后端通常需要从 'orderData' 字段解析字符串化的 JSON
-  formData.append('orderData', JSON.stringify(orderCopy))
+  // 5. 将清洗后的 JSON 数据塞进 FormData
+  // 后端接口明确要求字段名为 'workOrderJson'
+  formData.append('workOrderJson', JSON.stringify(orderCopy))
 
   return formData
 }

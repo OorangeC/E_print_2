@@ -125,6 +125,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   orderNumber: 'orderNumber',
   waixiaoFlag: 'waixiaoFlag',
   cpsiaYaoqiu: 'cpsiaYaoqiu',
+  cpcQueRen: 'cpcQueRen',
+  dingZhiBeiZhu: 'dingZhiBeiZhu',
   orderVer: 'orderVer',
   orderUnique: 'orderUnique',
   sales: 'sales',
@@ -137,6 +139,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   zhepaiRiqiPromise: 'zhepaiRiqiPromise',
   chuyangRiqiRequired: 'chuyangRiqiRequired',
   chuyangRiqiPromise: 'chuyangRiqiPromise',
+  chuHuoRiqiPromise: 'chuHuoRiqiPromise',
   customer: 'customer',
   productName: 'productName',
   customerPO: 'customerPO',
@@ -156,6 +159,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   baoLiuQianSe: 'baoLiuQianSe',
   dingDanShuLiang: 'dingDanShuLiang',
   chuYangShuLiang: 'chuYangShuLiang',
+  chuYangShuoMing: 'chuYangShuoMing',
   chaoBiLiShuLiang: 'chaoBiLiShuLiang',
   teShuLiuYangZhang: 'teShuLiuYangZhang',
   beiPinShuLiang: 'beiPinShuLiang',
@@ -308,6 +312,7 @@ exports.Prisma.EngineeringOrderMaterialLineScalarFieldEnum = {
   kaiShiShiJian: 'kaiShiShiJian',
   shiFouDaoLiao: 'shiFouDaoLiao',
   jieShuShiJian: 'jieShuShiJian',
+  dangQianJinDu: 'dangQianJinDu',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -388,6 +393,7 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.OrderOrderByRelevanceFieldEnum = {
   orderNumber: 'orderNumber',
   cpsiaYaoqiu: 'cpsiaYaoqiu',
+  dingZhiBeiZhu: 'dingZhiBeiZhu',
   orderVer: 'orderVer',
   orderUnique: 'orderUnique',
   sales: 'sales',
@@ -505,7 +511,8 @@ exports.Prisma.EngineeringOrderMaterialLineOrderByRelevanceFieldEnum = {
   shangJiChiCun: 'shangJiChiCun',
   biaoMianChuLi: 'biaoMianChuLi',
   shengChanLuJing: 'shengChanLuJing',
-  paiBanFangShi: 'paiBanFangShi'
+  paiBanFangShi: 'paiBanFangShi',
+  dangQianJinDu: 'dangQianJinDu'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {

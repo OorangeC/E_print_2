@@ -127,7 +127,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/gracec./Desktop/E_Bench/backend/src/generated/mongodb",
+      "value": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\src\\generated\\mongodb",
       "fromEnvVar": null
     },
     "config": {
@@ -136,12 +136,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/gracec./Desktop/E_Bench/backend/prisma/mongo.prisma",
+    "sourceFilePath": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\prisma\\mongo.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -155,7 +155,6 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -204,8 +203,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
-path.join(process.cwd(), "src/generated/mongodb/libquery_engine-darwin-arm64.dylib.node")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "src/generated/mongodb/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/mongodb/schema.prisma")

@@ -126,7 +126,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/gracec./Desktop/E_Bench/backend/src/generated/mongodb",
+      "value": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\src\\generated\\mongodb",
       "fromEnvVar": null
     },
     "config": {
@@ -135,12 +135,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/gracec./Desktop/E_Bench/backend/prisma/mongo.prisma",
+    "sourceFilePath": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\prisma\\mongo.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -154,7 +154,6 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

@@ -16,6 +16,8 @@ model Order {
 
   waixiaoFlag Boolean? @map("waixiao_flag") // 外销标识
   cpsiaYaoqiu String?  @map("cpsia_yaoqiu") // CPSIA 要求
+  cpcQueRen   Boolean? @map("cpc_que_ren")
+  dingZhiBeiZhu String? @map("ding_zhi_bei_zhu")
 
   // ============ Interface Required Fields ============
   orderVer    String? @map("order_ver")
@@ -35,6 +37,7 @@ model Order {
   
   chuyangRiqiRequired      DateTime?  @map("chuyang_riqi_required")      // 出样-要求日期
   chuyangRiqiPromise       DateTime?  @map("chuyang_riqi_promise")       // 出样-承诺日期
+  chuHuoRiqiPromise        DateTime?  @map("chu_huo_riqi_promise")       // 出货-承诺日期
 
   // ============ 基本信息 ============
   customer     String? @map("customer")              // 客户
@@ -60,7 +63,9 @@ model Order {
   // ============ 数量及规格 ============
   dingDanShuLiang   Int? @map("ding_dan_shu_liang")   // 订单数量
   chuYangShuLiang   Int? @map("chu_yang_shu_liang")   // 出样数量
+  chuYangShuoMing   Int? @map("chu_yang_shuo_ming")   // 出样说明 (Int)
   chaoBiLiShuLiang  Int? @map("chao_bi_li_shu_liang") // 超比例数量
+
   teShuLiuYangZhang Int? @map("te_shu_liu_yang_zhang")// 特殊留样张
   beiPinShuLiang    Int? @map("bei_pin_shu_liang")    // 备品数量
   teShuLiuShuYang   Int? @map("te_shu_liu_shu_yang")  // 特殊留书样
@@ -292,6 +297,7 @@ model EngineeringOrderMaterialLine {
   kaiShiShiJian DateTime? @map("kai_shi_shi_jian")
   shiFouDaoLiao Boolean   @default(false) @map("shi_fou_dao_liao")
   jieShuShiJian DateTime? @map("jie_shu_shi_jian")
+  dangQianJinDu String?   @map("dang_qian_jin_du") // 工序当前进度 (String)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -5,6 +5,18 @@ import { z } from 'zod';
  * 仅列出允许从前端传入的字段，审计字段和系统主键被排除在外
  */
 export const orderBaseSchema = z.object({
+    // 前端必要的标识字段
+    order_id: z.string().optional(),         // 前端的订单号字段
+    order_ver: z.string().optional(),        // 订单版本
+    order_unique: z.string().optional(),     // 唯一索引
+    sales: z.string().optional(),            // 业务员名称或工号
+    audit: z.string().optional(),            // 审单员名称或工号
+
+    cpcQueRen: z.boolean().optional(),
+    waixiaoFlag: z.boolean().optional(),
+    cpsiaYaoqiu: z.boolean().optional(),
+    dingZhiBeiZhu: z.string().optional(),
+
     customer: z.string().trim().optional().or(z.literal('')),
     productName: z.string().trim().optional().or(z.literal('')),
     orderNumber: z.string().optional(),
@@ -17,10 +29,13 @@ export const orderBaseSchema = z.object({
 
     chanPinDaLei: z.string().optional(),
     ziLeiXing: z.string().optional(),
-    zhangDingFangShi: z.string().optional(),
+    zhuangDingFangShi: z.string().optional(),
     fscType: z.string().optional(),
     fenBanShuoMing: z.string().optional(),
     baoLiuQianSe: z.string().optional(),
+    genSeZhiShi: z.string().optional(),
+    yongTu: z.string().optional(),
+    keLaiXinXi: z.string().optional(),
 
     dingDanShuLiang: z.coerce.number().int().optional(),
     chuYangShuLiang: z.coerce.number().int().optional(),
@@ -29,6 +44,8 @@ export const orderBaseSchema = z.object({
     beiPinShuLiang: z.coerce.number().int().optional(),
     teShuLiuShuYang: z.coerce.number().int().optional(),
     zongShuLiang: z.coerce.number().int().optional(),
+    chuHuoShuLiang: z.coerce.number().int().optional(),
+    chuYangShuoMing: z.coerce.number().int().optional(),
 
     guigeGaoMm: z.coerce.number().optional(),
     guigeKuanMm: z.coerce.number().optional(),
@@ -64,6 +81,32 @@ export const orderBaseSchema = z.object({
 
     // 经办人员 (前端只读)
     yeWuDaiBiaoFenJi: z.string().optional(),
+    yeWuRiqi: z.string().optional(),
+    shenHeRen: z.string().optional(),
+    shenHeRiqi: z.string().optional(),
+    daYinRen: z.string().optional(),
+    daYinRiqi: z.string().optional(),
+
+    // 排期相关字段
+    xiaZiliaodaiRiqiRequired: z.string().optional(),
+    xiaZiliaodaiRiqiPromise: z.string().optional(),
+    yinzhangRiqiRequired: z.string().optional(),
+    yinzhangRiqiPromise: z.string().optional(),
+    zhepaiRiqiRequired: z.string().optional(),
+    zhepaiRiqiPromise: z.string().optional(),
+    chuyangRiqiRequired: z.string().optional(),
+    chuyangRiqiPromise: z.string().optional(),
+    chuHuoRiqiRequired: z.string().optional(),
+    chuHuoRiqiPromise: z.string().optional(),
+
+    // 状态和评论 (虽然主要是后端控制，但前端可能会回传)
+    orderstatus: z.string().optional(),
+    keHuFanKui: z.string().optional(),
+    teShuYaoQiu: z.string().optional(),
+    kongZhiFangFa: z.string().optional(),
+    dingDanTeBieShuoMing: z.string().optional(),
+    yangPinPingShenXinXi: z.string().optional(),
+    dingDanPingShenXinXi: z.string().optional(),
 });
 
 /**
@@ -74,12 +117,10 @@ export const draftOrderSchema = orderBaseSchema.partial();
 
 /**
  * 2. 提交校验模式 (Strict)
- * 强制要求核心业务字段
+ * 目前业务要求：仅强制客户名称必填，其余字段按需填写
  */
 export const submitOrderSchema = orderBaseSchema.extend({
     customer: z.string().trim().min(1, '客户名称为必填项'),
-    productName: z.string().trim().min(1, '成品名称为必填项'),
-    dingDanShuLiang: z.coerce.number().positive('订单数量必须大于0'),
 });
 
 export type OrderInput = z.infer<typeof orderBaseSchema>;

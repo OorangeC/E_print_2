@@ -616,7 +616,7 @@ export enum PageMode {
 </script>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 
 import {
   OrderStatus,
@@ -625,6 +625,12 @@ import {
   prepareOrderFormData,
   initializeAuditLog,
 } from '@/types/Order'
+
+// --- Props 定义 ---
+const props = defineProps<{
+  mode: PageMode
+  initialOrder?: IOrder | null // 用于查看/编辑模式下传入的订单数据
+}>()
 
 const emit = defineEmits<{
   (e: 'close'): void
@@ -637,6 +643,10 @@ const handleSubmitOrder = async () => {
   // 基础校验
   if (!orderData.customer || !orderData.productName) {
     alert('请填写必要信息')
+    return
+  }
+  if (!salesman.value || !salesman.value.trim()) {
+    alert('请填写业务员')
     return
   }
 
@@ -652,7 +662,9 @@ const handleSubmitOrder = async () => {
   }
 }
 
-const salesman = ref('')
+// 业务员（用于后端 sales 归属与列表查询）
+// 目前项目未接入登录，这里默认给 admin，避免新单因为业务员为空导致“列表只看到老单”
+const salesman = ref('admin')
 
 // --- 订单核心数据 ---
 
@@ -849,75 +861,74 @@ const removeDetailRow = (index: number) => {
   }
 }
 
-// const loadOrderData = (existingOrder: IOrder) => {
+/**
+ * 加载已有订单数据到表单中
+ */
+const loadOrderData = (existingOrder: IOrder) => {
+  // 1. 基础字段拷贝
+  Object.assign(orderData, existingOrder)
 
-//   // 1. 基础字段拷贝
+  // 2. 设置业务员
+  if (existingOrder.sales) {
+    salesman.value = existingOrder.sales
+  }
 
-//   Object.assign(orderData, existingOrder)
+  // 3. 特殊处理附件：确保旧附件能够显示
+  if (existingOrder.attachments) {
+    orderData.attachments = existingOrder.attachments.map((attr) => ({
+      ...attr,
+      // 如果是后端传来的，通常已有 url；如果是本地新加的，会有 file 对象
+      // 这里确保如果是服务器文件，url 是完整的路径
+      url: attr.url || (attr.fileName ? `/api/download/${attr.fileName}` : ''),
+    }))
+  }
 
-//   // 2. 特殊处理附件：确保旧附件能够显示
+  // 4. 处理产品明细
+  if (existingOrder.chanPinMingXi && existingOrder.chanPinMingXi.length > 0) {
+    orderData.chanPinMingXi = [...existingOrder.chanPinMingXi]
+  }
 
-//   if (existingOrder.attachments) {
+  // 5. 处理日期字符串 (input type="date" 只识别 YYYY-MM-DD)
+  const dateFields = [
+    'xiaZiliaodaiRiqiRequired',
+    'xiaZiliaodaiRiqiPromise',
+    'yinzhangRiqiRequired',
+    'yinzhangRiqiPromise',
+    'zhepaiRiqiRequired',
+    'zhepaiRiqiPromise',
+    'chuyangRiqiRequired',
+    'chuyangRiqiPromise',
+    'chuHuoRiqiRequired',
+    'chuHuoRiqiPromise',
+  ] as const
 
-//     orderData.attachments = existingOrder.attachments.map((attr) => ({
+  dateFields.forEach((field) => {
+    if (orderData[field]) {
+      // 这里的逻辑是将 Date 对象或 ISO 字符串转换为 YYYY-MM-DD
+      const dateVal = new Date(orderData[field] as any)
+      if (!isNaN(dateVal.getTime())) {
+        ;(orderData[field] as any) = dateVal.toISOString().split('T')[0]
+      }
+    }
+  })
+}
 
-//       ...attr,
+// --- 组件挂载时加载数据 ---
+onMounted(() => {
+  if (props.initialOrder) {
+    loadOrderData(props.initialOrder)
+  }
+})
 
-//       // 如果是后端传来的，通常已有 url；如果是本地新加的，会有 file 对象
-
-//       // 这里确保如果是服务器文件，url 是完整的路径
-
-//       url: attr.url || (attr.fileName ? `/api/download/${attr.fileName}` : ''),
-
-//     }))
-
-//   }
-
-//   // 3. 处理日期字符串 (input type="date" 只识别 YYYY-MM-DD)
-
-//   const dateFields = [
-
-//     'xiaZiliaodaiRiqiRequired',
-
-//     'xiaZiliaodaiRiqiPromise',
-
-//     'yinzhangRiqiRequired',
-
-//     'yinzhangRiqiPromise',
-
-//     'zhepaiRiqiRequired',
-
-//     'zhepaiRiqiPromise',
-
-//     'chuyangRiqiRequired',
-
-//     'chuyangRiqiPromise',
-
-//     'chuHuoRiqiRequired',
-
-//     'chuHuoRiqiPromise',
-
-//   ] as const
-
-//   dateFields.forEach((field) => {
-
-//     if (orderData[field]) {
-
-//       // 这里的逻辑是将 Date 对象或 ISO 字符串转换为 YYYY-MM-DD
-
-//       const dateVal = new Date(orderData[field] as any)
-
-//       if (!isNaN(dateVal.getTime())) {
-
-//         ;(orderData[field] as any) = dateVal.toISOString().split('T')[0]
-
-//       }
-
-//     }
-
-//   })
-
-// }
+// --- 监听 initialOrder 变化 ---
+watch(
+  () => props.initialOrder,
+  (newOrder) => {
+    if (newOrder) {
+      loadOrderData(newOrder)
+    }
+  },
+)
 
 // --- 顶部按钮操作 ---
 

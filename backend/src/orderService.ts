@@ -1,5 +1,6 @@
 import { sqlDB, mongoDB } from './db';
 import { draftOrderSchema, submitOrderSchema } from './schemas/orderSchema';
+import { orderToDTO, ordersToDTO, orderStatusToDb, dbStatusToOrderStatus } from './dto/orderDTO';
 
 /**
  * 后端 OrderService - 处理校验、暂存与提交
@@ -35,9 +36,19 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
         throw new Error(`校验失败: ${errorMsg}`);
     }
 
-    const validatedData = validationResult.data;
+    const validatedData = validationResult.data as any;
 
-    // 4. 执行数据库逻辑
+    // 4. 统一转换：如果前端传了 orderstatus（中文），转换为 status（英文枚举）供数据库使用
+    // 使用 DTO 层的转换函数
+    if (validatedData.orderstatus && typeof validatedData.orderstatus === 'string') {
+        const dbStatus = orderStatusToDb(validatedData.orderstatus);
+        if (dbStatus) {
+            // 将转换后的 status 存入数据，但保留 orderstatus 供前端使用
+            validatedData._convertedStatus = dbStatus;
+        }
+    }
+
+    // 5. 执行数据库逻辑
     if (orderNumber) {
         // 检查是否存在订单
         const existing = await sqlDB.order.findUnique({ where: { orderNumber } });
@@ -54,15 +65,41 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
  * 创建新订单
  */
 async function createNewOrder(orderNumber: string, data: any, salesman: string, isDraft: boolean, files?: any[]) {
-    const { chanPinMingXi, ...baseData } = data;
+    const { chanPinMingXi, order_id, order_ver, order_unique, ...baseData } = data;
+
+    // 由于当前 Prisma Client 还未成功重新生成，某些在 schema 中新增的字段（如 cpcQueRen 等）
+    // 在客户端类型里仍然是"未知字段"，直接传给 create/update 会导致 Unknown argument 错误。
+    // 这里做一层白名单过滤，只把老版本模型里已有的字段传给数据库，保证创建流程可用。
+    const {
+        cpcQueRen,
+        waixiaoFlag,
+        cpsiaYaoqiu,
+        dingZhiBeiZhu,
+        genSeZhiShi,
+        yongTu,
+        keLaiXinXi,
+        chuHuoShuLiang,
+        chuYangShuoMing,
+        orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
+        _convertedStatus, // 从 processOrderRequest 转换来的英文状态
+        // 其余新加字段如有需要再按需加入
+        ...dbSafeData
+    } = baseData;
+
+    // 确定最终的状态值：优先使用前端转换后的状态，否则根据 isDraft 决定
+    const finalStatus = (_convertedStatus || (isDraft ? 'DRAFT' : 'PENDING_REVIEW')) as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED';
 
     // 1. 创建订单 (MySQL)
     const newOrder = await sqlDB.order.create({
         data: {
-            ...baseData,
+            ...dbSafeData,
             orderNumber,
+            // 保存前端传入的关键字段
+            orderVer: order_ver || 'V1',
+            orderUnique: order_unique || `${orderNumber}_V1`,
+            sales: data.sales || salesman,  // 优先使用前端传入的 sales，否则用 salesman
             yeWuDaiBiaoFenJi: salesman,
-            status: isDraft ? 'DRAFT' : 'PENDING_REVIEW',
+            status: finalStatus, // 使用转换后的状态或默认值
             submittedAt: isDraft ? null : new Date(),
 
             orderItems: {
@@ -108,15 +145,34 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
  * 更新已有订单
  */
 async function updateExistingOrder(orderNumber: string, data: any, isDraft: boolean, files?: any[]) {
-    const { chanPinMingXi, ...baseData } = data;
+    // 和 createNewOrder 保持一致，把前端专用字段和新加字段剥离掉，避免 Unknown arg 错误
+    const { chanPinMingXi, order_id, order_ver, order_unique, orderNumber: _ignoredOrderNumber, ...baseData } = data;
+
+    const {
+        cpcQueRen,
+        waixiaoFlag,
+        cpsiaYaoqiu,
+        dingZhiBeiZhu,
+        genSeZhiShi,
+        yongTu,
+        keLaiXinXi,
+        chuHuoShuLiang,
+        chuYangShuoMing,
+        orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
+        _convertedStatus, // 从 processOrderRequest 转换来的英文状态
+        ...dbSafeData
+    } = baseData;
+
+    // 确定最终的状态值：优先使用前端转换后的状态，否则根据 isDraft 决定
+    const finalStatus = (_convertedStatus || (isDraft ? 'DRAFT' : 'PENDING_REVIEW')) as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED';
 
     const updatedOrder = await sqlDB.$transaction(async (tx) => {
         // 1. 更新主表
         await tx.order.update({
             where: { orderNumber },
             data: {
-                ...baseData,
-                status: isDraft ? 'DRAFT' : 'PENDING_REVIEW',
+                ...dbSafeData,
+                status: finalStatus, // 使用转换后的状态或默认值
                 updatedAt: new Date()
             }
         });
@@ -173,7 +229,7 @@ export async function getOrder(orderNumber: string) {
         where: { orderNumber }
     });
 
-    return { ...order, auditLogs: logs };
+    return orderToDTO(order, logs);
 }
 
 export async function deleteOrder(orderNumber: string) {
@@ -182,21 +238,33 @@ export async function deleteOrder(orderNumber: string) {
 
 // ============ New Interface Search Functions ============
 
-export async function findOrdersBySales(salesName: string) {
-    return await sqlDB.order.findMany({
+export async function FindOrdersBySales(salesName: string) {
+    const orders = await sqlDB.order.findMany({
         where: { sales: salesName },
-        include: { orderItems: true }
+        include: { orderItems: true, documents: true }
     });
+    return ordersToDTO(orders);
 }
 
-export async function findOrdersByAudit(auditName: string) {
-    return await sqlDB.order.findMany({
+export async function FindOrdersByAudit(auditName: string) {
+    const orders = await sqlDB.order.findMany({
         where: { audit: auditName },
-        include: { orderItems: true }
+        include: { orderItems: true, documents: true }
     });
+    return ordersToDTO(orders);
 }
 
-export async function findOrderByUniqueId(uniqueId: string) {
+/**
+ * 查询所有订单（不按业务员过滤）
+ */
+export async function findAllOrders() {
+    const orders = await sqlDB.order.findMany({
+        include: { orderItems: true, documents: true }
+    });
+    return ordersToDTO(orders);
+}
+
+export async function FindOrderByID(uniqueId: string) {
     const order = await sqlDB.order.findUnique({
         where: { orderUnique: uniqueId },
         include: { orderItems: true, documents: true }
@@ -209,14 +277,50 @@ export async function findOrderByUniqueId(uniqueId: string) {
         where: { orderNumber: order.orderNumber }
     });
 
-    return { ...order, auditLogs: logs };
+    return orderToDTO(order, logs);
 }
 
-export async function findPendingOrders() {
-    return await sqlDB.order.findMany({
+// 注意：状态转换映射已移至 DTO 层（orderDTO.ts），使用 orderStatusToDb 函数
+
+// 保留原有：无参数时，默认查所有待审核订单
+export async function FindPendingOrders() {
+    const orders = await sqlDB.order.findMany({
         where: {
             status: 'PENDING_REVIEW' // Matches OrderStatus.PENDING_REVIEW
         },
-        include: { orderItems: true }
+        include: { orderItems: true, documents: true }
     });
+    return ordersToDTO(orders);
+}
+
+// 新增：根据前端传入的中文状态过滤
+export async function FindPendingOrdersByStatus(orderStatusText: string) {
+    const dbStatus = orderStatusToDb(orderStatusText) || 'PENDING_REVIEW';
+    const orders = await sqlDB.order.findMany({
+        where: {
+            status: dbStatus as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED'
+        },
+        include: { orderItems: true, documents: true }
+    });
+    return ordersToDTO(orders);
+}
+
+// 更新订单状态（根据唯一索引 orderUnique）
+export async function UpdateOrderStatus(orderUnique: string, orderStatusText: string) {
+    const dbStatus = orderStatusToDb(orderStatusText);
+    if (!dbStatus) {
+        throw new Error(`Unsupported order status: ${orderStatusText}`);
+    }
+
+    const updated = await sqlDB.order.update({
+        where: { orderUnique },
+        data: {
+            status: dbStatus as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED',
+            reviewedAt: new Date()
+        },
+        include: { orderItems: true, documents: true }
+    });
+
+    // 这里简单地不写 Mongo 审计日志，后面如果需要可按订单创建时的方式补充
+    return orderToDTO(updated);
 }

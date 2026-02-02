@@ -75,7 +75,7 @@ import { ref, computed, onMounted } from 'vue'
 import { type IWorkOrder } from '@/types/WorkOrder'
 // 核心：导入你的创建器组件
 import WorkOrderCreator from './WorkOrderCreator.vue'
-import { findWorkOrdersByClerk } from '@/stores/request'
+import { FindWorkOrdersByClerk } from '@/stores/request'
 
 const showCreator = ref(false)
 const searchQuery = ref<string>('')
@@ -92,8 +92,8 @@ onMounted(async () => {
  */
 const fetchOrdersData = async () => {
   try {
-    // 调用你在 request.ts 里写的函数，扒拉 admin 的数据
-    const data = await findWorkOrdersByClerk('admin')
+    // 文档接口：根据制单员姓名获取工程单数组
+    const data = await FindWorkOrdersByClerk('admin')
 
     // 将拿到的数组赋值给响应式变量 orders
     // processedOrders 会根据这个数据的变化自动重新计算过滤和排序
