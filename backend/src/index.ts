@@ -4,11 +4,11 @@ import multer = require('multer');
 import path = require('path');
 import {
     processOrderRequest, getOrder, deleteOrder,
-    FindOrdersBySales, FindOrdersByAudit, FindOrderByID, FindPendingOrders, FindPendingOrdersByStatus, UpdateOrderStatus, findAllOrders
+    FindOrdersBySales, FindOrdersByAudit, FindOrderByID, FindOrdersWithStatus, UpdateOrderStatus, findAllOrders
 } from './orderService';
 import {
     handleIncomingWorkOrder, getWorkOrder,
-    FindWorkOrdersByClerk, FindWorkOrdersByAudit, FindWorkOrderByID, FindPendingWorkOrders,
+    FindWorkOrdersByClerk, FindWorkOrdersByAudit, FindWorkOrderByID, FindWorkOrdersWithStatus,
     UpdateWorkOrderStatus, UpdateWorkOrderProcess
 } from './workOrderService';
 
@@ -56,24 +56,26 @@ app.get('/api', (req, res) => {
 // --- 订单 (Orders) ---
 
 // Search Routes (Must be defined BEFORE /:id)
-app.get('/api/orders/pending', async (req, res) => {
-    try {
-        const result = await FindPendingOrders();
-        res.json(result);
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
-// 新接口：根据前端中文状态查询订单列表（/orders/findPending?orderstatus=待审核）
-app.get('/api/orders/findPending', async (req, res) => {
+/**
+ * 根据订单状态查询订单
+ * GET /api/orders/status?orderstatus=待审核
+ * 
+ * 示例：
+ * - /api/orders/status?orderstatus=待审核  => 查询所有待审核订单
+ * - /api/orders/status?orderstatus=已审核  => 查询所有已审核订单
+ * - /api/orders/status?orderstatus=草稿    => 查询所有草稿订单
+ */
+app.get('/api/orders/status', async (req, res) => {
     try {
         const statusText = req.query.orderstatus as string;
-        if (!statusText) return res.status(400).json({ error: 'Missing orderstatus parameter' });
-        const result = await FindPendingOrdersByStatus(statusText);
+        if (!statusText) {
+            return res.status(400).json({ error: '缺少 orderstatus 参数' });
+        }
+        const result = await FindOrdersWithStatus(statusText);
         res.json(result);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 });
 
@@ -177,12 +179,26 @@ app.get('/api/orders/:id', async (req, res) => {
 // --- 工程单 (WorkOrders) ---
 
 // Search Routes (Must be defined BEFORE /:id)
-app.get('/api/work-orders/pending', async (req, res) => {
+
+/**
+ * 根据工单状态查询工单
+ * GET /api/workOrders/findWithStatus?workorderstatus=待审核
+ * 
+ * 示例：
+ * - /api/workOrders/findWithStatus?workorderstatus=待审核  => 查询所有待审核工单
+ * - /api/workOrders/findWithStatus?workorderstatus=通过    => 查询所有已通过工单
+ * - /api/workOrders/findWithStatus?workorderstatus=驳回    => 查询所有已驳回工单
+ */
+app.get('/api/workOrders/findWithStatus', async (req, res) => {
     try {
-        const result = await FindPendingWorkOrders();
+        const statusText = req.query.workorderstatus as string;
+        if (!statusText) {
+            return res.status(400).json({ error: '缺少 workorderstatus 参数' });
+        }
+        const result = await FindWorkOrdersWithStatus(statusText);
         res.json(result);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 });
 
@@ -235,15 +251,6 @@ app.get('/api/workOrders/findById', async (req, res) => {
     }
 });
 
-// 所有待处理工程单（前端：/workOrders/pending）
-app.get('/api/workOrders/pending', async (req, res) => {
-    try {
-        const result = await FindPendingWorkOrders();
-        res.json(result);
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // 修改工单状态（前端：/workOrders/updateStatus，body: { work_unique, workorderstatus }）
 app.post('/api/workOrders/updateStatus', async (req, res) => {

@@ -197,52 +197,17 @@ function auditLogToDTO(log: any): IAuditLogDTO {
 }
 
 /**
- * 后端订单状态到前端枚举映射（英文 -> 中文）
+ * 数据库枚举与前端枚举完全一致，不需要转换！
+ * 
+ * 前端 OrderStatus 枚举 = 数据库 OrderStatus 枚举：
+ * - DRAFT = '草稿'
+ * - PENDING_REVIEW = '待审核'
+ * - APPROVED = '通过'
+ * - REJECTED = '驳回'
+ * - IN_PRODUCTION = '生产中'
+ * - COMPLETED = '完成'
+ * - CANCELLED = '取消'
  */
-const statusMap: Record<string, string> = {
-    'DRAFT': '草稿',
-    'PENDING_REVIEW': '待审核',
-    'IN_REVIEW': '审核中',
-    'APPROVED': '通过',
-    'REJECTED': '驳回',
-    'IN_PRODUCTION': '生产中',
-    'COMPLETED': '完成',
-    'CANCELLED': '取消',
-};
-
-/**
- * 前端订单状态到后端枚举映射（中文 -> 英文）
- */
-export const statusMapReverse: Record<string, string> = {
-    '草稿': 'DRAFT',
-    '待审核': 'PENDING_REVIEW',
-    '审核中': 'IN_REVIEW',
-    '通过': 'APPROVED',
-    '驳回': 'REJECTED',
-    '生产中': 'IN_PRODUCTION',
-    '完成': 'COMPLETED',
-    '取消': 'CANCELLED',
-};
-
-/**
- * 将前端中文状态转换为后端英文枚举
- * @param orderStatusText 前端中文状态（如 '草稿', '待审核'）
- * @returns 后端英文枚举（如 'DRAFT', 'PENDING_REVIEW'），如果未找到则返回 undefined
- */
-export function orderStatusToDb(orderStatusText: string | undefined): string | undefined {
-    if (!orderStatusText) return undefined;
-    return statusMapReverse[orderStatusText];
-}
-
-/**
- * 将后端英文枚举转换为前端中文状态
- * @param dbStatus 后端英文枚举（如 'DRAFT', 'PENDING_REVIEW'）
- * @returns 前端中文状态（如 '草稿', '待审核'），如果未找到则返回原值
- */
-export function dbStatusToOrderStatus(dbStatus: string | undefined): string | undefined {
-    if (!dbStatus) return undefined;
-    return statusMap[dbStatus] || dbStatus;
-}
 
 /**
  * 核心转换函数：将 Prisma Order 模型转换为前端 IOrderDTO
@@ -336,7 +301,7 @@ export function orderToDTO(order: any, auditLogs?: any[]): IOrderDTO {
         daYinRiqi: formatDate(order.daYinRiqi),
 
         // 订单状态 - 转换为前端枚举值
-        orderstatus: dbStatusToOrderStatus(order.status) || order.status,
+        orderstatus: order.status || '草稿',
 
         // 审批日志
         auditLogs: auditLogs?.map(auditLogToDTO) || [],
@@ -380,12 +345,9 @@ export function dtoToOrder(dto: Partial<IOrderDTO>): any {
         delete result.order_unique;
     }
 
-    // 4. 状态转换：前端 orderstatus（中文）-> 后端 status（英文枚举）
+    // 4. 状态字段名映射：前端 orderstatus -> 后端 status（枚举值一致，无需转换）
     if (dto.orderstatus) {
-        const dbStatus = orderStatusToDb(dto.orderstatus);
-        if (dbStatus) {
-            result.status = dbStatus;
-        }
+        result.status = dto.orderstatus;
         // 删除前端的 orderstatus 字段，因为后端模型中没有这个字段
         delete result.orderstatus;
     }

@@ -1,6 +1,6 @@
 import { sqlDB, mongoDB } from './db';
 import { draftOrderSchema, submitOrderSchema } from './schemas/orderSchema';
-import { orderToDTO, ordersToDTO, orderStatusToDb, dbStatusToOrderStatus } from './dto/orderDTO';
+import { orderToDTO, ordersToDTO } from './dto/orderDTO';
 
 /**
  * 后端 OrderService - 处理校验、暂存与提交
@@ -38,14 +38,10 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
 
     const validatedData = validationResult.data as any;
 
-    // 4. 统一转换：如果前端传了 orderstatus（中文），转换为 status（英文枚举）供数据库使用
-    // 使用 DTO 层的转换函数
+    // 4. 状态字段：前端传入 orderstatus（中文），数据库枚举也是中文，无需转换
     if (validatedData.orderstatus && typeof validatedData.orderstatus === 'string') {
-        const dbStatus = orderStatusToDb(validatedData.orderstatus);
-        if (dbStatus) {
-            // 将转换后的 status 存入数据，但保留 orderstatus 供前端使用
-            validatedData._convertedStatus = dbStatus;
-        }
+        // 直接使用前端传入的中文状态
+        validatedData._convertedStatus = validatedData.orderstatus;
     }
 
     // 5. 执行数据库逻辑
@@ -86,8 +82,8 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
         ...dbSafeData
     } = baseData;
 
-    // 确定最终的状态值：优先使用前端转换后的状态，否则根据 isDraft 决定
-    const finalStatus = (_convertedStatus || (isDraft ? 'DRAFT' : 'PENDING_REVIEW')) as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED';
+    // 确定最终的状态值：优先使用前端传入的状态，否则根据 isDraft 决定
+    const finalStatus = (_convertedStatus || (isDraft ? '草稿' : '待审核')) as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消';
 
     // 1. 创建订单 (MySQL)
     const newOrder = await sqlDB.order.create({
@@ -100,7 +96,7 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
             sales: data.sales || salesman,  // 优先使用前端传入的 sales，否则用 salesman
             yeWuDaiBiaoFenJi: salesman,
             status: finalStatus, // 使用转换后的状态或默认值
-            submittedAt: isDraft ? null : new Date(),
+            submittedAt: isDraft ? null : new Date().toISOString(),
 
             orderItems: {
                 create: chanPinMingXi?.map((item: any) => ({
@@ -130,7 +126,7 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
                 entityType: 'Order',
                 entityId: orderNumber,
                 orderNumber: orderNumber,
-                time: new Date()
+                time: new Date().toISOString()
             }
         });
     } catch (logError) {
@@ -163,8 +159,8 @@ async function updateExistingOrder(orderNumber: string, data: any, isDraft: bool
         ...dbSafeData
     } = baseData;
 
-    // 确定最终的状态值：优先使用前端转换后的状态，否则根据 isDraft 决定
-    const finalStatus = (_convertedStatus || (isDraft ? 'DRAFT' : 'PENDING_REVIEW')) as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED';
+    // 确定最终的状态值：优先使用前端传入的状态，否则根据 isDraft 决定
+    const finalStatus = (_convertedStatus || (isDraft ? '草稿' : '待审核')) as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消';
 
     const updatedOrder = await sqlDB.$transaction(async (tx) => {
         // 1. 更新主表
@@ -173,7 +169,7 @@ async function updateExistingOrder(orderNumber: string, data: any, isDraft: bool
             data: {
                 ...dbSafeData,
                 status: finalStatus, // 使用转换后的状态或默认值
-                updatedAt: new Date()
+                updatedAt: new Date().toISOString()
             }
         });
 
@@ -205,7 +201,7 @@ async function updateExistingOrder(orderNumber: string, data: any, isDraft: bool
                 entityType: 'Order',
                 entityId: orderNumber,
                 orderNumber: orderNumber,
-                time: new Date()
+                time: new Date().toISOString()
             }
         });
     } catch (logError) {
@@ -280,25 +276,25 @@ export async function FindOrderByID(uniqueId: string) {
     return orderToDTO(order, logs);
 }
 
-// 注意：状态转换映射已移至 DTO 层（orderDTO.ts），使用 orderStatusToDb 函数
-
-// 保留原有：无参数时，默认查所有待审核订单
-export async function FindPendingOrders() {
+/**
+ * 根据订单状态查询订单
+ * @param orderStatusText 前端传入的中文状态（如"待审核"、"通过"等）
+ * @returns IOrder[] 满足条件的订单数组
+ * 
+ * 示例：
+ * - FindOrdersWithStatus("待审核") => 查询 status = '待审核' 的订单
+ * - FindOrdersWithStatus("通过") => 查询 status = '通过' 的订单
+ */
+export async function FindOrdersWithStatus(orderStatusText: string) {
+    // 验证是否为有效的订单状态
+    const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
+    if (!validStatuses.includes(orderStatusText)) {
+        throw new Error(`不支持的订单状态: ${orderStatusText}`);
+    }
+    
     const orders = await sqlDB.order.findMany({
         where: {
-            status: 'PENDING_REVIEW' // Matches OrderStatus.PENDING_REVIEW
-        },
-        include: { orderItems: true, documents: true }
-    });
-    return ordersToDTO(orders);
-}
-
-// 新增：根据前端传入的中文状态过滤
-export async function FindPendingOrdersByStatus(orderStatusText: string) {
-    const dbStatus = orderStatusToDb(orderStatusText) || 'PENDING_REVIEW';
-    const orders = await sqlDB.order.findMany({
-        where: {
-            status: dbStatus as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED'
+            status: orderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消'
         },
         include: { orderItems: true, documents: true }
     });
@@ -307,16 +303,17 @@ export async function FindPendingOrdersByStatus(orderStatusText: string) {
 
 // 更新订单状态（根据唯一索引 orderUnique）
 export async function UpdateOrderStatus(orderUnique: string, orderStatusText: string) {
-    const dbStatus = orderStatusToDb(orderStatusText);
-    if (!dbStatus) {
-        throw new Error(`Unsupported order status: ${orderStatusText}`);
+    // 验证是否为有效的订单状态
+    const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
+    if (!validStatuses.includes(orderStatusText)) {
+        throw new Error(`不支持的订单状态: ${orderStatusText}`);
     }
 
     const updated = await sqlDB.order.update({
         where: { orderUnique },
         data: {
-            status: dbStatus as 'DRAFT' | 'PENDING_REVIEW' | 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'IN_PRODUCTION' | 'COMPLETED' | 'CANCELLED',
-            reviewedAt: new Date()
+            status: orderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
+            reviewedAt: new Date().toISOString()
         },
         include: { orderItems: true, documents: true }
     });

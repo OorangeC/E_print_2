@@ -139,6 +139,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   zhepaiRiqiPromise: 'zhepaiRiqiPromise',
   chuyangRiqiRequired: 'chuyangRiqiRequired',
   chuyangRiqiPromise: 'chuyangRiqiPromise',
+  chuHuoRiqiRequired: 'chuHuoRiqiRequired',
   chuHuoRiqiPromise: 'chuHuoRiqiPromise',
   customer: 'customer',
   productName: 'productName',
@@ -398,6 +399,16 @@ exports.Prisma.OrderOrderByRelevanceFieldEnum = {
   orderUnique: 'orderUnique',
   sales: 'sales',
   audit: 'audit',
+  xiaZiliaodaiRiqiRequired: 'xiaZiliaodaiRiqiRequired',
+  xiaZiliaodaiRiqiPromise: 'xiaZiliaodaiRiqiPromise',
+  yinzhangRiqiRequired: 'yinzhangRiqiRequired',
+  yinzhangRiqiPromise: 'yinzhangRiqiPromise',
+  zhepaiRiqiRequired: 'zhepaiRiqiRequired',
+  zhepaiRiqiPromise: 'zhepaiRiqiPromise',
+  chuyangRiqiRequired: 'chuyangRiqiRequired',
+  chuyangRiqiPromise: 'chuyangRiqiPromise',
+  chuHuoRiqiRequired: 'chuHuoRiqiRequired',
+  chuHuoRiqiPromise: 'chuHuoRiqiPromise',
   customer: 'customer',
   productName: 'productName',
   customerPO: 'customerPO',
@@ -432,10 +443,17 @@ exports.Prisma.OrderOrderByRelevanceFieldEnum = {
   yeWuDaiBiaoFenJi: 'yeWuDaiBiaoFenJi',
   shenHeRen: 'shenHeRen',
   daYinRen: 'daYinRen',
+  yeWuRiqi: 'yeWuRiqi',
+  shenHeRiqi: 'shenHeRiqi',
+  daYinRiqi: 'daYinRiqi',
   previousOrderNumber: 'previousOrderNumber',
   versionTag: 'versionTag',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
   reviewedBy: 'reviewedBy',
-  reviewComments: 'reviewComments'
+  reviewComments: 'reviewComments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.MaterialOrderByRelevanceFieldEnum = {
@@ -451,7 +469,9 @@ exports.Prisma.MaterialOrderByRelevanceFieldEnum = {
   zhuanSeZhengFan: 'zhuanSeZhengFan',
   biaoMianChuLi: 'biaoMianChuLi',
   zhuangDingGongYi: 'zhuangDingGongYi',
-  beiZhu: 'beiZhu'
+  beiZhu: 'beiZhu',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.OrderItemOrderByRelevanceFieldEnum = {
@@ -469,7 +489,9 @@ exports.Prisma.OrderItemOrderByRelevanceFieldEnum = {
   zhuanSe: 'zhuanSe',
   biaoMianChuLi: 'biaoMianChuLi',
   zhuangDingGongYi: 'zhuangDingGongYi',
-  beiZhu: 'beiZhu'
+  beiZhu: 'beiZhu',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.EngineeringOrderOrderByRelevanceFieldEnum = {
@@ -484,18 +506,27 @@ exports.Prisma.EngineeringOrderOrderByRelevanceFieldEnum = {
   gongDanLeiXing: 'gongDanLeiXing',
   caiLiao: 'caiLiao',
   chanPinLeiXing: 'chanPinLeiXing',
+  zhiDanShiJian: 'zhiDanShiJian',
   keHu: 'keHu',
   po: 'po',
   chengPinMingCheng: 'chengPinMingCheng',
   chanPinGuiGe: 'chanPinGuiGe',
+  chuYangRiqi: 'chuYangRiqi',
+  chuHuoRiqi: 'chuHuoRiqi',
   chanPinYaoQiu: 'chanPinYaoQiu',
   zhiDan: 'zhiDan',
   shenHe: 'shenHe',
   benChangNeiBuGongXu: 'benChangNeiBuGongXu',
   appendix: 'appendix',
   yuJiGongQi: 'yuJiGongQi',
+  kaiShiShiJian: 'kaiShiShiJian',
+  jieShuShiJian: 'jieShuShiJian',
+  submitted_at: 'submitted_at',
   reviewedBy: 'reviewedBy',
-  reviewComments: 'reviewComments'
+  reviewedAt: 'reviewedAt',
+  reviewComments: 'reviewComments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.EngineeringOrderMaterialLineOrderByRelevanceFieldEnum = {
@@ -512,7 +543,11 @@ exports.Prisma.EngineeringOrderMaterialLineOrderByRelevanceFieldEnum = {
   biaoMianChuLi: 'biaoMianChuLi',
   shengChanLuJing: 'shengChanLuJing',
   paiBanFangShi: 'paiBanFangShi',
-  dangQianJinDu: 'dangQianJinDu'
+  kaiShiShiJian: 'kaiShiShiJian',
+  jieShuShiJian: 'jieShuShiJian',
+  dangQianJinDu: 'dangQianJinDu',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
@@ -520,7 +555,9 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   username: 'username',
   email: 'email',
   passwordHash: 'passwordHash',
-  fullName: 'fullName'
+  fullName: 'fullName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.DocumentOrderByRelevanceFieldEnum = {
@@ -529,7 +566,8 @@ exports.Prisma.DocumentOrderByRelevanceFieldEnum = {
   eoId: 'eoId',
   category: 'category',
   fileName: 'fileName',
-  fileUrl: 'fileUrl'
+  fileUrl: 'fileUrl',
+  uploadedAt: 'uploadedAt'
 };
 
 exports.Prisma.ReviewTaskOrderByRelevanceFieldEnum = {
@@ -538,7 +576,11 @@ exports.Prisma.ReviewTaskOrderByRelevanceFieldEnum = {
   title: 'title',
   description: 'description',
   assignedTo: 'assignedTo',
-  comments: 'comments'
+  dueDate: 'dueDate',
+  completedAt: 'completedAt',
+  comments: 'comments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.TodoOrderByRelevanceFieldEnum = {
@@ -546,8 +588,12 @@ exports.Prisma.TodoOrderByRelevanceFieldEnum = {
   userId: 'userId',
   title: 'title',
   description: 'description',
+  dueDate: 'dueDate',
+  completedAt: 'completedAt',
   entityType: 'entityType',
-  entityId: 'entityId'
+  entityId: 'entityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.StepPlanOrderByRelevanceFieldEnum = {
@@ -555,24 +601,28 @@ exports.Prisma.StepPlanOrderByRelevanceFieldEnum = {
   orderNumber: 'orderNumber',
   eoId: 'eoId',
   stepName: 'stepName',
-  description: 'description'
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 exports.OrderStatus = exports.$Enums.OrderStatus = {
-  DRAFT: 'DRAFT',
-  PENDING_REVIEW: 'PENDING_REVIEW',
-  IN_REVIEW: 'IN_REVIEW',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  IN_PRODUCTION: 'IN_PRODUCTION',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  草稿: '草稿',
+  待审核: '待审核',
+  通过: '通过',
+  驳回: '驳回',
+  生产中: '生产中',
+  完成: '完成',
+  取消: '取消'
 };
 
 exports.ReviewResult = exports.$Enums.ReviewResult = {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  NEEDS_REVISION: 'NEEDS_REVISION'
+  草稿: '草稿',
+  待审核: '待审核',
+  通过: '通过',
+  驳回: '驳回',
+  生产中: '生产中',
+  完成: '完成',
+  取消: '取消'
 };
 
 exports.UserRole = exports.$Enums.UserRole = {

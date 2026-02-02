@@ -9,19 +9,19 @@ datasource db {
 }
 
 model AuditLog {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  logId             String   @default(uuid()) @map("log_id") // Keep original ID for logic compatibility or rely on _id
-  orderNumber       String?  @map("order_number")
-  entityType        String   @map("entity_type")
-  entityId          String   @map("entity_id")
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  logId             String  @default(uuid()) @map("log_id") // Keep original ID for logic compatibility or rely on _id
+  orderNumber       String? @map("order_number")
+  entityType        String  @map("entity_type")
+  entityId          String  @map("entity_id")
   action            String
-  actionDescription String?  @map("action_description")
-  userId            String   @map("user_id")
+  actionDescription String? @map("action_description")
+  userId            String  @map("user_id")
   // Relations removed as they are in MySQL
-  oldValue          Json?    @map("old_value")
-  newValue          Json?    @map("new_value")
-  ipAddress         String?  @map("ip_address")
-  time              DateTime @default(now())
+  oldValue          Json?   @map("old_value")
+  newValue          Json?   @map("new_value")
+  ipAddress         String? @map("ip_address")
+  time              String
 
   @@index([orderNumber])
   @@index([userId])

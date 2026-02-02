@@ -26,18 +26,20 @@ model Order {
   audit       String? @map("audit")
 
   // ============ 排期信息 (Schedule Information) ============
-  xiaZiliaodaiRiqiRequired DateTime?  @map("xia_ziliaodai_riqi_required") // 下资料袋-要求日期
-  xiaZiliaodaiRiqiPromise  DateTime?  @map("xia_ziliaodai_riqi_promise")  // 下资料袋-承诺日期
+  xiaZiliaodaiRiqiRequired String?  @map("xia_ziliaodai_riqi_required") // 下资料袋-要求日期
+  xiaZiliaodaiRiqiPromise  String?  @map("xia_ziliaodai_riqi_promise")  // 下资料袋-承诺日期
   
-  yinzhangRiqiRequired     DateTime?  @map("yinzhang_riqi_required")     // 印张-要求日期
-  yinzhangRiqiPromise      DateTime?  @map("yinzhang_riqi_promise")      // 印张-承诺日期
+  yinzhangRiqiRequired     String?  @map("yinzhang_riqi_required")     // 印张-要求日期
+  yinzhangRiqiPromise      String?  @map("yinzhang_riqi_promise")      // 印张-承诺日期
   
-  zhepaiRiqiRequired       DateTime?  @map("zhepai_riqi_required")       // 折排-要求日期
-  zhepaiRiqiPromise        DateTime?  @map("zhepai_riqi_promise")        // 折排-承诺日期
+  zhepaiRiqiRequired       String?  @map("zhepai_riqi_required")       // 折排-要求日期
+  zhepaiRiqiPromise        String?  @map("zhepai_riqi_promise")        // 折排-承诺日期
   
-  chuyangRiqiRequired      DateTime?  @map("chuyang_riqi_required")      // 出样-要求日期
-  chuyangRiqiPromise       DateTime?  @map("chuyang_riqi_promise")       // 出样-承诺日期
-  chuHuoRiqiPromise        DateTime?  @map("chu_huo_riqi_promise")       // 出货-承诺日期
+  chuyangRiqiRequired      String?  @map("chuyang_riqi_required")      // 出样-要求日期
+  chuyangRiqiPromise       String?  @map("chuyang_riqi_promise")       // 出样-承诺日期
+  
+  chuHuoRiqiRequired       String?  @map("chu_huo_riqi_required")      // 出货-要求日期
+  chuHuoRiqiPromise        String?  @map("chu_huo_riqi_promise")       // 出货-承诺日期
 
   // ============ 基本信息 ============
   customer     String? @map("customer")              // 客户
@@ -101,9 +103,9 @@ model Order {
   yeWuDaiBiaoFenJi String?   @map("ye_wu_dai_biao_fen_ji")
   shenHeRen        String?   @map("shen_he_ren")
   daYinRen         String?   @map("da_yin_ren")
-  yeWuRiqi         DateTime? @map("ye_wu_riqi")   // 业务日期
-  shenHeRiqi       DateTime? @map("shen_he_riqi") // 审核日期
-  daYinRiqi        DateTime? @map("da_yin_riqi")  // 打印日期
+  yeWuRiqi         String? @map("ye_wu_riqi")   // 业务日期
+  shenHeRiqi       String? @map("shen_he_riqi") // 审核日期
+  daYinRiqi        String? @map("da_yin_riqi")  // 打印日期
 
   // ============ 版本控制 ============
   versionNumber       Int     @default(1) @map("version_number")
@@ -114,9 +116,9 @@ model Order {
   versionTag      String?  @map("version_tag")
 
   // ============ 审批流程 ============
-  status         OrderStatus @default(DRAFT)
-  submittedAt    DateTime?   @map("submitted_at")
-  reviewedAt     DateTime?   @map("reviewed_at")
+  status         OrderStatus @default(草稿)
+  submittedAt    String?   @map("submitted_at")
+  reviewedAt     String?   @map("reviewed_at")
   reviewedBy     String?     @map("reviewed_by")
   reviewComments String?      @map("review_comments")
 
@@ -126,8 +128,8 @@ model Order {
   reviewTasks      ReviewTask[]
   stepPlans        StepPlan[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@index([customerPO])
   @@index([status])
@@ -160,8 +162,8 @@ model Material {
   orderItems       OrderItem[]
   engineeringLines EngineeringOrderMaterialLine[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@map("materials")
 }
@@ -192,8 +194,8 @@ model OrderItem {
   zhuangDingGongYi String? @map("zhuang_ding_gong_yi")
   beiZhu           String? @map("bei_zhu")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@index([orderNumber])
   @@index([materialId])
@@ -219,7 +221,7 @@ model EngineeringOrder {
   gongDanLeiXing String?   @map("gong_dan_lei_xing")
   caiLiao        String?   @map("cai_liao")
   chanPinLeiXing String?   @map("chan_pin_lei_xing")
-  zhiDanShiJian  DateTime? @map("zhi_dan_shi_jian")
+  zhiDanShiJian  String? @map("zhi_dan_shi_jian")
 
   // ============ 订单信息备份 ============
   dingDanXuHao      Int?      @map("ding_dan_xu_hao")
@@ -231,8 +233,8 @@ model EngineeringOrder {
   chuYangShu        Int?      @map("chu_yang_shu")
   chaoBiLi          Int?      @map("chao_bi_li")
   benChangFangSun   Int?      @map("ben_chang_fang_sun")
-  chuYangRiqi       DateTime?  @map("chu_yang_riqi")
-  chuHuoRiqi        DateTime?  @map("chu_huo_riqi")
+  chuYangRiqi       String?  @map("chu_yang_riqi")
+  chuHuoRiqi        String?  @map("chu_huo_riqi")
 
   // ============ 产品要求与工序 ============
   chanPinYaoQiu       String?  @map("chan_pin_yao_qiu")
@@ -244,24 +246,24 @@ model EngineeringOrder {
   // ============ 生产跟踪 (Production Tracking) ============
   renLiRequirement Int?     @map("ren_li_requirement")  // 需投入人力
   yuJiGongQi       String?  @map("yu_ji_gong_qi")       // 预计工期
-  kaiShiShiJian    DateTime? @map("kai_shi_shi_jian")    // 实际开始时间
-  jieShuShiJian    DateTime? @map("jie_shu_shi_jian")    // 实际结束时间
+  kaiShiShiJian    String? @map("kai_shi_shi_jian")    // 实际开始时间
+  jieShuShiJian    String? @map("jie_shu_shi_jian")    // 实际结束时间
   shiFouWanGong    Boolean   @default(false) @map("shi_fou_wan_gong")
   wanChengJinDu    Float?  @map("wan_cheng_jin_du") // 完成进度 0-100
 
   // ============ 审批流程 ============
-  reviewStatus   ReviewResult @default(PENDING) @map("review_status")
-  submitted_at   DateTime?    @map("submitted_at")
+  reviewStatus   ReviewResult @default(待审核) @map("review_status")
+  submitted_at   String?    @map("submitted_at")
   reviewedBy     String?      @map("reviewed_by")
-  reviewedAt     DateTime?    @map("reviewed_at")
+  reviewedAt     String?    @map("reviewed_at")
   reviewComments String?       @map("review_comments")
 
   materialLines EngineeringOrderMaterialLine[]
   stepPlans     StepPlan[]
   documents     Document[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@map("engineering_orders")
 }
@@ -294,13 +296,13 @@ model EngineeringOrderMaterialLine {
   shengChanLuJing  String?   @map("sheng_chan_lu_jing")
   paiBanFangShi    String?   @map("pai_ban_fang_shi")
 
-  kaiShiShiJian DateTime? @map("kai_shi_shi_jian")
+  kaiShiShiJian String? @map("kai_shi_shi_jian")
   shiFouDaoLiao Boolean   @default(false) @map("shi_fou_dao_liao")
-  jieShuShiJian DateTime? @map("jie_shu_shi_jian")
+  jieShuShiJian String? @map("jie_shu_shi_jian")
   dangQianJinDu String?   @map("dang_qian_jin_du") // 工序当前进度 (String)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@unique([engineeringOrderId, lineNo])
   @@index([engineeringOrderId])
@@ -323,8 +325,8 @@ model User {
   // auditLogs was removed (moved to MongoDB)
   todos     Todo[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@map("users")
 }
@@ -339,7 +341,7 @@ model Document {
   fileName   String   @map("file_name")
   fileUrl    String?  @map("file_url")
   fileSize   Int?     @map("file_size")
-  uploadedAt DateTime @default(now()) @map("uploaded_at")
+  uploadedAt String? @map("uploaded_at")
 
   order            Order?            @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
   engineeringOrder EngineeringOrder? @relation(fields: [eoId], references: [engineeringOrderId], onDelete: Cascade)
@@ -356,15 +358,15 @@ model ReviewTask {
   title       String
   description String?      
   assignedTo  String?      @map("assigned_to")
-  result      ReviewResult @default(PENDING)
-  dueDate     DateTime?    @map("due_date")
-  completedAt DateTime?    @map("completed_at")
+  result      ReviewResult @default(待审核)
+  dueDate     String?    @map("due_date")
+  completedAt String?    @map("completed_at")
   comments    String?      
 
   order Order @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@index([orderNumber])
   @@index([result])
@@ -379,15 +381,15 @@ model Todo {
   description String?      
   priority    TaskPriority @default(NORMAL)
   isDone      Boolean      @default(false) @map("is_done")
-  dueDate     DateTime?    @map("due_date")
-  completedAt DateTime?    @map("completed_at")
+  dueDate     String?    @map("due_date")
+  completedAt String?    @map("completed_at")
   entityType  String?      @map("entity_type")
   entityId    String?      @map("entity_id")
 
   user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@index([userId])
   @@index([isDone])
@@ -407,8 +409,8 @@ model StepPlan {
   order            Order             @relation(fields: [orderNumber], references: [orderNumber], onDelete: Cascade)
   engineeringOrder EngineeringOrder? @relation(fields: [eoId], references: [engineeringOrderId], onDelete: Cascade)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
 
   @@index([orderNumber])
   @@index([eoId])
@@ -418,14 +420,13 @@ model StepPlan {
 // ============ 枚举 (Enums) ===========
 
 enum OrderStatus {
-  DRAFT
-  PENDING_REVIEW
-  IN_REVIEW
-  APPROVED
-  REJECTED
-  IN_PRODUCTION
-  COMPLETED
-  CANCELLED
+  草稿
+  待审核
+  通过
+  驳回
+  生产中
+  完成
+  取消
 }
 
 enum Priority {
@@ -445,10 +446,13 @@ enum UserRole {
 }
 
 enum ReviewResult {
-  PENDING
-  APPROVED
-  REJECTED
-  NEEDS_REVISION
+  草稿
+  待审核
+  通过
+  驳回
+  生产中
+  完成
+  取消
 }
 
 enum TaskPriority {

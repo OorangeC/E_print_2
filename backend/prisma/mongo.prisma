@@ -21,7 +21,7 @@ model AuditLog {
   oldValue          Json?    @map("old_value")
   newValue          Json?    @map("new_value")
   ipAddress         String?  @map("ip_address")
-  time              DateTime @default(now())
+  time              String
 
   @@index([orderNumber])
   @@index([userId])

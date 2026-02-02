@@ -150,14 +150,17 @@ function auditLogToDTO(log: any): IAuditLogDTO {
 }
 
 /**
- * 后端审核状态到前端枚举映射
+ * 数据库枚举与前端枚举完全一致，不需要转换！
+ * 
+ * 前端 WorkOrderStatus 枚举 = 数据库 ReviewResult 枚举：
+ * - DRAFT = '草稿'
+ * - PENDING_REVIEW = '待审核'
+ * - APPROVED = '通过'
+ * - REJECTED = '驳回'
+ * - IN_PRODUCTION = '生产中'
+ * - COMPLETED = '完成'
+ * - CANCELLED = '取消'
  */
-const statusMap: Record<string, string> = {
-    'PENDING': '待审核',
-    'APPROVED': '通过',
-    'REJECTED': '驳回',
-    'NEEDS_REVISION': '需修改',
-};
 
 /**
  * 核心转换函数：将 Prisma EngineeringOrder 模型转换为前端 IWorkOrderDTO
@@ -194,8 +197,8 @@ export function workOrderToDTO(workOrder: any, auditLogs?: any[]): IWorkOrderDTO
         // 中间物料详单 - materialLines -> intermedia
         intermedia: workOrder.materialLines?.map(materialLineToIMDTO) || [],
 
-        // 状态 - 转换为前端枚举值
-        workorderstatus: statusMap[workOrder.reviewStatus] || workOrder.reviewStatus || '待审核',
+        // 状态 - 数据库和前端枚举一致，直接使用
+        workorderstatus: workOrder.reviewStatus || '待审核',
 
         // 审批日志
         auditLogs: auditLogs?.map(auditLogToDTO) || [],

@@ -831,7 +831,7 @@ export namespace Prisma {
     actionDescription: string | null
     userId: string | null
     ipAddress: string | null
-    time: Date | null
+    time: string | null
   }
 
   export type AuditLogMaxAggregateOutputType = {
@@ -844,7 +844,7 @@ export namespace Prisma {
     actionDescription: string | null
     userId: string | null
     ipAddress: string | null
-    time: Date | null
+    time: string | null
   }
 
   export type AuditLogCountAggregateOutputType = {
@@ -990,7 +990,7 @@ export namespace Prisma {
     oldValue: JsonValue | null
     newValue: JsonValue | null
     ipAddress: string | null
-    time: Date
+    time: string
     _count: AuditLogCountAggregateOutputType | null
     _min: AuditLogMinAggregateOutputType | null
     _max: AuditLogMaxAggregateOutputType | null
@@ -1059,7 +1059,7 @@ export namespace Prisma {
       oldValue: Prisma.JsonValue | null
       newValue: Prisma.JsonValue | null
       ipAddress: string | null
-      time: Date
+      time: string
     }, ExtArgs["result"]["auditLog"]>
     composites: {}
   }
@@ -1463,7 +1463,7 @@ export namespace Prisma {
     readonly oldValue: FieldRef<"AuditLog", 'Json'>
     readonly newValue: FieldRef<"AuditLog", 'Json'>
     readonly ipAddress: FieldRef<"AuditLog", 'String'>
-    readonly time: FieldRef<"AuditLog", 'DateTime'>
+    readonly time: FieldRef<"AuditLog", 'String'>
   }
     
 
@@ -1877,20 +1877,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1922,7 +1908,7 @@ export namespace Prisma {
     oldValue?: JsonNullableFilter<"AuditLog">
     newValue?: JsonNullableFilter<"AuditLog">
     ipAddress?: StringNullableFilter<"AuditLog"> | string | null
-    time?: DateTimeFilter<"AuditLog"> | Date | string
+    time?: StringFilter<"AuditLog"> | string
   }
 
   export type AuditLogOrderByWithRelationInput = {
@@ -1955,7 +1941,7 @@ export namespace Prisma {
     oldValue?: JsonNullableFilter<"AuditLog">
     newValue?: JsonNullableFilter<"AuditLog">
     ipAddress?: StringNullableFilter<"AuditLog"> | string | null
-    time?: DateTimeFilter<"AuditLog"> | Date | string
+    time?: StringFilter<"AuditLog"> | string
   }, "id">
 
   export type AuditLogOrderByWithAggregationInput = {
@@ -1991,7 +1977,7 @@ export namespace Prisma {
     oldValue?: JsonNullableWithAggregatesFilter<"AuditLog">
     newValue?: JsonNullableWithAggregatesFilter<"AuditLog">
     ipAddress?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
-    time?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
+    time?: StringWithAggregatesFilter<"AuditLog"> | string
   }
 
   export type AuditLogCreateInput = {
@@ -2006,7 +1992,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | null
     newValue?: InputJsonValue | null
     ipAddress?: string | null
-    time?: Date | string
+    time: string
   }
 
   export type AuditLogUncheckedCreateInput = {
@@ -2021,7 +2007,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | null
     newValue?: InputJsonValue | null
     ipAddress?: string | null
-    time?: Date | string
+    time: string
   }
 
   export type AuditLogUpdateInput = {
@@ -2035,7 +2021,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | InputJsonValue | null
     newValue?: InputJsonValue | InputJsonValue | null
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    time?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditLogUncheckedUpdateInput = {
@@ -2049,7 +2035,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | InputJsonValue | null
     newValue?: InputJsonValue | InputJsonValue | null
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    time?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditLogCreateManyInput = {
@@ -2064,7 +2050,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | null
     newValue?: InputJsonValue | null
     ipAddress?: string | null
-    time?: Date | string
+    time: string
   }
 
   export type AuditLogUpdateManyMutationInput = {
@@ -2078,7 +2064,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | InputJsonValue | null
     newValue?: InputJsonValue | InputJsonValue | null
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    time?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditLogUncheckedUpdateManyInput = {
@@ -2092,7 +2078,7 @@ export namespace Prisma {
     oldValue?: InputJsonValue | InputJsonValue | null
     newValue?: InputJsonValue | InputJsonValue | null
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    time?: DateTimeFieldUpdateOperationsInput | Date | string
+    time?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2136,17 +2122,6 @@ export namespace Prisma {
     equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
     isSet?: boolean
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type AuditLogCountOrderByAggregateInput = {
@@ -2242,20 +2217,6 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2263,10 +2224,6 @@ export namespace Prisma {
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
     unset?: boolean
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2296,17 +2253,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
     isSet?: boolean
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2377,20 +2323,6 @@ export namespace Prisma {
     equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
     isSet?: boolean
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
 

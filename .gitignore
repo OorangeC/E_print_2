@@ -40,3 +40,7 @@ __screenshots__/
 
 # Windows reserved names
 nul
+
+# Prisma temporary files
+backend/src/generated/**/*.tmp*
+*.tmp*

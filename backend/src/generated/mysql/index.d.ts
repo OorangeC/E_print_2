@@ -69,14 +69,13 @@ export type StepPlan = $Result.DefaultSelection<Prisma.$StepPlanPayload>
  */
 export namespace $Enums {
   export const OrderStatus: {
-  DRAFT: 'DRAFT',
-  PENDING_REVIEW: 'PENDING_REVIEW',
-  IN_REVIEW: 'IN_REVIEW',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  IN_PRODUCTION: 'IN_PRODUCTION',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  草稿: '草稿',
+  待审核: '待审核',
+  通过: '通过',
+  驳回: '驳回',
+  生产中: '生产中',
+  完成: '完成',
+  取消: '取消'
 };
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
@@ -105,10 +104,13 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const ReviewResult: {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  NEEDS_REVISION: 'NEEDS_REVISION'
+  草稿: '草稿',
+  待审核: '待审核',
+  通过: '通过',
+  驳回: '驳回',
+  生产中: '生产中',
+  完成: '完成',
+  取消: '取消'
 };
 
 export type ReviewResult = (typeof ReviewResult)[keyof typeof ReviewResult]
@@ -1921,15 +1923,16 @@ export namespace Prisma {
     orderUnique: string | null
     sales: string | null
     audit: string | null
-    xiaZiliaodaiRiqiRequired: Date | null
-    xiaZiliaodaiRiqiPromise: Date | null
-    yinzhangRiqiRequired: Date | null
-    yinzhangRiqiPromise: Date | null
-    zhepaiRiqiRequired: Date | null
-    zhepaiRiqiPromise: Date | null
-    chuyangRiqiRequired: Date | null
-    chuyangRiqiPromise: Date | null
-    chuHuoRiqiPromise: Date | null
+    xiaZiliaodaiRiqiRequired: string | null
+    xiaZiliaodaiRiqiPromise: string | null
+    yinzhangRiqiRequired: string | null
+    yinzhangRiqiPromise: string | null
+    zhepaiRiqiRequired: string | null
+    zhepaiRiqiPromise: string | null
+    chuyangRiqiRequired: string | null
+    chuyangRiqiPromise: string | null
+    chuHuoRiqiRequired: string | null
+    chuHuoRiqiPromise: string | null
     customer: string | null
     productName: string | null
     customerPO: string | null
@@ -1976,20 +1979,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi: string | null
     shenHeRen: string | null
     daYinRen: string | null
-    yeWuRiqi: Date | null
-    shenHeRiqi: Date | null
-    daYinRiqi: Date | null
+    yeWuRiqi: string | null
+    shenHeRiqi: string | null
+    daYinRiqi: string | null
     versionNumber: number | null
     previousOrderNumber: string | null
     isLatestVersion: boolean | null
     versionTag: string | null
     status: $Enums.OrderStatus | null
-    submittedAt: Date | null
-    reviewedAt: Date | null
+    submittedAt: string | null
+    reviewedAt: string | null
     reviewedBy: string | null
     reviewComments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -2002,15 +2005,16 @@ export namespace Prisma {
     orderUnique: string | null
     sales: string | null
     audit: string | null
-    xiaZiliaodaiRiqiRequired: Date | null
-    xiaZiliaodaiRiqiPromise: Date | null
-    yinzhangRiqiRequired: Date | null
-    yinzhangRiqiPromise: Date | null
-    zhepaiRiqiRequired: Date | null
-    zhepaiRiqiPromise: Date | null
-    chuyangRiqiRequired: Date | null
-    chuyangRiqiPromise: Date | null
-    chuHuoRiqiPromise: Date | null
+    xiaZiliaodaiRiqiRequired: string | null
+    xiaZiliaodaiRiqiPromise: string | null
+    yinzhangRiqiRequired: string | null
+    yinzhangRiqiPromise: string | null
+    zhepaiRiqiRequired: string | null
+    zhepaiRiqiPromise: string | null
+    chuyangRiqiRequired: string | null
+    chuyangRiqiPromise: string | null
+    chuHuoRiqiRequired: string | null
+    chuHuoRiqiPromise: string | null
     customer: string | null
     productName: string | null
     customerPO: string | null
@@ -2057,20 +2061,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi: string | null
     shenHeRen: string | null
     daYinRen: string | null
-    yeWuRiqi: Date | null
-    shenHeRiqi: Date | null
-    daYinRiqi: Date | null
+    yeWuRiqi: string | null
+    shenHeRiqi: string | null
+    daYinRiqi: string | null
     versionNumber: number | null
     previousOrderNumber: string | null
     isLatestVersion: boolean | null
     versionTag: string | null
     status: $Enums.OrderStatus | null
-    submittedAt: Date | null
-    reviewedAt: Date | null
+    submittedAt: string | null
+    reviewedAt: string | null
     reviewedBy: string | null
     reviewComments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -2091,6 +2095,7 @@ export namespace Prisma {
     zhepaiRiqiPromise: number
     chuyangRiqiRequired: number
     chuyangRiqiPromise: number
+    chuHuoRiqiRequired: number
     chuHuoRiqiPromise: number
     customer: number
     productName: number
@@ -2206,6 +2211,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: true
     chuyangRiqiRequired?: true
     chuyangRiqiPromise?: true
+    chuHuoRiqiRequired?: true
     chuHuoRiqiPromise?: true
     customer?: true
     productName?: true
@@ -2287,6 +2293,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: true
     chuyangRiqiRequired?: true
     chuyangRiqiPromise?: true
+    chuHuoRiqiRequired?: true
     chuHuoRiqiPromise?: true
     customer?: true
     productName?: true
@@ -2368,6 +2375,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: true
     chuyangRiqiRequired?: true
     chuyangRiqiPromise?: true
+    chuHuoRiqiRequired?: true
     chuHuoRiqiPromise?: true
     customer?: true
     productName?: true
@@ -2528,15 +2536,16 @@ export namespace Prisma {
     orderUnique: string | null
     sales: string | null
     audit: string | null
-    xiaZiliaodaiRiqiRequired: Date | null
-    xiaZiliaodaiRiqiPromise: Date | null
-    yinzhangRiqiRequired: Date | null
-    yinzhangRiqiPromise: Date | null
-    zhepaiRiqiRequired: Date | null
-    zhepaiRiqiPromise: Date | null
-    chuyangRiqiRequired: Date | null
-    chuyangRiqiPromise: Date | null
-    chuHuoRiqiPromise: Date | null
+    xiaZiliaodaiRiqiRequired: string | null
+    xiaZiliaodaiRiqiPromise: string | null
+    yinzhangRiqiRequired: string | null
+    yinzhangRiqiPromise: string | null
+    zhepaiRiqiRequired: string | null
+    zhepaiRiqiPromise: string | null
+    chuyangRiqiRequired: string | null
+    chuyangRiqiPromise: string | null
+    chuHuoRiqiRequired: string | null
+    chuHuoRiqiPromise: string | null
     customer: string | null
     productName: string | null
     customerPO: string | null
@@ -2583,20 +2592,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi: string | null
     shenHeRen: string | null
     daYinRen: string | null
-    yeWuRiqi: Date | null
-    shenHeRiqi: Date | null
-    daYinRiqi: Date | null
+    yeWuRiqi: string | null
+    shenHeRiqi: string | null
+    daYinRiqi: string | null
     versionNumber: number
     previousOrderNumber: string | null
     isLatestVersion: boolean
     versionTag: string | null
     status: $Enums.OrderStatus
-    submittedAt: Date | null
-    reviewedAt: Date | null
+    submittedAt: string | null
+    reviewedAt: string | null
     reviewedBy: string | null
     reviewComments: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -2636,6 +2645,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: boolean
     chuyangRiqiRequired?: boolean
     chuyangRiqiPromise?: boolean
+    chuHuoRiqiRequired?: boolean
     chuHuoRiqiPromise?: boolean
     customer?: boolean
     productName?: boolean
@@ -2726,6 +2736,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: boolean
     chuyangRiqiRequired?: boolean
     chuyangRiqiPromise?: boolean
+    chuHuoRiqiRequired?: boolean
     chuHuoRiqiPromise?: boolean
     customer?: boolean
     productName?: boolean
@@ -2789,7 +2800,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderNumber" | "waixiaoFlag" | "cpsiaYaoqiu" | "cpcQueRen" | "dingZhiBeiZhu" | "orderVer" | "orderUnique" | "sales" | "audit" | "xiaZiliaodaiRiqiRequired" | "xiaZiliaodaiRiqiPromise" | "yinzhangRiqiRequired" | "yinzhangRiqiPromise" | "zhepaiRiqiRequired" | "zhepaiRiqiPromise" | "chuyangRiqiRequired" | "chuyangRiqiPromise" | "chuHuoRiqiPromise" | "customer" | "productName" | "customerPO" | "baoJiaDanHao" | "jiuBianMa" | "isbn" | "xiLieDanMing" | "qiTaShiBie" | "chanPinDaLei" | "ziLeiXing" | "zhuangDingFangShi" | "yongTu" | "fscType" | "fenBanShuoMing" | "genSeZhiShi" | "keLaiXinXi" | "baoLiuQianSe" | "dingDanShuLiang" | "chuYangShuLiang" | "chuYangShuoMing" | "chaoBiLiShuLiang" | "teShuLiuYangZhang" | "beiPinShuLiang" | "teShuLiuShuYang" | "zongShuLiang" | "chuHuoShuLiang" | "guigeGaoMm" | "guigeKuanMm" | "guigeHouMm" | "fuLiaoShuoMing" | "chanPinMingXiTeBieShuoMing" | "fenBanShuoMing2" | "wuLiaoShuoMing" | "yinShuaGenSeYaoQiu" | "zhuangDingShouGongYaoQiu" | "qiTa" | "zhiLiangYaoQiu" | "keHuFanKui" | "teShuYaoQiu" | "kongZhiFangFa" | "dingDanTeBieShuoMing" | "yangPinPingShenXinXi" | "dingDanPingShenXinXi" | "yeWuDaiBiaoFenJi" | "shenHeRen" | "daYinRen" | "yeWuRiqi" | "shenHeRiqi" | "daYinRiqi" | "versionNumber" | "previousOrderNumber" | "isLatestVersion" | "versionTag" | "status" | "submittedAt" | "reviewedAt" | "reviewedBy" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderNumber" | "waixiaoFlag" | "cpsiaYaoqiu" | "cpcQueRen" | "dingZhiBeiZhu" | "orderVer" | "orderUnique" | "sales" | "audit" | "xiaZiliaodaiRiqiRequired" | "xiaZiliaodaiRiqiPromise" | "yinzhangRiqiRequired" | "yinzhangRiqiPromise" | "zhepaiRiqiRequired" | "zhepaiRiqiPromise" | "chuyangRiqiRequired" | "chuyangRiqiPromise" | "chuHuoRiqiRequired" | "chuHuoRiqiPromise" | "customer" | "productName" | "customerPO" | "baoJiaDanHao" | "jiuBianMa" | "isbn" | "xiLieDanMing" | "qiTaShiBie" | "chanPinDaLei" | "ziLeiXing" | "zhuangDingFangShi" | "yongTu" | "fscType" | "fenBanShuoMing" | "genSeZhiShi" | "keLaiXinXi" | "baoLiuQianSe" | "dingDanShuLiang" | "chuYangShuLiang" | "chuYangShuoMing" | "chaoBiLiShuLiang" | "teShuLiuYangZhang" | "beiPinShuLiang" | "teShuLiuShuYang" | "zongShuLiang" | "chuHuoShuLiang" | "guigeGaoMm" | "guigeKuanMm" | "guigeHouMm" | "fuLiaoShuoMing" | "chanPinMingXiTeBieShuoMing" | "fenBanShuoMing2" | "wuLiaoShuoMing" | "yinShuaGenSeYaoQiu" | "zhuangDingShouGongYaoQiu" | "qiTa" | "zhiLiangYaoQiu" | "keHuFanKui" | "teShuYaoQiu" | "kongZhiFangFa" | "dingDanTeBieShuoMing" | "yangPinPingShenXinXi" | "dingDanPingShenXinXi" | "yeWuDaiBiaoFenJi" | "shenHeRen" | "daYinRen" | "yeWuRiqi" | "shenHeRiqi" | "daYinRiqi" | "versionNumber" | "previousOrderNumber" | "isLatestVersion" | "versionTag" | "status" | "submittedAt" | "reviewedAt" | "reviewedBy" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
     previousOrder?: boolean | Order$previousOrderArgs<ExtArgs>
@@ -2820,15 +2831,16 @@ export namespace Prisma {
       orderUnique: string | null
       sales: string | null
       audit: string | null
-      xiaZiliaodaiRiqiRequired: Date | null
-      xiaZiliaodaiRiqiPromise: Date | null
-      yinzhangRiqiRequired: Date | null
-      yinzhangRiqiPromise: Date | null
-      zhepaiRiqiRequired: Date | null
-      zhepaiRiqiPromise: Date | null
-      chuyangRiqiRequired: Date | null
-      chuyangRiqiPromise: Date | null
-      chuHuoRiqiPromise: Date | null
+      xiaZiliaodaiRiqiRequired: string | null
+      xiaZiliaodaiRiqiPromise: string | null
+      yinzhangRiqiRequired: string | null
+      yinzhangRiqiPromise: string | null
+      zhepaiRiqiRequired: string | null
+      zhepaiRiqiPromise: string | null
+      chuyangRiqiRequired: string | null
+      chuyangRiqiPromise: string | null
+      chuHuoRiqiRequired: string | null
+      chuHuoRiqiPromise: string | null
       customer: string | null
       productName: string | null
       customerPO: string | null
@@ -2875,20 +2887,20 @@ export namespace Prisma {
       yeWuDaiBiaoFenJi: string | null
       shenHeRen: string | null
       daYinRen: string | null
-      yeWuRiqi: Date | null
-      shenHeRiqi: Date | null
-      daYinRiqi: Date | null
+      yeWuRiqi: string | null
+      shenHeRiqi: string | null
+      daYinRiqi: string | null
       versionNumber: number
       previousOrderNumber: string | null
       isLatestVersion: boolean
       versionTag: string | null
       status: $Enums.OrderStatus
-      submittedAt: Date | null
-      reviewedAt: Date | null
+      submittedAt: string | null
+      reviewedAt: string | null
       reviewedBy: string | null
       reviewComments: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -3273,15 +3285,16 @@ export namespace Prisma {
     readonly orderUnique: FieldRef<"Order", 'String'>
     readonly sales: FieldRef<"Order", 'String'>
     readonly audit: FieldRef<"Order", 'String'>
-    readonly xiaZiliaodaiRiqiRequired: FieldRef<"Order", 'DateTime'>
-    readonly xiaZiliaodaiRiqiPromise: FieldRef<"Order", 'DateTime'>
-    readonly yinzhangRiqiRequired: FieldRef<"Order", 'DateTime'>
-    readonly yinzhangRiqiPromise: FieldRef<"Order", 'DateTime'>
-    readonly zhepaiRiqiRequired: FieldRef<"Order", 'DateTime'>
-    readonly zhepaiRiqiPromise: FieldRef<"Order", 'DateTime'>
-    readonly chuyangRiqiRequired: FieldRef<"Order", 'DateTime'>
-    readonly chuyangRiqiPromise: FieldRef<"Order", 'DateTime'>
-    readonly chuHuoRiqiPromise: FieldRef<"Order", 'DateTime'>
+    readonly xiaZiliaodaiRiqiRequired: FieldRef<"Order", 'String'>
+    readonly xiaZiliaodaiRiqiPromise: FieldRef<"Order", 'String'>
+    readonly yinzhangRiqiRequired: FieldRef<"Order", 'String'>
+    readonly yinzhangRiqiPromise: FieldRef<"Order", 'String'>
+    readonly zhepaiRiqiRequired: FieldRef<"Order", 'String'>
+    readonly zhepaiRiqiPromise: FieldRef<"Order", 'String'>
+    readonly chuyangRiqiRequired: FieldRef<"Order", 'String'>
+    readonly chuyangRiqiPromise: FieldRef<"Order", 'String'>
+    readonly chuHuoRiqiRequired: FieldRef<"Order", 'String'>
+    readonly chuHuoRiqiPromise: FieldRef<"Order", 'String'>
     readonly customer: FieldRef<"Order", 'String'>
     readonly productName: FieldRef<"Order", 'String'>
     readonly customerPO: FieldRef<"Order", 'String'>
@@ -3328,20 +3341,20 @@ export namespace Prisma {
     readonly yeWuDaiBiaoFenJi: FieldRef<"Order", 'String'>
     readonly shenHeRen: FieldRef<"Order", 'String'>
     readonly daYinRen: FieldRef<"Order", 'String'>
-    readonly yeWuRiqi: FieldRef<"Order", 'DateTime'>
-    readonly shenHeRiqi: FieldRef<"Order", 'DateTime'>
-    readonly daYinRiqi: FieldRef<"Order", 'DateTime'>
+    readonly yeWuRiqi: FieldRef<"Order", 'String'>
+    readonly shenHeRiqi: FieldRef<"Order", 'String'>
+    readonly daYinRiqi: FieldRef<"Order", 'String'>
     readonly versionNumber: FieldRef<"Order", 'Int'>
     readonly previousOrderNumber: FieldRef<"Order", 'String'>
     readonly isLatestVersion: FieldRef<"Order", 'Boolean'>
     readonly versionTag: FieldRef<"Order", 'String'>
     readonly status: FieldRef<"Order", 'OrderStatus'>
-    readonly submittedAt: FieldRef<"Order", 'DateTime'>
-    readonly reviewedAt: FieldRef<"Order", 'DateTime'>
+    readonly submittedAt: FieldRef<"Order", 'String'>
+    readonly reviewedAt: FieldRef<"Order", 'String'>
     readonly reviewedBy: FieldRef<"Order", 'String'>
     readonly reviewComments: FieldRef<"Order", 'String'>
-    readonly createdAt: FieldRef<"Order", 'DateTime'>
-    readonly updatedAt: FieldRef<"Order", 'DateTime'>
+    readonly createdAt: FieldRef<"Order", 'String'>
+    readonly updatedAt: FieldRef<"Order", 'String'>
   }
     
 
@@ -3880,8 +3893,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type MaterialMaxAggregateOutputType = {
@@ -3900,8 +3913,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type MaterialCountAggregateOutputType = {
@@ -4099,8 +4112,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: MaterialCountAggregateOutputType | null
     _avg: MaterialAvgAggregateOutputType | null
     _sum: MaterialSumAggregateOutputType | null
@@ -4196,8 +4209,8 @@ export namespace Prisma {
       biaoMianChuLi: string | null
       zhuangDingGongYi: string | null
       beiZhu: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["material"]>
     composites: {}
   }
@@ -4584,8 +4597,8 @@ export namespace Prisma {
     readonly biaoMianChuLi: FieldRef<"Material", 'String'>
     readonly zhuangDingGongYi: FieldRef<"Material", 'String'>
     readonly beiZhu: FieldRef<"Material", 'String'>
-    readonly createdAt: FieldRef<"Material", 'DateTime'>
-    readonly updatedAt: FieldRef<"Material", 'DateTime'>
+    readonly createdAt: FieldRef<"Material", 'String'>
+    readonly updatedAt: FieldRef<"Material", 'String'>
   }
     
 
@@ -4804,7 +4817,7 @@ export namespace Prisma {
     /**
      * The data needed to create a Material.
      */
-    data: XOR<MaterialCreateInput, MaterialUncheckedCreateInput>
+    data?: XOR<MaterialCreateInput, MaterialUncheckedCreateInput>
   }
 
   /**
@@ -5035,8 +5048,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type OrderItemMaxAggregateOutputType = {
@@ -5057,8 +5070,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type OrderItemCountAggregateOutputType = {
@@ -5266,8 +5279,8 @@ export namespace Prisma {
     biaoMianChuLi: string | null
     zhuangDingGongYi: string | null
     beiZhu: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: OrderItemCountAggregateOutputType | null
     _avg: OrderItemAvgAggregateOutputType | null
     _sum: OrderItemSumAggregateOutputType | null
@@ -5367,8 +5380,8 @@ export namespace Prisma {
       biaoMianChuLi: string | null
       zhuangDingGongYi: string | null
       beiZhu: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["orderItem"]>
     composites: {}
   }
@@ -5757,8 +5770,8 @@ export namespace Prisma {
     readonly biaoMianChuLi: FieldRef<"OrderItem", 'String'>
     readonly zhuangDingGongYi: FieldRef<"OrderItem", 'String'>
     readonly beiZhu: FieldRef<"OrderItem", 'String'>
-    readonly createdAt: FieldRef<"OrderItem", 'DateTime'>
-    readonly updatedAt: FieldRef<"OrderItem", 'DateTime'>
+    readonly createdAt: FieldRef<"OrderItem", 'String'>
+    readonly updatedAt: FieldRef<"OrderItem", 'String'>
   }
     
 
@@ -6183,7 +6196,7 @@ export namespace Prisma {
     gongDanLeiXing: string | null
     caiLiao: string | null
     chanPinLeiXing: string | null
-    zhiDanShiJian: Date | null
+    zhiDanShiJian: string | null
     dingDanXuHao: number | null
     keHu: string | null
     po: string | null
@@ -6193,8 +6206,8 @@ export namespace Prisma {
     chuYangShu: number | null
     chaoBiLi: number | null
     benChangFangSun: number | null
-    chuYangRiqi: Date | null
-    chuHuoRiqi: Date | null
+    chuYangRiqi: string | null
+    chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
     zhiDan: string | null
     shenHe: string | null
@@ -6202,17 +6215,17 @@ export namespace Prisma {
     appendix: string | null
     renLiRequirement: number | null
     yuJiGongQi: string | null
-    kaiShiShiJian: Date | null
-    jieShuShiJian: Date | null
+    kaiShiShiJian: string | null
+    jieShuShiJian: string | null
     shiFouWanGong: boolean | null
     wanChengJinDu: number | null
     reviewStatus: $Enums.ReviewResult | null
-    submitted_at: Date | null
+    submitted_at: string | null
     reviewedBy: string | null
-    reviewedAt: Date | null
+    reviewedAt: string | null
     reviewComments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type EngineeringOrderMaxAggregateOutputType = {
@@ -6227,7 +6240,7 @@ export namespace Prisma {
     gongDanLeiXing: string | null
     caiLiao: string | null
     chanPinLeiXing: string | null
-    zhiDanShiJian: Date | null
+    zhiDanShiJian: string | null
     dingDanXuHao: number | null
     keHu: string | null
     po: string | null
@@ -6237,8 +6250,8 @@ export namespace Prisma {
     chuYangShu: number | null
     chaoBiLi: number | null
     benChangFangSun: number | null
-    chuYangRiqi: Date | null
-    chuHuoRiqi: Date | null
+    chuYangRiqi: string | null
+    chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
     zhiDan: string | null
     shenHe: string | null
@@ -6246,17 +6259,17 @@ export namespace Prisma {
     appendix: string | null
     renLiRequirement: number | null
     yuJiGongQi: string | null
-    kaiShiShiJian: Date | null
-    jieShuShiJian: Date | null
+    kaiShiShiJian: string | null
+    jieShuShiJian: string | null
     shiFouWanGong: boolean | null
     wanChengJinDu: number | null
     reviewStatus: $Enums.ReviewResult | null
-    submitted_at: Date | null
+    submitted_at: string | null
     reviewedBy: string | null
-    reviewedAt: Date | null
+    reviewedAt: string | null
     reviewComments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type EngineeringOrderCountAggregateOutputType = {
@@ -6556,7 +6569,7 @@ export namespace Prisma {
     gongDanLeiXing: string | null
     caiLiao: string | null
     chanPinLeiXing: string | null
-    zhiDanShiJian: Date | null
+    zhiDanShiJian: string | null
     dingDanXuHao: number | null
     keHu: string | null
     po: string | null
@@ -6566,8 +6579,8 @@ export namespace Prisma {
     chuYangShu: number | null
     chaoBiLi: number | null
     benChangFangSun: number | null
-    chuYangRiqi: Date | null
-    chuHuoRiqi: Date | null
+    chuYangRiqi: string | null
+    chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
     zhiDan: string | null
     shenHe: string | null
@@ -6575,17 +6588,17 @@ export namespace Prisma {
     appendix: string | null
     renLiRequirement: number | null
     yuJiGongQi: string | null
-    kaiShiShiJian: Date | null
-    jieShuShiJian: Date | null
+    kaiShiShiJian: string | null
+    jieShuShiJian: string | null
     shiFouWanGong: boolean
     wanChengJinDu: number | null
     reviewStatus: $Enums.ReviewResult
-    submitted_at: Date | null
+    submitted_at: string | null
     reviewedBy: string | null
-    reviewedAt: Date | null
+    reviewedAt: string | null
     reviewComments: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: EngineeringOrderCountAggregateOutputType | null
     _avg: EngineeringOrderAvgAggregateOutputType | null
     _sum: EngineeringOrderSumAggregateOutputType | null
@@ -6728,7 +6741,7 @@ export namespace Prisma {
       gongDanLeiXing: string | null
       caiLiao: string | null
       chanPinLeiXing: string | null
-      zhiDanShiJian: Date | null
+      zhiDanShiJian: string | null
       dingDanXuHao: number | null
       keHu: string | null
       po: string | null
@@ -6738,8 +6751,8 @@ export namespace Prisma {
       chuYangShu: number | null
       chaoBiLi: number | null
       benChangFangSun: number | null
-      chuYangRiqi: Date | null
-      chuHuoRiqi: Date | null
+      chuYangRiqi: string | null
+      chuHuoRiqi: string | null
       chanPinYaoQiu: string | null
       zhiDan: string | null
       shenHe: string | null
@@ -6747,17 +6760,17 @@ export namespace Prisma {
       appendix: string | null
       renLiRequirement: number | null
       yuJiGongQi: string | null
-      kaiShiShiJian: Date | null
-      jieShuShiJian: Date | null
+      kaiShiShiJian: string | null
+      jieShuShiJian: string | null
       shiFouWanGong: boolean
       wanChengJinDu: number | null
       reviewStatus: $Enums.ReviewResult
-      submitted_at: Date | null
+      submitted_at: string | null
       reviewedBy: string | null
-      reviewedAt: Date | null
+      reviewedAt: string | null
       reviewComments: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["engineeringOrder"]>
     composites: {}
   }
@@ -7141,7 +7154,7 @@ export namespace Prisma {
     readonly gongDanLeiXing: FieldRef<"EngineeringOrder", 'String'>
     readonly caiLiao: FieldRef<"EngineeringOrder", 'String'>
     readonly chanPinLeiXing: FieldRef<"EngineeringOrder", 'String'>
-    readonly zhiDanShiJian: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly zhiDanShiJian: FieldRef<"EngineeringOrder", 'String'>
     readonly dingDanXuHao: FieldRef<"EngineeringOrder", 'Int'>
     readonly keHu: FieldRef<"EngineeringOrder", 'String'>
     readonly po: FieldRef<"EngineeringOrder", 'String'>
@@ -7151,8 +7164,8 @@ export namespace Prisma {
     readonly chuYangShu: FieldRef<"EngineeringOrder", 'Int'>
     readonly chaoBiLi: FieldRef<"EngineeringOrder", 'Int'>
     readonly benChangFangSun: FieldRef<"EngineeringOrder", 'Int'>
-    readonly chuYangRiqi: FieldRef<"EngineeringOrder", 'DateTime'>
-    readonly chuHuoRiqi: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly chuYangRiqi: FieldRef<"EngineeringOrder", 'String'>
+    readonly chuHuoRiqi: FieldRef<"EngineeringOrder", 'String'>
     readonly chanPinYaoQiu: FieldRef<"EngineeringOrder", 'String'>
     readonly zhiDan: FieldRef<"EngineeringOrder", 'String'>
     readonly shenHe: FieldRef<"EngineeringOrder", 'String'>
@@ -7160,17 +7173,17 @@ export namespace Prisma {
     readonly appendix: FieldRef<"EngineeringOrder", 'String'>
     readonly renLiRequirement: FieldRef<"EngineeringOrder", 'Int'>
     readonly yuJiGongQi: FieldRef<"EngineeringOrder", 'String'>
-    readonly kaiShiShiJian: FieldRef<"EngineeringOrder", 'DateTime'>
-    readonly jieShuShiJian: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly kaiShiShiJian: FieldRef<"EngineeringOrder", 'String'>
+    readonly jieShuShiJian: FieldRef<"EngineeringOrder", 'String'>
     readonly shiFouWanGong: FieldRef<"EngineeringOrder", 'Boolean'>
     readonly wanChengJinDu: FieldRef<"EngineeringOrder", 'Float'>
     readonly reviewStatus: FieldRef<"EngineeringOrder", 'ReviewResult'>
-    readonly submitted_at: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly submitted_at: FieldRef<"EngineeringOrder", 'String'>
     readonly reviewedBy: FieldRef<"EngineeringOrder", 'String'>
-    readonly reviewedAt: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly reviewedAt: FieldRef<"EngineeringOrder", 'String'>
     readonly reviewComments: FieldRef<"EngineeringOrder", 'String'>
-    readonly createdAt: FieldRef<"EngineeringOrder", 'DateTime'>
-    readonly updatedAt: FieldRef<"EngineeringOrder", 'DateTime'>
+    readonly createdAt: FieldRef<"EngineeringOrder", 'String'>
+    readonly updatedAt: FieldRef<"EngineeringOrder", 'String'>
   }
     
 
@@ -7389,7 +7402,7 @@ export namespace Prisma {
     /**
      * The data needed to create a EngineeringOrder.
      */
-    data: XOR<EngineeringOrderCreateInput, EngineeringOrderUncheckedCreateInput>
+    data?: XOR<EngineeringOrderCreateInput, EngineeringOrderUncheckedCreateInput>
   }
 
   /**
@@ -7657,12 +7670,12 @@ export namespace Prisma {
     yinShuaBanShu: number | null
     shengChanLuJing: string | null
     paiBanFangShi: string | null
-    kaiShiShiJian: Date | null
+    kaiShiShiJian: string | null
     shiFouDaoLiao: boolean | null
-    jieShuShiJian: Date | null
+    jieShuShiJian: string | null
     dangQianJinDu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type EngineeringOrderMaterialLineMaxAggregateOutputType = {
@@ -7686,12 +7699,12 @@ export namespace Prisma {
     yinShuaBanShu: number | null
     shengChanLuJing: string | null
     paiBanFangShi: string | null
-    kaiShiShiJian: Date | null
+    kaiShiShiJian: string | null
     shiFouDaoLiao: boolean | null
-    jieShuShiJian: Date | null
+    jieShuShiJian: string | null
     dangQianJinDu: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type EngineeringOrderMaterialLineCountAggregateOutputType = {
@@ -7940,12 +7953,12 @@ export namespace Prisma {
     yinShuaBanShu: number | null
     shengChanLuJing: string | null
     paiBanFangShi: string | null
-    kaiShiShiJian: Date | null
+    kaiShiShiJian: string | null
     shiFouDaoLiao: boolean
-    jieShuShiJian: Date | null
+    jieShuShiJian: string | null
     dangQianJinDu: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: EngineeringOrderMaterialLineCountAggregateOutputType | null
     _avg: EngineeringOrderMaterialLineAvgAggregateOutputType | null
     _sum: EngineeringOrderMaterialLineSumAggregateOutputType | null
@@ -8062,12 +8075,12 @@ export namespace Prisma {
       yinShuaBanShu: number | null
       shengChanLuJing: string | null
       paiBanFangShi: string | null
-      kaiShiShiJian: Date | null
+      kaiShiShiJian: string | null
       shiFouDaoLiao: boolean
-      jieShuShiJian: Date | null
+      jieShuShiJian: string | null
       dangQianJinDu: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["engineeringOrderMaterialLine"]>
     composites: {}
   }
@@ -8459,12 +8472,12 @@ export namespace Prisma {
     readonly yinShuaBanShu: FieldRef<"EngineeringOrderMaterialLine", 'Int'>
     readonly shengChanLuJing: FieldRef<"EngineeringOrderMaterialLine", 'String'>
     readonly paiBanFangShi: FieldRef<"EngineeringOrderMaterialLine", 'String'>
-    readonly kaiShiShiJian: FieldRef<"EngineeringOrderMaterialLine", 'DateTime'>
+    readonly kaiShiShiJian: FieldRef<"EngineeringOrderMaterialLine", 'String'>
     readonly shiFouDaoLiao: FieldRef<"EngineeringOrderMaterialLine", 'Boolean'>
-    readonly jieShuShiJian: FieldRef<"EngineeringOrderMaterialLine", 'DateTime'>
+    readonly jieShuShiJian: FieldRef<"EngineeringOrderMaterialLine", 'String'>
     readonly dangQianJinDu: FieldRef<"EngineeringOrderMaterialLine", 'String'>
-    readonly createdAt: FieldRef<"EngineeringOrderMaterialLine", 'DateTime'>
-    readonly updatedAt: FieldRef<"EngineeringOrderMaterialLine", 'DateTime'>
+    readonly createdAt: FieldRef<"EngineeringOrderMaterialLine", 'String'>
+    readonly updatedAt: FieldRef<"EngineeringOrderMaterialLine", 'String'>
   }
     
 
@@ -8863,8 +8876,8 @@ export namespace Prisma {
     fullName: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -8875,8 +8888,8 @@ export namespace Prisma {
     fullName: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -9010,8 +9023,8 @@ export namespace Prisma {
     fullName: string | null
     role: $Enums.UserRole
     isActive: boolean
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -9078,8 +9091,8 @@ export namespace Prisma {
       fullName: string | null
       role: $Enums.UserRole
       isActive: boolean
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -9457,8 +9470,8 @@ export namespace Prisma {
     readonly fullName: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isActive: FieldRef<"User", 'Boolean'>
-    readonly createdAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly createdAt: FieldRef<"User", 'String'>
+    readonly updatedAt: FieldRef<"User", 'String'>
   }
     
 
@@ -9872,7 +9885,7 @@ export namespace Prisma {
     fileName: string | null
     fileUrl: string | null
     fileSize: number | null
-    uploadedAt: Date | null
+    uploadedAt: string | null
   }
 
   export type DocumentMaxAggregateOutputType = {
@@ -9883,7 +9896,7 @@ export namespace Prisma {
     fileName: string | null
     fileUrl: string | null
     fileSize: number | null
-    uploadedAt: Date | null
+    uploadedAt: string | null
   }
 
   export type DocumentCountAggregateOutputType = {
@@ -10035,7 +10048,7 @@ export namespace Prisma {
     fileName: string
     fileUrl: string | null
     fileSize: number | null
-    uploadedAt: Date
+    uploadedAt: string | null
     _count: DocumentCountAggregateOutputType | null
     _avg: DocumentAvgAggregateOutputType | null
     _sum: DocumentSumAggregateOutputType | null
@@ -10103,7 +10116,7 @@ export namespace Prisma {
       fileName: string
       fileUrl: string | null
       fileSize: number | null
-      uploadedAt: Date
+      uploadedAt: string | null
     }, ExtArgs["result"]["document"]>
     composites: {}
   }
@@ -10482,7 +10495,7 @@ export namespace Prisma {
     readonly fileName: FieldRef<"Document", 'String'>
     readonly fileUrl: FieldRef<"Document", 'String'>
     readonly fileSize: FieldRef<"Document", 'Int'>
-    readonly uploadedAt: FieldRef<"Document", 'DateTime'>
+    readonly uploadedAt: FieldRef<"Document", 'String'>
   }
     
 
@@ -10899,11 +10912,11 @@ export namespace Prisma {
     description: string | null
     assignedTo: string | null
     result: $Enums.ReviewResult | null
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     comments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type ReviewTaskMaxAggregateOutputType = {
@@ -10913,11 +10926,11 @@ export namespace Prisma {
     description: string | null
     assignedTo: string | null
     result: $Enums.ReviewResult | null
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     comments: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type ReviewTaskCountAggregateOutputType = {
@@ -11058,11 +11071,11 @@ export namespace Prisma {
     description: string | null
     assignedTo: string | null
     result: $Enums.ReviewResult
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     comments: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: ReviewTaskCountAggregateOutputType | null
     _min: ReviewTaskMinAggregateOutputType | null
     _max: ReviewTaskMaxAggregateOutputType | null
@@ -11130,11 +11143,11 @@ export namespace Prisma {
       description: string | null
       assignedTo: string | null
       result: $Enums.ReviewResult
-      dueDate: Date | null
-      completedAt: Date | null
+      dueDate: string | null
+      completedAt: string | null
       comments: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["reviewTask"]>
     composites: {}
   }
@@ -11511,11 +11524,11 @@ export namespace Prisma {
     readonly description: FieldRef<"ReviewTask", 'String'>
     readonly assignedTo: FieldRef<"ReviewTask", 'String'>
     readonly result: FieldRef<"ReviewTask", 'ReviewResult'>
-    readonly dueDate: FieldRef<"ReviewTask", 'DateTime'>
-    readonly completedAt: FieldRef<"ReviewTask", 'DateTime'>
+    readonly dueDate: FieldRef<"ReviewTask", 'String'>
+    readonly completedAt: FieldRef<"ReviewTask", 'String'>
     readonly comments: FieldRef<"ReviewTask", 'String'>
-    readonly createdAt: FieldRef<"ReviewTask", 'DateTime'>
-    readonly updatedAt: FieldRef<"ReviewTask", 'DateTime'>
+    readonly createdAt: FieldRef<"ReviewTask", 'String'>
+    readonly updatedAt: FieldRef<"ReviewTask", 'String'>
   }
     
 
@@ -11894,12 +11907,12 @@ export namespace Prisma {
     description: string | null
     priority: $Enums.TaskPriority | null
     isDone: boolean | null
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     entityType: string | null
     entityId: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type TodoMaxAggregateOutputType = {
@@ -11909,12 +11922,12 @@ export namespace Prisma {
     description: string | null
     priority: $Enums.TaskPriority | null
     isDone: boolean | null
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     entityType: string | null
     entityId: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type TodoCountAggregateOutputType = {
@@ -12059,12 +12072,12 @@ export namespace Prisma {
     description: string | null
     priority: $Enums.TaskPriority
     isDone: boolean
-    dueDate: Date | null
-    completedAt: Date | null
+    dueDate: string | null
+    completedAt: string | null
     entityType: string | null
     entityId: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: TodoCountAggregateOutputType | null
     _min: TodoMinAggregateOutputType | null
     _max: TodoMaxAggregateOutputType | null
@@ -12134,12 +12147,12 @@ export namespace Prisma {
       description: string | null
       priority: $Enums.TaskPriority
       isDone: boolean
-      dueDate: Date | null
-      completedAt: Date | null
+      dueDate: string | null
+      completedAt: string | null
       entityType: string | null
       entityId: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["todo"]>
     composites: {}
   }
@@ -12516,12 +12529,12 @@ export namespace Prisma {
     readonly description: FieldRef<"Todo", 'String'>
     readonly priority: FieldRef<"Todo", 'TaskPriority'>
     readonly isDone: FieldRef<"Todo", 'Boolean'>
-    readonly dueDate: FieldRef<"Todo", 'DateTime'>
-    readonly completedAt: FieldRef<"Todo", 'DateTime'>
+    readonly dueDate: FieldRef<"Todo", 'String'>
+    readonly completedAt: FieldRef<"Todo", 'String'>
     readonly entityType: FieldRef<"Todo", 'String'>
     readonly entityId: FieldRef<"Todo", 'String'>
-    readonly createdAt: FieldRef<"Todo", 'DateTime'>
-    readonly updatedAt: FieldRef<"Todo", 'DateTime'>
+    readonly createdAt: FieldRef<"Todo", 'String'>
+    readonly updatedAt: FieldRef<"Todo", 'String'>
   }
     
 
@@ -12910,8 +12923,8 @@ export namespace Prisma {
     sequence: number | null
     stepName: string | null
     description: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type StepPlanMaxAggregateOutputType = {
@@ -12921,8 +12934,8 @@ export namespace Prisma {
     sequence: number | null
     stepName: string | null
     description: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: string | null
+    updatedAt: string | null
   }
 
   export type StepPlanCountAggregateOutputType = {
@@ -13073,8 +13086,8 @@ export namespace Prisma {
     sequence: number
     stepName: string | null
     description: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string | null
+    updatedAt: string | null
     _count: StepPlanCountAggregateOutputType | null
     _avg: StepPlanAvgAggregateOutputType | null
     _sum: StepPlanSumAggregateOutputType | null
@@ -13141,8 +13154,8 @@ export namespace Prisma {
       sequence: number
       stepName: string | null
       description: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: string | null
+      updatedAt: string | null
     }, ExtArgs["result"]["stepPlan"]>
     composites: {}
   }
@@ -13520,8 +13533,8 @@ export namespace Prisma {
     readonly sequence: FieldRef<"StepPlan", 'Int'>
     readonly stepName: FieldRef<"StepPlan", 'String'>
     readonly description: FieldRef<"StepPlan", 'String'>
-    readonly createdAt: FieldRef<"StepPlan", 'DateTime'>
-    readonly updatedAt: FieldRef<"StepPlan", 'DateTime'>
+    readonly createdAt: FieldRef<"StepPlan", 'String'>
+    readonly updatedAt: FieldRef<"StepPlan", 'String'>
   }
     
 
@@ -13934,6 +13947,7 @@ export namespace Prisma {
     zhepaiRiqiPromise: 'zhepaiRiqiPromise',
     chuyangRiqiRequired: 'chuyangRiqiRequired',
     chuyangRiqiPromise: 'chuyangRiqiPromise',
+    chuHuoRiqiRequired: 'chuHuoRiqiRequired',
     chuHuoRiqiPromise: 'chuHuoRiqiPromise',
     customer: 'customer',
     productName: 'productName',
@@ -14229,6 +14243,16 @@ export namespace Prisma {
     orderUnique: 'orderUnique',
     sales: 'sales',
     audit: 'audit',
+    xiaZiliaodaiRiqiRequired: 'xiaZiliaodaiRiqiRequired',
+    xiaZiliaodaiRiqiPromise: 'xiaZiliaodaiRiqiPromise',
+    yinzhangRiqiRequired: 'yinzhangRiqiRequired',
+    yinzhangRiqiPromise: 'yinzhangRiqiPromise',
+    zhepaiRiqiRequired: 'zhepaiRiqiRequired',
+    zhepaiRiqiPromise: 'zhepaiRiqiPromise',
+    chuyangRiqiRequired: 'chuyangRiqiRequired',
+    chuyangRiqiPromise: 'chuyangRiqiPromise',
+    chuHuoRiqiRequired: 'chuHuoRiqiRequired',
+    chuHuoRiqiPromise: 'chuHuoRiqiPromise',
     customer: 'customer',
     productName: 'productName',
     customerPO: 'customerPO',
@@ -14263,10 +14287,17 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi: 'yeWuDaiBiaoFenJi',
     shenHeRen: 'shenHeRen',
     daYinRen: 'daYinRen',
+    yeWuRiqi: 'yeWuRiqi',
+    shenHeRiqi: 'shenHeRiqi',
+    daYinRiqi: 'daYinRiqi',
     previousOrderNumber: 'previousOrderNumber',
     versionTag: 'versionTag',
+    submittedAt: 'submittedAt',
+    reviewedAt: 'reviewedAt',
     reviewedBy: 'reviewedBy',
-    reviewComments: 'reviewComments'
+    reviewComments: 'reviewComments',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
@@ -14285,7 +14316,9 @@ export namespace Prisma {
     zhuanSeZhengFan: 'zhuanSeZhengFan',
     biaoMianChuLi: 'biaoMianChuLi',
     zhuangDingGongYi: 'zhuangDingGongYi',
-    beiZhu: 'beiZhu'
+    beiZhu: 'beiZhu',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -14306,7 +14339,9 @@ export namespace Prisma {
     zhuanSe: 'zhuanSe',
     biaoMianChuLi: 'biaoMianChuLi',
     zhuangDingGongYi: 'zhuangDingGongYi',
-    beiZhu: 'beiZhu'
+    beiZhu: 'beiZhu',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type OrderItemOrderByRelevanceFieldEnum = (typeof OrderItemOrderByRelevanceFieldEnum)[keyof typeof OrderItemOrderByRelevanceFieldEnum]
@@ -14324,18 +14359,27 @@ export namespace Prisma {
     gongDanLeiXing: 'gongDanLeiXing',
     caiLiao: 'caiLiao',
     chanPinLeiXing: 'chanPinLeiXing',
+    zhiDanShiJian: 'zhiDanShiJian',
     keHu: 'keHu',
     po: 'po',
     chengPinMingCheng: 'chengPinMingCheng',
     chanPinGuiGe: 'chanPinGuiGe',
+    chuYangRiqi: 'chuYangRiqi',
+    chuHuoRiqi: 'chuHuoRiqi',
     chanPinYaoQiu: 'chanPinYaoQiu',
     zhiDan: 'zhiDan',
     shenHe: 'shenHe',
     benChangNeiBuGongXu: 'benChangNeiBuGongXu',
     appendix: 'appendix',
     yuJiGongQi: 'yuJiGongQi',
+    kaiShiShiJian: 'kaiShiShiJian',
+    jieShuShiJian: 'jieShuShiJian',
+    submitted_at: 'submitted_at',
     reviewedBy: 'reviewedBy',
-    reviewComments: 'reviewComments'
+    reviewedAt: 'reviewedAt',
+    reviewComments: 'reviewComments',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type EngineeringOrderOrderByRelevanceFieldEnum = (typeof EngineeringOrderOrderByRelevanceFieldEnum)[keyof typeof EngineeringOrderOrderByRelevanceFieldEnum]
@@ -14355,7 +14399,11 @@ export namespace Prisma {
     biaoMianChuLi: 'biaoMianChuLi',
     shengChanLuJing: 'shengChanLuJing',
     paiBanFangShi: 'paiBanFangShi',
-    dangQianJinDu: 'dangQianJinDu'
+    kaiShiShiJian: 'kaiShiShiJian',
+    jieShuShiJian: 'jieShuShiJian',
+    dangQianJinDu: 'dangQianJinDu',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type EngineeringOrderMaterialLineOrderByRelevanceFieldEnum = (typeof EngineeringOrderMaterialLineOrderByRelevanceFieldEnum)[keyof typeof EngineeringOrderMaterialLineOrderByRelevanceFieldEnum]
@@ -14366,7 +14414,9 @@ export namespace Prisma {
     username: 'username',
     email: 'email',
     passwordHash: 'passwordHash',
-    fullName: 'fullName'
+    fullName: 'fullName',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -14378,7 +14428,8 @@ export namespace Prisma {
     eoId: 'eoId',
     category: 'category',
     fileName: 'fileName',
-    fileUrl: 'fileUrl'
+    fileUrl: 'fileUrl',
+    uploadedAt: 'uploadedAt'
   };
 
   export type DocumentOrderByRelevanceFieldEnum = (typeof DocumentOrderByRelevanceFieldEnum)[keyof typeof DocumentOrderByRelevanceFieldEnum]
@@ -14390,7 +14441,11 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     assignedTo: 'assignedTo',
-    comments: 'comments'
+    dueDate: 'dueDate',
+    completedAt: 'completedAt',
+    comments: 'comments',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type ReviewTaskOrderByRelevanceFieldEnum = (typeof ReviewTaskOrderByRelevanceFieldEnum)[keyof typeof ReviewTaskOrderByRelevanceFieldEnum]
@@ -14401,8 +14456,12 @@ export namespace Prisma {
     userId: 'userId',
     title: 'title',
     description: 'description',
+    dueDate: 'dueDate',
+    completedAt: 'completedAt',
     entityType: 'entityType',
-    entityId: 'entityId'
+    entityId: 'entityId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type TodoOrderByRelevanceFieldEnum = (typeof TodoOrderByRelevanceFieldEnum)[keyof typeof TodoOrderByRelevanceFieldEnum]
@@ -14413,7 +14472,9 @@ export namespace Prisma {
     orderNumber: 'orderNumber',
     eoId: 'eoId',
     stepName: 'stepName',
-    description: 'description'
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type StepPlanOrderByRelevanceFieldEnum = (typeof StepPlanOrderByRelevanceFieldEnum)[keyof typeof StepPlanOrderByRelevanceFieldEnum]
@@ -14435,13 +14496,6 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
@@ -14503,15 +14557,16 @@ export namespace Prisma {
     orderUnique?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
-    xiaZiliaodaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    xiaZiliaodaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuHuoRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
+    xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiPromise?: StringNullableFilter<"Order"> | string | null
     customer?: StringNullableFilter<"Order"> | string | null
     productName?: StringNullableFilter<"Order"> | string | null
     customerPO?: StringNullableFilter<"Order"> | string | null
@@ -14558,20 +14613,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: StringNullableFilter<"Order"> | string | null
     shenHeRen?: StringNullableFilter<"Order"> | string | null
     daYinRen?: StringNullableFilter<"Order"> | string | null
-    yeWuRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    shenHeRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    daYinRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
+    yeWuRiqi?: StringNullableFilter<"Order"> | string | null
+    shenHeRiqi?: StringNullableFilter<"Order"> | string | null
+    daYinRiqi?: StringNullableFilter<"Order"> | string | null
     versionNumber?: IntFilter<"Order"> | number
     previousOrderNumber?: StringNullableFilter<"Order"> | string | null
     isLatestVersion?: BoolFilter<"Order"> | boolean
     versionTag?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
-    submittedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
-    reviewedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    submittedAt?: StringNullableFilter<"Order"> | string | null
+    reviewedAt?: StringNullableFilter<"Order"> | string | null
     reviewedBy?: StringNullableFilter<"Order"> | string | null
     reviewComments?: StringNullableFilter<"Order"> | string | null
-    createdAt?: DateTimeFilter<"Order"> | Date | string
-    updatedAt?: DateTimeFilter<"Order"> | Date | string
+    createdAt?: StringNullableFilter<"Order"> | string | null
+    updatedAt?: StringNullableFilter<"Order"> | string | null
     orderItems?: OrderItemListRelationFilter
     previousOrder?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
     nextVersions?: OrderListRelationFilter
@@ -14598,6 +14653,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: SortOrderInput | SortOrder
     chuyangRiqiRequired?: SortOrderInput | SortOrder
     chuyangRiqiPromise?: SortOrderInput | SortOrder
+    chuHuoRiqiRequired?: SortOrderInput | SortOrder
     chuHuoRiqiPromise?: SortOrderInput | SortOrder
     customer?: SortOrderInput | SortOrder
     productName?: SortOrderInput | SortOrder
@@ -14657,8 +14713,8 @@ export namespace Prisma {
     reviewedAt?: SortOrderInput | SortOrder
     reviewedBy?: SortOrderInput | SortOrder
     reviewComments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     orderItems?: OrderItemOrderByRelationAggregateInput
     previousOrder?: OrderOrderByWithRelationInput
     nextVersions?: OrderOrderByRelationAggregateInput
@@ -14681,15 +14737,16 @@ export namespace Prisma {
     orderVer?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
-    xiaZiliaodaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    xiaZiliaodaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuHuoRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
+    xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiPromise?: StringNullableFilter<"Order"> | string | null
     customer?: StringNullableFilter<"Order"> | string | null
     productName?: StringNullableFilter<"Order"> | string | null
     customerPO?: StringNullableFilter<"Order"> | string | null
@@ -14736,20 +14793,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: StringNullableFilter<"Order"> | string | null
     shenHeRen?: StringNullableFilter<"Order"> | string | null
     daYinRen?: StringNullableFilter<"Order"> | string | null
-    yeWuRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    shenHeRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    daYinRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
+    yeWuRiqi?: StringNullableFilter<"Order"> | string | null
+    shenHeRiqi?: StringNullableFilter<"Order"> | string | null
+    daYinRiqi?: StringNullableFilter<"Order"> | string | null
     versionNumber?: IntFilter<"Order"> | number
     previousOrderNumber?: StringNullableFilter<"Order"> | string | null
     isLatestVersion?: BoolFilter<"Order"> | boolean
     versionTag?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
-    submittedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
-    reviewedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    submittedAt?: StringNullableFilter<"Order"> | string | null
+    reviewedAt?: StringNullableFilter<"Order"> | string | null
     reviewedBy?: StringNullableFilter<"Order"> | string | null
     reviewComments?: StringNullableFilter<"Order"> | string | null
-    createdAt?: DateTimeFilter<"Order"> | Date | string
-    updatedAt?: DateTimeFilter<"Order"> | Date | string
+    createdAt?: StringNullableFilter<"Order"> | string | null
+    updatedAt?: StringNullableFilter<"Order"> | string | null
     orderItems?: OrderItemListRelationFilter
     previousOrder?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
     nextVersions?: OrderListRelationFilter
@@ -14776,6 +14833,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: SortOrderInput | SortOrder
     chuyangRiqiRequired?: SortOrderInput | SortOrder
     chuyangRiqiPromise?: SortOrderInput | SortOrder
+    chuHuoRiqiRequired?: SortOrderInput | SortOrder
     chuHuoRiqiPromise?: SortOrderInput | SortOrder
     customer?: SortOrderInput | SortOrder
     productName?: SortOrderInput | SortOrder
@@ -14835,8 +14893,8 @@ export namespace Prisma {
     reviewedAt?: SortOrderInput | SortOrder
     reviewedBy?: SortOrderInput | SortOrder
     reviewComments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -14857,15 +14915,16 @@ export namespace Prisma {
     orderUnique?: StringNullableWithAggregatesFilter<"Order"> | string | null
     sales?: StringNullableWithAggregatesFilter<"Order"> | string | null
     audit?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    xiaZiliaodaiRiqiRequired?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    xiaZiliaodaiRiqiPromise?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    yinzhangRiqiRequired?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    yinzhangRiqiPromise?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    zhepaiRiqiRequired?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    zhepaiRiqiPromise?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    chuyangRiqiRequired?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    chuyangRiqiPromise?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    chuHuoRiqiPromise?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    xiaZiliaodaiRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    xiaZiliaodaiRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    yinzhangRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    yinzhangRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    zhepaiRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    zhepaiRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    chuyangRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    chuyangRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    chuHuoRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    chuHuoRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
     customer?: StringNullableWithAggregatesFilter<"Order"> | string | null
     productName?: StringNullableWithAggregatesFilter<"Order"> | string | null
     customerPO?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -14912,20 +14971,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: StringNullableWithAggregatesFilter<"Order"> | string | null
     shenHeRen?: StringNullableWithAggregatesFilter<"Order"> | string | null
     daYinRen?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    yeWuRiqi?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    shenHeRiqi?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    daYinRiqi?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    yeWuRiqi?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    shenHeRiqi?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    daYinRiqi?: StringNullableWithAggregatesFilter<"Order"> | string | null
     versionNumber?: IntWithAggregatesFilter<"Order"> | number
     previousOrderNumber?: StringNullableWithAggregatesFilter<"Order"> | string | null
     isLatestVersion?: BoolWithAggregatesFilter<"Order"> | boolean
     versionTag?: StringNullableWithAggregatesFilter<"Order"> | string | null
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
-    submittedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
-    reviewedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    submittedAt?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    reviewedAt?: StringNullableWithAggregatesFilter<"Order"> | string | null
     reviewedBy?: StringNullableWithAggregatesFilter<"Order"> | string | null
     reviewComments?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"Order"> | string | null
   }
 
   export type MaterialWhereInput = {
@@ -14947,8 +15006,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableFilter<"Material"> | string | null
     zhuangDingGongYi?: StringNullableFilter<"Material"> | string | null
     beiZhu?: StringNullableFilter<"Material"> | string | null
-    createdAt?: DateTimeFilter<"Material"> | Date | string
-    updatedAt?: DateTimeFilter<"Material"> | Date | string
+    createdAt?: StringNullableFilter<"Material"> | string | null
+    updatedAt?: StringNullableFilter<"Material"> | string | null
     orderItems?: OrderItemListRelationFilter
     engineeringLines?: EngineeringOrderMaterialLineListRelationFilter
   }
@@ -14969,8 +15028,8 @@ export namespace Prisma {
     biaoMianChuLi?: SortOrderInput | SortOrder
     zhuangDingGongYi?: SortOrderInput | SortOrder
     beiZhu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     orderItems?: OrderItemOrderByRelationAggregateInput
     engineeringLines?: EngineeringOrderMaterialLineOrderByRelationAggregateInput
     _relevance?: MaterialOrderByRelevanceInput
@@ -14995,8 +15054,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableFilter<"Material"> | string | null
     zhuangDingGongYi?: StringNullableFilter<"Material"> | string | null
     beiZhu?: StringNullableFilter<"Material"> | string | null
-    createdAt?: DateTimeFilter<"Material"> | Date | string
-    updatedAt?: DateTimeFilter<"Material"> | Date | string
+    createdAt?: StringNullableFilter<"Material"> | string | null
+    updatedAt?: StringNullableFilter<"Material"> | string | null
     orderItems?: OrderItemListRelationFilter
     engineeringLines?: EngineeringOrderMaterialLineListRelationFilter
   }, "materialId">
@@ -15017,8 +15076,8 @@ export namespace Prisma {
     biaoMianChuLi?: SortOrderInput | SortOrder
     zhuangDingGongYi?: SortOrderInput | SortOrder
     beiZhu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: MaterialCountOrderByAggregateInput
     _avg?: MaterialAvgOrderByAggregateInput
     _max?: MaterialMaxOrderByAggregateInput
@@ -15045,8 +15104,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableWithAggregatesFilter<"Material"> | string | null
     zhuangDingGongYi?: StringNullableWithAggregatesFilter<"Material"> | string | null
     beiZhu?: StringNullableWithAggregatesFilter<"Material"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Material"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Material"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"Material"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"Material"> | string | null
   }
 
   export type OrderItemWhereInput = {
@@ -15070,8 +15129,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableFilter<"OrderItem"> | string | null
     zhuangDingGongYi?: StringNullableFilter<"OrderItem"> | string | null
     beiZhu?: StringNullableFilter<"OrderItem"> | string | null
-    createdAt?: DateTimeFilter<"OrderItem"> | Date | string
-    updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
+    createdAt?: StringNullableFilter<"OrderItem"> | string | null
+    updatedAt?: StringNullableFilter<"OrderItem"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
   }
@@ -15094,8 +15153,8 @@ export namespace Prisma {
     biaoMianChuLi?: SortOrderInput | SortOrder
     zhuangDingGongYi?: SortOrderInput | SortOrder
     beiZhu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     order?: OrderOrderByWithRelationInput
     material?: MaterialOrderByWithRelationInput
     _relevance?: OrderItemOrderByRelevanceInput
@@ -15122,8 +15181,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableFilter<"OrderItem"> | string | null
     zhuangDingGongYi?: StringNullableFilter<"OrderItem"> | string | null
     beiZhu?: StringNullableFilter<"OrderItem"> | string | null
-    createdAt?: DateTimeFilter<"OrderItem"> | Date | string
-    updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
+    createdAt?: StringNullableFilter<"OrderItem"> | string | null
+    updatedAt?: StringNullableFilter<"OrderItem"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
   }, "orderItemId">
@@ -15146,8 +15205,8 @@ export namespace Prisma {
     biaoMianChuLi?: SortOrderInput | SortOrder
     zhuangDingGongYi?: SortOrderInput | SortOrder
     beiZhu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: OrderItemCountOrderByAggregateInput
     _avg?: OrderItemAvgOrderByAggregateInput
     _max?: OrderItemMaxOrderByAggregateInput
@@ -15176,8 +15235,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
     zhuangDingGongYi?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
     beiZhu?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
   }
 
   export type EngineeringOrderWhereInput = {
@@ -15195,7 +15254,7 @@ export namespace Prisma {
     gongDanLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
     caiLiao?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
-    zhiDanShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    zhiDanShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
     dingDanXuHao?: IntNullableFilter<"EngineeringOrder"> | number | null
     keHu?: StringNullableFilter<"EngineeringOrder"> | string | null
     po?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15205,8 +15264,8 @@ export namespace Prisma {
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
     benChangFangSun?: IntNullableFilter<"EngineeringOrder"> | number | null
-    chuYangRiqi?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
-    chuHuoRiqi?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
+    chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
     zhiDan?: StringNullableFilter<"EngineeringOrder"> | string | null
     shenHe?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15214,17 +15273,17 @@ export namespace Prisma {
     appendix?: StringNullableFilter<"EngineeringOrder"> | string | null
     renLiRequirement?: IntNullableFilter<"EngineeringOrder"> | number | null
     yuJiGongQi?: StringNullableFilter<"EngineeringOrder"> | string | null
-    kaiShiShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
-    jieShuShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    kaiShiShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
+    jieShuShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
     shiFouWanGong?: BoolFilter<"EngineeringOrder"> | boolean
     wanChengJinDu?: FloatNullableFilter<"EngineeringOrder"> | number | null
     reviewStatus?: EnumReviewResultFilter<"EngineeringOrder"> | $Enums.ReviewResult
-    submitted_at?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    submitted_at?: StringNullableFilter<"EngineeringOrder"> | string | null
     reviewedBy?: StringNullableFilter<"EngineeringOrder"> | string | null
-    reviewedAt?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    reviewedAt?: StringNullableFilter<"EngineeringOrder"> | string | null
     reviewComments?: StringNullableFilter<"EngineeringOrder"> | string | null
-    createdAt?: DateTimeFilter<"EngineeringOrder"> | Date | string
-    updatedAt?: DateTimeFilter<"EngineeringOrder"> | Date | string
+    createdAt?: StringNullableFilter<"EngineeringOrder"> | string | null
+    updatedAt?: StringNullableFilter<"EngineeringOrder"> | string | null
     materialLines?: EngineeringOrderMaterialLineListRelationFilter
     stepPlans?: StepPlanListRelationFilter
     documents?: DocumentListRelationFilter
@@ -15270,8 +15329,8 @@ export namespace Prisma {
     reviewedBy?: SortOrderInput | SortOrder
     reviewedAt?: SortOrderInput | SortOrder
     reviewComments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     materialLines?: EngineeringOrderMaterialLineOrderByRelationAggregateInput
     stepPlans?: StepPlanOrderByRelationAggregateInput
     documents?: DocumentOrderByRelationAggregateInput
@@ -15293,7 +15352,7 @@ export namespace Prisma {
     gongDanLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
     caiLiao?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
-    zhiDanShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    zhiDanShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
     dingDanXuHao?: IntNullableFilter<"EngineeringOrder"> | number | null
     keHu?: StringNullableFilter<"EngineeringOrder"> | string | null
     po?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15303,8 +15362,8 @@ export namespace Prisma {
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
     benChangFangSun?: IntNullableFilter<"EngineeringOrder"> | number | null
-    chuYangRiqi?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
-    chuHuoRiqi?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
+    chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
     zhiDan?: StringNullableFilter<"EngineeringOrder"> | string | null
     shenHe?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15312,17 +15371,17 @@ export namespace Prisma {
     appendix?: StringNullableFilter<"EngineeringOrder"> | string | null
     renLiRequirement?: IntNullableFilter<"EngineeringOrder"> | number | null
     yuJiGongQi?: StringNullableFilter<"EngineeringOrder"> | string | null
-    kaiShiShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
-    jieShuShiJian?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    kaiShiShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
+    jieShuShiJian?: StringNullableFilter<"EngineeringOrder"> | string | null
     shiFouWanGong?: BoolFilter<"EngineeringOrder"> | boolean
     wanChengJinDu?: FloatNullableFilter<"EngineeringOrder"> | number | null
     reviewStatus?: EnumReviewResultFilter<"EngineeringOrder"> | $Enums.ReviewResult
-    submitted_at?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    submitted_at?: StringNullableFilter<"EngineeringOrder"> | string | null
     reviewedBy?: StringNullableFilter<"EngineeringOrder"> | string | null
-    reviewedAt?: DateTimeNullableFilter<"EngineeringOrder"> | Date | string | null
+    reviewedAt?: StringNullableFilter<"EngineeringOrder"> | string | null
     reviewComments?: StringNullableFilter<"EngineeringOrder"> | string | null
-    createdAt?: DateTimeFilter<"EngineeringOrder"> | Date | string
-    updatedAt?: DateTimeFilter<"EngineeringOrder"> | Date | string
+    createdAt?: StringNullableFilter<"EngineeringOrder"> | string | null
+    updatedAt?: StringNullableFilter<"EngineeringOrder"> | string | null
     materialLines?: EngineeringOrderMaterialLineListRelationFilter
     stepPlans?: StepPlanListRelationFilter
     documents?: DocumentListRelationFilter
@@ -15368,8 +15427,8 @@ export namespace Prisma {
     reviewedBy?: SortOrderInput | SortOrder
     reviewedAt?: SortOrderInput | SortOrder
     reviewComments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: EngineeringOrderCountOrderByAggregateInput
     _avg?: EngineeringOrderAvgOrderByAggregateInput
     _max?: EngineeringOrderMaxOrderByAggregateInput
@@ -15392,7 +15451,7 @@ export namespace Prisma {
     gongDanLeiXing?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     caiLiao?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chanPinLeiXing?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
-    zhiDanShiJian?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
+    zhiDanShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     dingDanXuHao?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     keHu?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     po?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
@@ -15402,8 +15461,8 @@ export namespace Prisma {
     chuYangShu?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     benChangFangSun?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
-    chuYangRiqi?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
-    chuHuoRiqi?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
+    chuYangRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    chuHuoRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     zhiDan?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     shenHe?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
@@ -15411,17 +15470,17 @@ export namespace Prisma {
     appendix?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     renLiRequirement?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     yuJiGongQi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
-    kaiShiShiJian?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
-    jieShuShiJian?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
+    kaiShiShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    jieShuShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     shiFouWanGong?: BoolWithAggregatesFilter<"EngineeringOrder"> | boolean
     wanChengJinDu?: FloatNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     reviewStatus?: EnumReviewResultWithAggregatesFilter<"EngineeringOrder"> | $Enums.ReviewResult
-    submitted_at?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
+    submitted_at?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     reviewedBy?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
-    reviewedAt?: DateTimeNullableWithAggregatesFilter<"EngineeringOrder"> | Date | string | null
+    reviewedAt?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     reviewComments?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"EngineeringOrder"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"EngineeringOrder"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
   }
 
   export type EngineeringOrderMaterialLineWhereInput = {
@@ -15448,12 +15507,12 @@ export namespace Prisma {
     yinShuaBanShu?: IntNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     shengChanLuJing?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     paiBanFangShi?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    kaiShiShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
-    jieShuShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    createdAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
-    updatedAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
+    createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     engineeringOrder?: XOR<EngineeringOrderScalarRelationFilter, EngineeringOrderWhereInput>
     material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
   }
@@ -15483,8 +15542,8 @@ export namespace Prisma {
     shiFouDaoLiao?: SortOrder
     jieShuShiJian?: SortOrderInput | SortOrder
     dangQianJinDu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     engineeringOrder?: EngineeringOrderOrderByWithRelationInput
     material?: MaterialOrderByWithRelationInput
     _relevance?: EngineeringOrderMaterialLineOrderByRelevanceInput
@@ -15515,12 +15574,12 @@ export namespace Prisma {
     yinShuaBanShu?: IntNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     shengChanLuJing?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     paiBanFangShi?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    kaiShiShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
-    jieShuShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    createdAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
-    updatedAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
+    createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     engineeringOrder?: XOR<EngineeringOrderScalarRelationFilter, EngineeringOrderWhereInput>
     material?: XOR<MaterialNullableScalarRelationFilter, MaterialWhereInput> | null
   }, "lineId" | "engineeringOrderId_lineNo">
@@ -15550,8 +15609,8 @@ export namespace Prisma {
     shiFouDaoLiao?: SortOrder
     jieShuShiJian?: SortOrderInput | SortOrder
     dangQianJinDu?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: EngineeringOrderMaterialLineCountOrderByAggregateInput
     _avg?: EngineeringOrderMaterialLineAvgOrderByAggregateInput
     _max?: EngineeringOrderMaterialLineMaxOrderByAggregateInput
@@ -15583,12 +15642,12 @@ export namespace Prisma {
     yinShuaBanShu?: IntNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | number | null
     shengChanLuJing?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
     paiBanFangShi?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
-    kaiShiShiJian?: DateTimeNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    kaiShiShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolWithAggregatesFilter<"EngineeringOrderMaterialLine"> | boolean
-    jieShuShiJian?: DateTimeNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    jieShuShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
     dangQianJinDu?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"EngineeringOrderMaterialLine"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"EngineeringOrderMaterialLine"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
   }
 
   export type UserWhereInput = {
@@ -15602,8 +15661,8 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    createdAt?: StringNullableFilter<"User"> | string | null
+    updatedAt?: StringNullableFilter<"User"> | string | null
     todos?: TodoListRelationFilter
   }
 
@@ -15615,8 +15674,8 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     role?: SortOrder
     isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     todos?: TodoOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
@@ -15632,8 +15691,8 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    createdAt?: StringNullableFilter<"User"> | string | null
+    updatedAt?: StringNullableFilter<"User"> | string | null
     todos?: TodoListRelationFilter
   }, "userId" | "username" | "email">
 
@@ -15645,8 +15704,8 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     role?: SortOrder
     isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -15663,8 +15722,8 @@ export namespace Prisma {
     fullName?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"User"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type DocumentWhereInput = {
@@ -15678,7 +15737,7 @@ export namespace Prisma {
     fileName?: StringFilter<"Document"> | string
     fileUrl?: StringNullableFilter<"Document"> | string | null
     fileSize?: IntNullableFilter<"Document"> | number | null
-    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    uploadedAt?: StringNullableFilter<"Document"> | string | null
     order?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
     engineeringOrder?: XOR<EngineeringOrderNullableScalarRelationFilter, EngineeringOrderWhereInput> | null
   }
@@ -15691,7 +15750,7 @@ export namespace Prisma {
     fileName?: SortOrder
     fileUrl?: SortOrderInput | SortOrder
     fileSize?: SortOrderInput | SortOrder
-    uploadedAt?: SortOrder
+    uploadedAt?: SortOrderInput | SortOrder
     order?: OrderOrderByWithRelationInput
     engineeringOrder?: EngineeringOrderOrderByWithRelationInput
     _relevance?: DocumentOrderByRelevanceInput
@@ -15708,7 +15767,7 @@ export namespace Prisma {
     fileName?: StringFilter<"Document"> | string
     fileUrl?: StringNullableFilter<"Document"> | string | null
     fileSize?: IntNullableFilter<"Document"> | number | null
-    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    uploadedAt?: StringNullableFilter<"Document"> | string | null
     order?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
     engineeringOrder?: XOR<EngineeringOrderNullableScalarRelationFilter, EngineeringOrderWhereInput> | null
   }, "documentId">
@@ -15721,7 +15780,7 @@ export namespace Prisma {
     fileName?: SortOrder
     fileUrl?: SortOrderInput | SortOrder
     fileSize?: SortOrderInput | SortOrder
-    uploadedAt?: SortOrder
+    uploadedAt?: SortOrderInput | SortOrder
     _count?: DocumentCountOrderByAggregateInput
     _avg?: DocumentAvgOrderByAggregateInput
     _max?: DocumentMaxOrderByAggregateInput
@@ -15740,7 +15799,7 @@ export namespace Prisma {
     fileName?: StringWithAggregatesFilter<"Document"> | string
     fileUrl?: StringNullableWithAggregatesFilter<"Document"> | string | null
     fileSize?: IntNullableWithAggregatesFilter<"Document"> | number | null
-    uploadedAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
+    uploadedAt?: StringNullableWithAggregatesFilter<"Document"> | string | null
   }
 
   export type ReviewTaskWhereInput = {
@@ -15753,11 +15812,11 @@ export namespace Prisma {
     description?: StringNullableFilter<"ReviewTask"> | string | null
     assignedTo?: StringNullableFilter<"ReviewTask"> | string | null
     result?: EnumReviewResultFilter<"ReviewTask"> | $Enums.ReviewResult
-    dueDate?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
+    dueDate?: StringNullableFilter<"ReviewTask"> | string | null
+    completedAt?: StringNullableFilter<"ReviewTask"> | string | null
     comments?: StringNullableFilter<"ReviewTask"> | string | null
-    createdAt?: DateTimeFilter<"ReviewTask"> | Date | string
-    updatedAt?: DateTimeFilter<"ReviewTask"> | Date | string
+    createdAt?: StringNullableFilter<"ReviewTask"> | string | null
+    updatedAt?: StringNullableFilter<"ReviewTask"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
   }
 
@@ -15771,8 +15830,8 @@ export namespace Prisma {
     dueDate?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     comments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     order?: OrderOrderByWithRelationInput
     _relevance?: ReviewTaskOrderByRelevanceInput
   }
@@ -15787,11 +15846,11 @@ export namespace Prisma {
     description?: StringNullableFilter<"ReviewTask"> | string | null
     assignedTo?: StringNullableFilter<"ReviewTask"> | string | null
     result?: EnumReviewResultFilter<"ReviewTask"> | $Enums.ReviewResult
-    dueDate?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
+    dueDate?: StringNullableFilter<"ReviewTask"> | string | null
+    completedAt?: StringNullableFilter<"ReviewTask"> | string | null
     comments?: StringNullableFilter<"ReviewTask"> | string | null
-    createdAt?: DateTimeFilter<"ReviewTask"> | Date | string
-    updatedAt?: DateTimeFilter<"ReviewTask"> | Date | string
+    createdAt?: StringNullableFilter<"ReviewTask"> | string | null
+    updatedAt?: StringNullableFilter<"ReviewTask"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
   }, "taskId">
 
@@ -15805,8 +15864,8 @@ export namespace Prisma {
     dueDate?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     comments?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: ReviewTaskCountOrderByAggregateInput
     _max?: ReviewTaskMaxOrderByAggregateInput
     _min?: ReviewTaskMinOrderByAggregateInput
@@ -15822,11 +15881,11 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
     assignedTo?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
     result?: EnumReviewResultWithAggregatesFilter<"ReviewTask"> | $Enums.ReviewResult
-    dueDate?: DateTimeNullableWithAggregatesFilter<"ReviewTask"> | Date | string | null
-    completedAt?: DateTimeNullableWithAggregatesFilter<"ReviewTask"> | Date | string | null
+    dueDate?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
+    completedAt?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
     comments?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"ReviewTask"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"ReviewTask"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"ReviewTask"> | string | null
   }
 
   export type TodoWhereInput = {
@@ -15839,12 +15898,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"Todo"> | string | null
     priority?: EnumTaskPriorityFilter<"Todo"> | $Enums.TaskPriority
     isDone?: BoolFilter<"Todo"> | boolean
-    dueDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"Todo"> | Date | string | null
+    dueDate?: StringNullableFilter<"Todo"> | string | null
+    completedAt?: StringNullableFilter<"Todo"> | string | null
     entityType?: StringNullableFilter<"Todo"> | string | null
     entityId?: StringNullableFilter<"Todo"> | string | null
-    createdAt?: DateTimeFilter<"Todo"> | Date | string
-    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    createdAt?: StringNullableFilter<"Todo"> | string | null
+    updatedAt?: StringNullableFilter<"Todo"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -15859,8 +15918,8 @@ export namespace Prisma {
     completedAt?: SortOrderInput | SortOrder
     entityType?: SortOrderInput | SortOrder
     entityId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     _relevance?: TodoOrderByRelevanceInput
   }
@@ -15875,12 +15934,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"Todo"> | string | null
     priority?: EnumTaskPriorityFilter<"Todo"> | $Enums.TaskPriority
     isDone?: BoolFilter<"Todo"> | boolean
-    dueDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"Todo"> | Date | string | null
+    dueDate?: StringNullableFilter<"Todo"> | string | null
+    completedAt?: StringNullableFilter<"Todo"> | string | null
     entityType?: StringNullableFilter<"Todo"> | string | null
     entityId?: StringNullableFilter<"Todo"> | string | null
-    createdAt?: DateTimeFilter<"Todo"> | Date | string
-    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    createdAt?: StringNullableFilter<"Todo"> | string | null
+    updatedAt?: StringNullableFilter<"Todo"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "todoId">
 
@@ -15895,8 +15954,8 @@ export namespace Prisma {
     completedAt?: SortOrderInput | SortOrder
     entityType?: SortOrderInput | SortOrder
     entityId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: TodoCountOrderByAggregateInput
     _max?: TodoMaxOrderByAggregateInput
     _min?: TodoMinOrderByAggregateInput
@@ -15912,12 +15971,12 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Todo"> | string | null
     priority?: EnumTaskPriorityWithAggregatesFilter<"Todo"> | $Enums.TaskPriority
     isDone?: BoolWithAggregatesFilter<"Todo"> | boolean
-    dueDate?: DateTimeNullableWithAggregatesFilter<"Todo"> | Date | string | null
-    completedAt?: DateTimeNullableWithAggregatesFilter<"Todo"> | Date | string | null
+    dueDate?: StringNullableWithAggregatesFilter<"Todo"> | string | null
+    completedAt?: StringNullableWithAggregatesFilter<"Todo"> | string | null
     entityType?: StringNullableWithAggregatesFilter<"Todo"> | string | null
     entityId?: StringNullableWithAggregatesFilter<"Todo"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Todo"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"Todo"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"Todo"> | string | null
   }
 
   export type StepPlanWhereInput = {
@@ -15930,8 +15989,8 @@ export namespace Prisma {
     sequence?: IntFilter<"StepPlan"> | number
     stepName?: StringNullableFilter<"StepPlan"> | string | null
     description?: StringNullableFilter<"StepPlan"> | string | null
-    createdAt?: DateTimeFilter<"StepPlan"> | Date | string
-    updatedAt?: DateTimeFilter<"StepPlan"> | Date | string
+    createdAt?: StringNullableFilter<"StepPlan"> | string | null
+    updatedAt?: StringNullableFilter<"StepPlan"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     engineeringOrder?: XOR<EngineeringOrderNullableScalarRelationFilter, EngineeringOrderWhereInput> | null
   }
@@ -15943,8 +16002,8 @@ export namespace Prisma {
     sequence?: SortOrder
     stepName?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     order?: OrderOrderByWithRelationInput
     engineeringOrder?: EngineeringOrderOrderByWithRelationInput
     _relevance?: StepPlanOrderByRelevanceInput
@@ -15960,8 +16019,8 @@ export namespace Prisma {
     sequence?: IntFilter<"StepPlan"> | number
     stepName?: StringNullableFilter<"StepPlan"> | string | null
     description?: StringNullableFilter<"StepPlan"> | string | null
-    createdAt?: DateTimeFilter<"StepPlan"> | Date | string
-    updatedAt?: DateTimeFilter<"StepPlan"> | Date | string
+    createdAt?: StringNullableFilter<"StepPlan"> | string | null
+    updatedAt?: StringNullableFilter<"StepPlan"> | string | null
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     engineeringOrder?: XOR<EngineeringOrderNullableScalarRelationFilter, EngineeringOrderWhereInput> | null
   }, "planId">
@@ -15973,8 +16032,8 @@ export namespace Prisma {
     sequence?: SortOrder
     stepName?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: StepPlanCountOrderByAggregateInput
     _avg?: StepPlanAvgOrderByAggregateInput
     _max?: StepPlanMaxOrderByAggregateInput
@@ -15992,8 +16051,8 @@ export namespace Prisma {
     sequence?: IntWithAggregatesFilter<"StepPlan"> | number
     stepName?: StringNullableWithAggregatesFilter<"StepPlan"> | string | null
     description?: StringNullableWithAggregatesFilter<"StepPlan"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"StepPlan"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"StepPlan"> | Date | string
+    createdAt?: StringNullableWithAggregatesFilter<"StepPlan"> | string | null
+    updatedAt?: StringNullableWithAggregatesFilter<"StepPlan"> | string | null
   }
 
   export type OrderCreateInput = {
@@ -16006,15 +16065,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -16061,19 +16121,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
@@ -16092,15 +16152,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -16147,20 +16208,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
@@ -16178,15 +16239,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16233,19 +16295,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
@@ -16264,15 +16326,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16319,20 +16382,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
@@ -16350,15 +16413,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -16405,20 +16469,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -16431,15 +16495,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16486,19 +16551,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderUncheckedUpdateManyInput = {
@@ -16511,15 +16576,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16566,20 +16632,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MaterialCreateInput = {
@@ -16598,8 +16664,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutMaterialInput
     engineeringLines?: EngineeringOrderMaterialLineCreateNestedManyWithoutMaterialInput
   }
@@ -16620,8 +16686,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutMaterialInput
     engineeringLines?: EngineeringOrderMaterialLineUncheckedCreateNestedManyWithoutMaterialInput
   }
@@ -16642,8 +16708,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutMaterialNestedInput
     engineeringLines?: EngineeringOrderMaterialLineUpdateManyWithoutMaterialNestedInput
   }
@@ -16664,8 +16730,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutMaterialNestedInput
     engineeringLines?: EngineeringOrderMaterialLineUncheckedUpdateManyWithoutMaterialNestedInput
   }
@@ -16686,8 +16752,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type MaterialUpdateManyMutationInput = {
@@ -16706,8 +16772,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MaterialUncheckedUpdateManyInput = {
@@ -16726,8 +16792,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemCreateInput = {
@@ -16746,8 +16812,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     order: OrderCreateNestedOneWithoutOrderItemsInput
     material?: MaterialCreateNestedOneWithoutOrderItemsInput
   }
@@ -16770,8 +16836,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemUpdateInput = {
@@ -16790,8 +16856,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
     material?: MaterialUpdateOneWithoutOrderItemsNestedInput
   }
@@ -16814,8 +16880,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemCreateManyInput = {
@@ -16836,8 +16902,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemUpdateManyMutationInput = {
@@ -16856,8 +16922,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemUncheckedUpdateManyInput = {
@@ -16878,8 +16944,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderCreateInput = {
@@ -16894,7 +16960,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -16904,8 +16970,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -16913,17 +16979,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineCreateNestedManyWithoutEngineeringOrderInput
     stepPlans?: StepPlanCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentCreateNestedManyWithoutEngineeringOrderInput
@@ -16941,7 +17007,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -16951,8 +17017,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -16960,17 +17026,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedCreateNestedManyWithoutEngineeringOrderInput
     stepPlans?: StepPlanUncheckedCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutEngineeringOrderInput
@@ -16988,7 +17054,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16998,8 +17064,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17007,17 +17073,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUpdateManyWithoutEngineeringOrderNestedInput
     stepPlans?: StepPlanUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUpdateManyWithoutEngineeringOrderNestedInput
@@ -17035,7 +17101,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17045,8 +17111,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17054,17 +17120,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedUpdateManyWithoutEngineeringOrderNestedInput
     stepPlans?: StepPlanUncheckedUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutEngineeringOrderNestedInput
@@ -17082,7 +17148,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -17092,8 +17158,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -17101,17 +17167,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderUpdateManyMutationInput = {
@@ -17126,7 +17192,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17136,8 +17202,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17145,17 +17211,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderUncheckedUpdateManyInput = {
@@ -17170,7 +17236,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17180,8 +17246,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17189,17 +17255,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineCreateInput = {
@@ -17221,12 +17287,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     engineeringOrder: EngineeringOrderCreateNestedOneWithoutMaterialLinesInput
     material?: MaterialCreateNestedOneWithoutEngineeringLinesInput
   }
@@ -17252,12 +17318,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineUpdateInput = {
@@ -17279,12 +17345,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneRequiredWithoutMaterialLinesNestedInput
     material?: MaterialUpdateOneWithoutEngineeringLinesNestedInput
   }
@@ -17310,12 +17376,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineCreateManyInput = {
@@ -17339,12 +17405,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineUpdateManyMutationInput = {
@@ -17366,12 +17432,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineUncheckedUpdateManyInput = {
@@ -17395,12 +17461,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateInput = {
@@ -17411,8 +17477,8 @@ export namespace Prisma {
     fullName?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     todos?: TodoCreateNestedManyWithoutUserInput
   }
 
@@ -17424,8 +17490,8 @@ export namespace Prisma {
     fullName?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     todos?: TodoUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -17437,8 +17503,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     todos?: TodoUpdateManyWithoutUserNestedInput
   }
 
@@ -17450,8 +17516,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     todos?: TodoUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -17463,8 +17529,8 @@ export namespace Prisma {
     fullName?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -17475,8 +17541,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -17487,8 +17553,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentCreateInput = {
@@ -17497,7 +17563,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
     order?: OrderCreateNestedOneWithoutDocumentsInput
     engineeringOrder?: EngineeringOrderCreateNestedOneWithoutDocumentsInput
   }
@@ -17510,7 +17576,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type DocumentUpdateInput = {
@@ -17519,7 +17585,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneWithoutDocumentsNestedInput
     engineeringOrder?: EngineeringOrderUpdateOneWithoutDocumentsNestedInput
   }
@@ -17532,7 +17598,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentCreateManyInput = {
@@ -17543,7 +17609,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type DocumentUpdateManyMutationInput = {
@@ -17552,7 +17618,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentUncheckedUpdateManyInput = {
@@ -17563,7 +17629,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskCreateInput = {
@@ -17572,11 +17638,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     order: OrderCreateNestedOneWithoutReviewTasksInput
   }
 
@@ -17587,11 +17653,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type ReviewTaskUpdateInput = {
@@ -17600,11 +17666,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneRequiredWithoutReviewTasksNestedInput
   }
 
@@ -17615,11 +17681,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskCreateManyInput = {
@@ -17629,11 +17695,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type ReviewTaskUpdateManyMutationInput = {
@@ -17642,11 +17708,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskUncheckedUpdateManyInput = {
@@ -17656,11 +17722,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoCreateInput = {
@@ -17669,12 +17735,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     user: UserCreateNestedOneWithoutTodosInput
   }
 
@@ -17685,12 +17751,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type TodoUpdateInput = {
@@ -17699,12 +17765,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutTodosNestedInput
   }
 
@@ -17715,12 +17781,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoCreateManyInput = {
@@ -17730,12 +17796,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type TodoUpdateManyMutationInput = {
@@ -17744,12 +17810,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoUncheckedUpdateManyInput = {
@@ -17759,12 +17825,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanCreateInput = {
@@ -17772,8 +17838,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     order: OrderCreateNestedOneWithoutStepPlansInput
     engineeringOrder?: EngineeringOrderCreateNestedOneWithoutStepPlansInput
   }
@@ -17785,8 +17851,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanUpdateInput = {
@@ -17794,8 +17860,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneRequiredWithoutStepPlansNestedInput
     engineeringOrder?: EngineeringOrderUpdateOneWithoutStepPlansNestedInput
   }
@@ -17807,8 +17873,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanCreateManyInput = {
@@ -17818,8 +17884,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanUpdateManyMutationInput = {
@@ -17827,8 +17893,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanUncheckedUpdateManyInput = {
@@ -17838,8 +17904,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -17875,17 +17941,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -17931,17 +17986,6 @@ export namespace Prisma {
     in?: $Enums.OrderStatus[]
     notIn?: $Enums.OrderStatus[]
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type OrderItemListRelationFilter = {
@@ -18028,6 +18072,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: SortOrder
     chuyangRiqiRequired?: SortOrder
     chuyangRiqiPromise?: SortOrder
+    chuHuoRiqiRequired?: SortOrder
     chuHuoRiqiPromise?: SortOrder
     customer?: SortOrder
     productName?: SortOrder
@@ -18125,6 +18170,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: SortOrder
     chuyangRiqiRequired?: SortOrder
     chuyangRiqiPromise?: SortOrder
+    chuHuoRiqiRequired?: SortOrder
     chuHuoRiqiPromise?: SortOrder
     customer?: SortOrder
     productName?: SortOrder
@@ -18206,6 +18252,7 @@ export namespace Prisma {
     zhepaiRiqiPromise?: SortOrder
     chuyangRiqiRequired?: SortOrder
     chuyangRiqiPromise?: SortOrder
+    chuHuoRiqiRequired?: SortOrder
     chuHuoRiqiPromise?: SortOrder
     customer?: SortOrder
     productName?: SortOrder
@@ -18329,20 +18376,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -18407,20 +18440,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrderStatusFilter<$PrismaModel>
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type EngineeringOrderMaterialLineListRelationFilter = {
@@ -19276,10 +19295,6 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -19310,10 +19325,6 @@ export namespace Prisma {
 
   export type EnumOrderStatusFieldUpdateOperationsInput = {
     set?: $Enums.OrderStatus
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type OrderItemUpdateManyWithoutOrderNestedInput = {
@@ -19915,17 +19926,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -19971,17 +19971,6 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -20024,20 +20013,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20117,20 +20092,6 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedEnumReviewResultFilter<$PrismaModel = never> = {
     equals?: $Enums.ReviewResult | EnumReviewResultFieldRefInput<$PrismaModel>
     in?: $Enums.ReviewResult[]
@@ -20198,8 +20159,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     material?: MaterialCreateNestedOneWithoutOrderItemsInput
   }
 
@@ -20220,8 +20181,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -20244,15 +20205,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -20299,19 +20261,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     documents?: DocumentCreateNestedManyWithoutOrderInput
@@ -20329,15 +20291,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -20384,20 +20347,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
     reviewTasks?: ReviewTaskUncheckedCreateNestedManyWithoutOrderInput
@@ -20419,15 +20382,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -20474,19 +20438,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentCreateNestedManyWithoutOrderInput
@@ -20504,15 +20468,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -20559,19 +20524,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
@@ -20595,7 +20560,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
     engineeringOrder?: EngineeringOrderCreateNestedOneWithoutDocumentsInput
   }
 
@@ -20606,7 +20571,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type DocumentCreateOrConnectWithoutOrderInput = {
@@ -20625,11 +20590,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type ReviewTaskUncheckedCreateWithoutOrderInput = {
@@ -20638,11 +20603,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type ReviewTaskCreateOrConnectWithoutOrderInput = {
@@ -20660,8 +20625,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     engineeringOrder?: EngineeringOrderCreateNestedOneWithoutStepPlansInput
   }
 
@@ -20671,8 +20636,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanCreateOrConnectWithoutOrderInput = {
@@ -20722,8 +20687,8 @@ export namespace Prisma {
     biaoMianChuLi?: StringNullableFilter<"OrderItem"> | string | null
     zhuangDingGongYi?: StringNullableFilter<"OrderItem"> | string | null
     beiZhu?: StringNullableFilter<"OrderItem"> | string | null
-    createdAt?: DateTimeFilter<"OrderItem"> | Date | string
-    updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
+    createdAt?: StringNullableFilter<"OrderItem"> | string | null
+    updatedAt?: StringNullableFilter<"OrderItem"> | string | null
   }
 
   export type OrderUpsertWithoutNextVersionsInput = {
@@ -20747,15 +20712,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20802,19 +20768,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     documents?: DocumentUpdateManyWithoutOrderNestedInput
@@ -20832,15 +20798,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20887,20 +20854,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
     reviewTasks?: ReviewTaskUncheckedUpdateManyWithoutOrderNestedInput
@@ -20936,15 +20903,16 @@ export namespace Prisma {
     orderUnique?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
-    xiaZiliaodaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    xiaZiliaodaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    yinzhangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    zhepaiRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiRequired?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuyangRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
-    chuHuoRiqiPromise?: DateTimeNullableFilter<"Order"> | Date | string | null
+    xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    yinzhangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    zhepaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuyangRiqiPromise?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiRequired?: StringNullableFilter<"Order"> | string | null
+    chuHuoRiqiPromise?: StringNullableFilter<"Order"> | string | null
     customer?: StringNullableFilter<"Order"> | string | null
     productName?: StringNullableFilter<"Order"> | string | null
     customerPO?: StringNullableFilter<"Order"> | string | null
@@ -20991,20 +20959,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: StringNullableFilter<"Order"> | string | null
     shenHeRen?: StringNullableFilter<"Order"> | string | null
     daYinRen?: StringNullableFilter<"Order"> | string | null
-    yeWuRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    shenHeRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
-    daYinRiqi?: DateTimeNullableFilter<"Order"> | Date | string | null
+    yeWuRiqi?: StringNullableFilter<"Order"> | string | null
+    shenHeRiqi?: StringNullableFilter<"Order"> | string | null
+    daYinRiqi?: StringNullableFilter<"Order"> | string | null
     versionNumber?: IntFilter<"Order"> | number
     previousOrderNumber?: StringNullableFilter<"Order"> | string | null
     isLatestVersion?: BoolFilter<"Order"> | boolean
     versionTag?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
-    submittedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
-    reviewedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    submittedAt?: StringNullableFilter<"Order"> | string | null
+    reviewedAt?: StringNullableFilter<"Order"> | string | null
     reviewedBy?: StringNullableFilter<"Order"> | string | null
     reviewComments?: StringNullableFilter<"Order"> | string | null
-    createdAt?: DateTimeFilter<"Order"> | Date | string
-    updatedAt?: DateTimeFilter<"Order"> | Date | string
+    createdAt?: StringNullableFilter<"Order"> | string | null
+    updatedAt?: StringNullableFilter<"Order"> | string | null
   }
 
   export type DocumentUpsertWithWhereUniqueWithoutOrderInput = {
@@ -21034,7 +21002,7 @@ export namespace Prisma {
     fileName?: StringFilter<"Document"> | string
     fileUrl?: StringNullableFilter<"Document"> | string | null
     fileSize?: IntNullableFilter<"Document"> | number | null
-    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    uploadedAt?: StringNullableFilter<"Document"> | string | null
   }
 
   export type ReviewTaskUpsertWithWhereUniqueWithoutOrderInput = {
@@ -21063,11 +21031,11 @@ export namespace Prisma {
     description?: StringNullableFilter<"ReviewTask"> | string | null
     assignedTo?: StringNullableFilter<"ReviewTask"> | string | null
     result?: EnumReviewResultFilter<"ReviewTask"> | $Enums.ReviewResult
-    dueDate?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"ReviewTask"> | Date | string | null
+    dueDate?: StringNullableFilter<"ReviewTask"> | string | null
+    completedAt?: StringNullableFilter<"ReviewTask"> | string | null
     comments?: StringNullableFilter<"ReviewTask"> | string | null
-    createdAt?: DateTimeFilter<"ReviewTask"> | Date | string
-    updatedAt?: DateTimeFilter<"ReviewTask"> | Date | string
+    createdAt?: StringNullableFilter<"ReviewTask"> | string | null
+    updatedAt?: StringNullableFilter<"ReviewTask"> | string | null
   }
 
   export type StepPlanUpsertWithWhereUniqueWithoutOrderInput = {
@@ -21096,8 +21064,8 @@ export namespace Prisma {
     sequence?: IntFilter<"StepPlan"> | number
     stepName?: StringNullableFilter<"StepPlan"> | string | null
     description?: StringNullableFilter<"StepPlan"> | string | null
-    createdAt?: DateTimeFilter<"StepPlan"> | Date | string
-    updatedAt?: DateTimeFilter<"StepPlan"> | Date | string
+    createdAt?: StringNullableFilter<"StepPlan"> | string | null
+    updatedAt?: StringNullableFilter<"StepPlan"> | string | null
   }
 
   export type OrderItemCreateWithoutMaterialInput = {
@@ -21116,8 +21084,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     order: OrderCreateNestedOneWithoutOrderItemsInput
   }
 
@@ -21138,8 +21106,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemCreateOrConnectWithoutMaterialInput = {
@@ -21171,12 +21139,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     engineeringOrder: EngineeringOrderCreateNestedOneWithoutMaterialLinesInput
   }
 
@@ -21200,12 +21168,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineCreateOrConnectWithoutMaterialInput = {
@@ -21274,12 +21242,12 @@ export namespace Prisma {
     yinShuaBanShu?: IntNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     shengChanLuJing?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     paiBanFangShi?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    kaiShiShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
-    jieShuShiJian?: DateTimeNullableFilter<"EngineeringOrderMaterialLine"> | Date | string | null
+    jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    createdAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
-    updatedAt?: DateTimeFilter<"EngineeringOrderMaterialLine"> | Date | string
+    createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
   }
 
   export type OrderCreateWithoutOrderItemsInput = {
@@ -21292,15 +21260,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -21347,19 +21316,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentCreateNestedManyWithoutOrderInput
@@ -21377,15 +21346,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -21432,20 +21402,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
     reviewTasks?: ReviewTaskUncheckedCreateNestedManyWithoutOrderInput
@@ -21473,8 +21443,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     engineeringLines?: EngineeringOrderMaterialLineCreateNestedManyWithoutMaterialInput
   }
 
@@ -21494,8 +21464,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     engineeringLines?: EngineeringOrderMaterialLineUncheckedCreateNestedManyWithoutMaterialInput
   }
 
@@ -21525,15 +21495,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21580,19 +21551,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUpdateManyWithoutOrderNestedInput
@@ -21610,15 +21581,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21665,20 +21637,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
     reviewTasks?: ReviewTaskUncheckedUpdateManyWithoutOrderNestedInput
@@ -21712,8 +21684,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringLines?: EngineeringOrderMaterialLineUpdateManyWithoutMaterialNestedInput
   }
 
@@ -21733,8 +21705,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringLines?: EngineeringOrderMaterialLineUncheckedUpdateManyWithoutMaterialNestedInput
   }
 
@@ -21757,12 +21729,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     material?: MaterialCreateNestedOneWithoutEngineeringLinesInput
   }
 
@@ -21786,12 +21758,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineCreateOrConnectWithoutEngineeringOrderInput = {
@@ -21809,8 +21781,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     order: OrderCreateNestedOneWithoutStepPlansInput
   }
 
@@ -21820,8 +21792,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanCreateOrConnectWithoutEngineeringOrderInput = {
@@ -21840,7 +21812,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
     order?: OrderCreateNestedOneWithoutDocumentsInput
   }
 
@@ -21851,7 +21823,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type DocumentCreateOrConnectWithoutEngineeringOrderInput = {
@@ -21924,7 +21896,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -21934,8 +21906,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -21943,17 +21915,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     stepPlans?: StepPlanCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -21970,7 +21942,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -21980,8 +21952,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -21989,17 +21961,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     stepPlans?: StepPlanUncheckedCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -22025,8 +21997,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutMaterialInput
   }
 
@@ -22046,8 +22018,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutMaterialInput
   }
 
@@ -22079,7 +22051,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22089,8 +22061,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22098,17 +22070,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     stepPlans?: StepPlanUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -22125,7 +22097,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22135,8 +22107,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22144,17 +22116,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     stepPlans?: StepPlanUncheckedUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -22186,8 +22158,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutMaterialNestedInput
   }
 
@@ -22207,8 +22179,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutMaterialNestedInput
   }
 
@@ -22218,12 +22190,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type TodoUncheckedCreateWithoutUserInput = {
@@ -22232,12 +22204,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type TodoCreateOrConnectWithoutUserInput = {
@@ -22276,12 +22248,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"Todo"> | string | null
     priority?: EnumTaskPriorityFilter<"Todo"> | $Enums.TaskPriority
     isDone?: BoolFilter<"Todo"> | boolean
-    dueDate?: DateTimeNullableFilter<"Todo"> | Date | string | null
-    completedAt?: DateTimeNullableFilter<"Todo"> | Date | string | null
+    dueDate?: StringNullableFilter<"Todo"> | string | null
+    completedAt?: StringNullableFilter<"Todo"> | string | null
     entityType?: StringNullableFilter<"Todo"> | string | null
     entityId?: StringNullableFilter<"Todo"> | string | null
-    createdAt?: DateTimeFilter<"Todo"> | Date | string
-    updatedAt?: DateTimeFilter<"Todo"> | Date | string
+    createdAt?: StringNullableFilter<"Todo"> | string | null
+    updatedAt?: StringNullableFilter<"Todo"> | string | null
   }
 
   export type OrderCreateWithoutDocumentsInput = {
@@ -22294,15 +22266,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -22349,19 +22322,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
@@ -22379,15 +22352,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -22434,20 +22408,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     reviewTasks?: ReviewTaskUncheckedCreateNestedManyWithoutOrderInput
@@ -22471,7 +22445,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -22481,8 +22455,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -22490,17 +22464,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineCreateNestedManyWithoutEngineeringOrderInput
     stepPlans?: StepPlanCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -22517,7 +22491,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -22527,8 +22501,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -22536,17 +22510,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedCreateNestedManyWithoutEngineeringOrderInput
     stepPlans?: StepPlanUncheckedCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -22577,15 +22551,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22632,19 +22607,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
@@ -22662,15 +22637,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22717,20 +22693,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     reviewTasks?: ReviewTaskUncheckedUpdateManyWithoutOrderNestedInput
@@ -22760,7 +22736,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22770,8 +22746,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22779,17 +22755,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUpdateManyWithoutEngineeringOrderNestedInput
     stepPlans?: StepPlanUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -22806,7 +22782,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22816,8 +22792,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22825,17 +22801,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedUpdateManyWithoutEngineeringOrderNestedInput
     stepPlans?: StepPlanUncheckedUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -22850,15 +22826,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -22905,19 +22882,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
@@ -22935,15 +22912,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -22990,20 +22968,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
@@ -23036,15 +23014,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23091,19 +23070,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
@@ -23121,15 +23100,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23176,20 +23156,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
@@ -23204,8 +23184,8 @@ export namespace Prisma {
     fullName?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type UserUncheckedCreateWithoutTodosInput = {
@@ -23216,8 +23196,8 @@ export namespace Prisma {
     fullName?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type UserCreateOrConnectWithoutTodosInput = {
@@ -23244,8 +23224,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateWithoutTodosInput = {
@@ -23256,8 +23236,8 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderCreateWithoutStepPlansInput = {
@@ -23270,15 +23250,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -23325,19 +23306,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     previousOrder?: OrderCreateNestedOneWithoutNextVersionsInput
     nextVersions?: OrderCreateNestedManyWithoutPreviousOrderInput
@@ -23355,15 +23336,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -23410,20 +23392,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     previousOrderNumber?: string | null
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     nextVersions?: OrderUncheckedCreateNestedManyWithoutPreviousOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutOrderInput
@@ -23447,7 +23429,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -23457,8 +23439,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -23466,17 +23448,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -23493,7 +23475,7 @@ export namespace Prisma {
     gongDanLeiXing?: string | null
     caiLiao?: string | null
     chanPinLeiXing?: string | null
-    zhiDanShiJian?: Date | string | null
+    zhiDanShiJian?: string | null
     dingDanXuHao?: number | null
     keHu?: string | null
     po?: string | null
@@ -23503,8 +23485,8 @@ export namespace Prisma {
     chuYangShu?: number | null
     chaoBiLi?: number | null
     benChangFangSun?: number | null
-    chuYangRiqi?: Date | string | null
-    chuHuoRiqi?: Date | string | null
+    chuYangRiqi?: string | null
+    chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
     zhiDan?: string | null
     shenHe?: string | null
@@ -23512,17 +23494,17 @@ export namespace Prisma {
     appendix?: string | null
     renLiRequirement?: number | null
     yuJiGongQi?: string | null
-    kaiShiShiJian?: Date | string | null
-    jieShuShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
+    jieShuShiJian?: string | null
     shiFouWanGong?: boolean
     wanChengJinDu?: number | null
     reviewStatus?: $Enums.ReviewResult
-    submitted_at?: Date | string | null
+    submitted_at?: string | null
     reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    reviewedAt?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedCreateNestedManyWithoutEngineeringOrderInput
     documents?: DocumentUncheckedCreateNestedManyWithoutEngineeringOrderInput
   }
@@ -23553,15 +23535,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23608,19 +23591,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     previousOrder?: OrderUpdateOneWithoutNextVersionsNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
@@ -23638,15 +23621,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23693,20 +23677,20 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     previousOrderNumber?: NullableStringFieldUpdateOperationsInput | string | null
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
@@ -23736,7 +23720,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23746,8 +23730,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23755,17 +23739,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -23782,7 +23766,7 @@ export namespace Prisma {
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
     caiLiao?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
-    zhiDanShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    zhiDanShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dingDanXuHao?: NullableIntFieldUpdateOperationsInput | number | null
     keHu?: NullableStringFieldUpdateOperationsInput | string | null
     po?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23792,8 +23776,8 @@ export namespace Prisma {
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
     benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
-    chuYangRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
     zhiDan?: NullableStringFieldUpdateOperationsInput | string | null
     shenHe?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23801,17 +23785,17 @@ export namespace Prisma {
     appendix?: NullableStringFieldUpdateOperationsInput | string | null
     renLiRequirement?: NullableIntFieldUpdateOperationsInput | number | null
     yuJiGongQi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouWanGong?: BoolFieldUpdateOperationsInput | boolean
     wanChengJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     reviewStatus?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     materialLines?: EngineeringOrderMaterialLineUncheckedUpdateManyWithoutEngineeringOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutEngineeringOrderNestedInput
   }
@@ -23833,8 +23817,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderCreateManyPreviousOrderInput = {
@@ -23847,15 +23831,16 @@ export namespace Prisma {
     orderUnique?: string | null
     sales?: string | null
     audit?: string | null
-    xiaZiliaodaiRiqiRequired?: Date | string | null
-    xiaZiliaodaiRiqiPromise?: Date | string | null
-    yinzhangRiqiRequired?: Date | string | null
-    yinzhangRiqiPromise?: Date | string | null
-    zhepaiRiqiRequired?: Date | string | null
-    zhepaiRiqiPromise?: Date | string | null
-    chuyangRiqiRequired?: Date | string | null
-    chuyangRiqiPromise?: Date | string | null
-    chuHuoRiqiPromise?: Date | string | null
+    xiaZiliaodaiRiqiRequired?: string | null
+    xiaZiliaodaiRiqiPromise?: string | null
+    yinzhangRiqiRequired?: string | null
+    yinzhangRiqiPromise?: string | null
+    zhepaiRiqiRequired?: string | null
+    zhepaiRiqiPromise?: string | null
+    chuyangRiqiRequired?: string | null
+    chuyangRiqiPromise?: string | null
+    chuHuoRiqiRequired?: string | null
+    chuHuoRiqiPromise?: string | null
     customer?: string | null
     productName?: string | null
     customerPO?: string | null
@@ -23902,19 +23887,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: string | null
     shenHeRen?: string | null
     daYinRen?: string | null
-    yeWuRiqi?: Date | string | null
-    shenHeRiqi?: Date | string | null
-    daYinRiqi?: Date | string | null
+    yeWuRiqi?: string | null
+    shenHeRiqi?: string | null
+    daYinRiqi?: string | null
     versionNumber?: number
     isLatestVersion?: boolean
     versionTag?: string | null
     status?: $Enums.OrderStatus
-    submittedAt?: Date | string | null
-    reviewedAt?: Date | string | null
+    submittedAt?: string | null
+    reviewedAt?: string | null
     reviewedBy?: string | null
     reviewComments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type DocumentCreateManyOrderInput = {
@@ -23924,7 +23909,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type ReviewTaskCreateManyOrderInput = {
@@ -23933,11 +23918,11 @@ export namespace Prisma {
     description?: string | null
     assignedTo?: string | null
     result?: $Enums.ReviewResult
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     comments?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanCreateManyOrderInput = {
@@ -23946,8 +23931,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemUpdateWithoutOrderInput = {
@@ -23966,8 +23951,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     material?: MaterialUpdateOneWithoutOrderItemsNestedInput
   }
 
@@ -23988,8 +23973,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
@@ -24009,8 +23994,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderUpdateWithoutPreviousOrderInput = {
@@ -24023,15 +24008,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24078,19 +24064,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUpdateManyWithoutOrderNestedInput
@@ -24108,15 +24094,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24163,19 +24150,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     nextVersions?: OrderUncheckedUpdateManyWithoutPreviousOrderNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutOrderNestedInput
@@ -24193,15 +24180,16 @@ export namespace Prisma {
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
-    xiaZiliaodaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    xiaZiliaodaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    yinzhangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    zhepaiRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiRequired?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuyangRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    chuHuoRiqiPromise?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    yinzhangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    zhepaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuyangRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
+    chuHuoRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     productName?: NullableStringFieldUpdateOperationsInput | string | null
     customerPO?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24248,19 +24236,19 @@ export namespace Prisma {
     yeWuDaiBiaoFenJi?: NullableStringFieldUpdateOperationsInput | string | null
     shenHeRen?: NullableStringFieldUpdateOperationsInput | string | null
     daYinRen?: NullableStringFieldUpdateOperationsInput | string | null
-    yeWuRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    shenHeRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    daYinRiqi?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    yeWuRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    shenHeRiqi?: NullableStringFieldUpdateOperationsInput | string | null
+    daYinRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     versionNumber?: IntFieldUpdateOperationsInput | number
     isLatestVersion?: BoolFieldUpdateOperationsInput | boolean
     versionTag?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
-    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submittedAt?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableStringFieldUpdateOperationsInput | string | null
     reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
     reviewComments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentUpdateWithoutOrderInput = {
@@ -24269,7 +24257,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneWithoutDocumentsNestedInput
   }
 
@@ -24280,7 +24268,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentUncheckedUpdateManyWithoutOrderInput = {
@@ -24290,7 +24278,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskUpdateWithoutOrderInput = {
@@ -24299,11 +24287,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskUncheckedUpdateWithoutOrderInput = {
@@ -24312,11 +24300,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReviewTaskUncheckedUpdateManyWithoutOrderInput = {
@@ -24325,11 +24313,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
     result?: EnumReviewResultFieldUpdateOperationsInput | $Enums.ReviewResult
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanUpdateWithoutOrderInput = {
@@ -24337,8 +24325,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneWithoutStepPlansNestedInput
   }
 
@@ -24348,8 +24336,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanUncheckedUpdateManyWithoutOrderInput = {
@@ -24358,8 +24346,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemCreateManyMaterialInput = {
@@ -24379,8 +24367,8 @@ export namespace Prisma {
     biaoMianChuLi?: string | null
     zhuangDingGongYi?: string | null
     beiZhu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineCreateManyMaterialInput = {
@@ -24403,12 +24391,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type OrderItemUpdateWithoutMaterialInput = {
@@ -24427,8 +24415,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
   }
 
@@ -24449,8 +24437,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemUncheckedUpdateManyWithoutMaterialInput = {
@@ -24470,8 +24458,8 @@ export namespace Prisma {
     biaoMianChuLi?: NullableStringFieldUpdateOperationsInput | string | null
     zhuangDingGongYi?: NullableStringFieldUpdateOperationsInput | string | null
     beiZhu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineUpdateWithoutMaterialInput = {
@@ -24493,12 +24481,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneRequiredWithoutMaterialLinesNestedInput
   }
 
@@ -24522,12 +24510,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineUncheckedUpdateManyWithoutMaterialInput = {
@@ -24550,12 +24538,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineCreateManyEngineeringOrderInput = {
@@ -24578,12 +24566,12 @@ export namespace Prisma {
     yinShuaBanShu?: number | null
     shengChanLuJing?: string | null
     paiBanFangShi?: string | null
-    kaiShiShiJian?: Date | string | null
+    kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
-    jieShuShiJian?: Date | string | null
+    jieShuShiJian?: string | null
     dangQianJinDu?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type StepPlanCreateManyEngineeringOrderInput = {
@@ -24592,8 +24580,8 @@ export namespace Prisma {
     sequence: number
     stepName?: string | null
     description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type DocumentCreateManyEngineeringOrderInput = {
@@ -24603,7 +24591,7 @@ export namespace Prisma {
     fileName: string
     fileUrl?: string | null
     fileSize?: number | null
-    uploadedAt?: Date | string
+    uploadedAt?: string | null
   }
 
   export type EngineeringOrderMaterialLineUpdateWithoutEngineeringOrderInput = {
@@ -24625,12 +24613,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     material?: MaterialUpdateOneWithoutEngineeringLinesNestedInput
   }
 
@@ -24654,12 +24642,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EngineeringOrderMaterialLineUncheckedUpdateManyWithoutEngineeringOrderInput = {
@@ -24682,12 +24670,12 @@ export namespace Prisma {
     yinShuaBanShu?: NullableIntFieldUpdateOperationsInput | number | null
     shengChanLuJing?: NullableStringFieldUpdateOperationsInput | string | null
     paiBanFangShi?: NullableStringFieldUpdateOperationsInput | string | null
-    kaiShiShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
-    jieShuShiJian?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanUpdateWithoutEngineeringOrderInput = {
@@ -24695,8 +24683,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneRequiredWithoutStepPlansNestedInput
   }
 
@@ -24706,8 +24694,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StepPlanUncheckedUpdateManyWithoutEngineeringOrderInput = {
@@ -24716,8 +24704,8 @@ export namespace Prisma {
     sequence?: IntFieldUpdateOperationsInput | number
     stepName?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentUpdateWithoutEngineeringOrderInput = {
@@ -24726,7 +24714,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
     order?: OrderUpdateOneWithoutDocumentsNestedInput
   }
 
@@ -24737,7 +24725,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DocumentUncheckedUpdateManyWithoutEngineeringOrderInput = {
@@ -24747,7 +24735,7 @@ export namespace Prisma {
     fileName?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploadedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoCreateManyUserInput = {
@@ -24756,12 +24744,12 @@ export namespace Prisma {
     description?: string | null
     priority?: $Enums.TaskPriority
     isDone?: boolean
-    dueDate?: Date | string | null
-    completedAt?: Date | string | null
+    dueDate?: string | null
+    completedAt?: string | null
     entityType?: string | null
     entityId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: string | null
+    updatedAt?: string | null
   }
 
   export type TodoUpdateWithoutUserInput = {
@@ -24770,12 +24758,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoUncheckedUpdateWithoutUserInput = {
@@ -24784,12 +24772,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TodoUncheckedUpdateManyWithoutUserInput = {
@@ -24798,12 +24786,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     isDone?: BoolFieldUpdateOperationsInput | boolean
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dueDate?: NullableStringFieldUpdateOperationsInput | string | null
+    completedAt?: NullableStringFieldUpdateOperationsInput | string | null
     entityType?: NullableStringFieldUpdateOperationsInput | string | null
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

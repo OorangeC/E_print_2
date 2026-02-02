@@ -1,22 +1,6 @@
 import { sqlDB } from './db';
 import { workOrderToDTO, workOrdersToDTO } from './dto/workOrderDTO';
 
-/**
- * 状态映射：将前端中文状态映射为后端 ReviewResult 枚举
- * EngineeringOrder.reviewStatus 使用的是 ReviewResult(PENDING/APPROVED/REJECTED/NEEDS_REVISION)
- */
-const statusMap: Record<string, string> = {
-    '草稿': 'PENDING',
-    '待审核': 'PENDING',
-    '通过': 'APPROVED',
-    '驳回': 'REJECTED',
-    '需修改': 'NEEDS_REVISION',
-    // 下面几种业务状态目前也先归并到审核结果枚举里，避免写入非法值导致 400
-    '生产中': 'APPROVED',
-    '完成': 'APPROVED',
-    '取消': 'REJECTED'
-};
-
 export async function handleIncomingWorkOrder(jsonString: string, files?: any[]) {
     try {
         const rawData = JSON.parse(jsonString);
@@ -107,7 +91,7 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             gongDanLeiXing,
             caiLiao,
             chanPinLeiXing,
-            zhiDanShiJian: zhiDanShiJian ? new Date(zhiDanShiJian) : null,
+            zhiDanShiJian: zhiDanShiJian || null,
 
             // 订单信息备份映射到数据库字段
             keHu: customer,
@@ -118,14 +102,14 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             chuYangShu: chuYangShuLiang,
             chaoBiLi: chaoBiLiShuLiang,
             benChangFangSun: benChangFangSun,
-            chuYangRiqi: chuYangRiqiRequired ? new Date(chuYangRiqiRequired) : null,
-            chuHuoRiqi: chuHuoRiqiRequired ? new Date(chuHuoRiqiRequired) : null,
+            chuYangRiqi: chuYangRiqiRequired || null,
+            chuHuoRiqi: chuHuoRiqiRequired || null,
 
             // 让工单能被 FindWorkOrdersByClerk(clerkName) 查到，同时保留制单人
             zhiDan: zhiDanYuan,
 
-            // 审批状态映射
-            reviewStatus: statusMap[reviewStatus || workorderstatus || orderStatus] || 'PENDING',
+            // 审批状态 - 直接使用前端传入的中文状态（数据库枚举和前端一致）
+            reviewStatus: (reviewStatus || workorderstatus || orderStatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
 
             // 中间物料行
             materialLines: {
@@ -202,27 +186,48 @@ export async function FindWorkOrderByID(uniqueId: string) {
     return workOrderToDTO(workOrder);
 }
 
-export async function FindPendingWorkOrders() {
+/**
+ * 根据工单状态查询工单
+ * @param workOrderStatusText 前端传入的中文状态（WorkOrderStatus 枚举值），如 "待审核"、"通过"
+ * @returns IWorkOrder[] 满足条件的工单数组
+ * 
+ * 示例：
+ * - FindWorkOrdersWithStatus("待审核") => 查询 reviewStatus = '待审核' 的工单
+ * - FindWorkOrdersWithStatus("通过") => 查询 reviewStatus = '通过' 的工单
+ */
+export async function FindWorkOrdersWithStatus(workOrderStatusText: string) {
+    // 验证是否为有效的工单状态
+    const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
+    if (!validStatuses.includes(workOrderStatusText)) {
+        throw new Error(`不支持的工单状态: ${workOrderStatusText}`);
+    }
+    
     const workOrders = await sqlDB.engineeringOrder.findMany({
         where: {
-            reviewStatus: 'PENDING'
+            reviewStatus: workOrderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消'
         },
         include: { materialLines: true, documents: true }
     });
     return workOrdersToDTO(workOrders);
 }
 
-// 更新工程单状态（根据唯一索引 workUnique）
-export async function UpdateWorkOrderStatus(workUnique: string, statusText: string) {
-    const reviewStatus = statusMap[statusText];
-    if (!reviewStatus) {
-        throw new Error(`Unsupported work order status: ${statusText}`);
+/**
+ * 更新工程单状态（根据唯一索引 workUnique）
+ * @param workUnique 工程单唯一标识
+ * @param workOrderStatusText 前端传入的中文状态（WorkOrderStatus 枚举值），如 "待审核"、"通过"
+ * @returns 更新后的工程单 DTO
+ */
+export async function UpdateWorkOrderStatus(workUnique: string, workOrderStatusText: string) {
+    // 验证是否为有效的工单状态
+    const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
+    if (!validStatuses.includes(workOrderStatusText)) {
+        throw new Error(`不支持的工单状态: ${workOrderStatusText}`);
     }
 
     const updated = await sqlDB.engineeringOrder.update({
         where: { workUnique },
         data: {
-            reviewStatus
+            reviewStatus: workOrderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消'
         },
         include: { materialLines: true, documents: true }
     });
