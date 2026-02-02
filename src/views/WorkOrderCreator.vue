@@ -94,10 +94,10 @@
             <td><textarea v-model="workOrder.customerPO"></textarea></td>
             <td><textarea v-model="workOrder.productName"></textarea></td>
             <td><textarea v-model="workOrder.chanPinGuiGe"></textarea></td>
-            <td><input type="number" v-model="workOrder.dingDanShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.chuYangShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.chaoBiLiShuLiang" /></td>
-            <td><input type="number" v-model="workOrder.benChangFangSun" /></td>
+            <td><input type="number" v-model.number="workOrder.dingDanShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.chuYangShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.chaoBiLiShuLiang" /></td>
+            <td><input type="number" v-model.number="workOrder.benChangFangSun" /></td>
             <td><input type="date" v-model="workOrder.chuYangRiqiRequired" /></td>
             <td><input type="date" v-model="workOrder.chuHuoRiqiRequired" /></td>
           </tr>
@@ -169,7 +169,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { type IWorkOrder, OrderStatus, prepareWorkOrderForSubmit } from '@/types/WorkOrder'
+import { type IWorkOrder, WorkOrderStatus, prepareWorkOrderForSubmit } from '@/types/WorkOrder'
 import service from '@/stores/request'
 
 const emit = defineEmits(['close', 'submit'])
@@ -177,7 +177,7 @@ const emit = defineEmits(['close', 'submit'])
 const workOrder = reactive<Partial<IWorkOrder> & { zhiDanYuan: string }>({
   zhiDanYuan: '',
   work_ver: '1.0',
-  orderStatus: OrderStatus.DRAFT,
+  workorderstatus: WorkOrderStatus.DRAFT,
   intermedia: [{}],
 })
 

@@ -2,7 +2,10 @@ export interface IOrder {
   // 必填字段
   order_id?: string //订单号
   order_ver?: string //订单版本
+  order_unique?: string //唯一索引，在提交order报审核的时候创建，是order_id+"_"+order_ver.
   customer: string // 客户名称: 创建草稿时唯一需要明确的，这样就可以开始保存草稿了
+  sales: string //业务员名称或者工号
+  audit?: string //审单员名称或者工号
 
   // 外销与CPSIA
   cpcQueRen?: boolean //cpc确认
@@ -40,17 +43,17 @@ export interface IOrder {
   genSeZhiShi?: string //跟色指示
 
   // 排期信息和其他
-  xiaZiliaodaiRiqiRequired?: Date //下资料袋要求
-  xiaZiliaodaiRiqiPromise?: Date //下资料袋承诺
-  yinzhangRiqiRequired?: Date //印章日期要求
-  yinzhangRiqiPromise?: Date //印章日期承诺
-  zhepaiRiqiRequired?: Date //折牌日期要求
-  zhepaiRiqiPromise?: Date //折牌日期承诺
-  chuyangRiqiRequired?: Date //出样日期要求
-  chuyangRiqiPromise?: Date //出样日期承诺
+  xiaZiliaodaiRiqiRequired?: string //下资料袋要求
+  xiaZiliaodaiRiqiPromise?: string //下资料袋承诺
+  yinzhangRiqiRequired?: string //印章日期要求
+  yinzhangRiqiPromise?: string //印章日期承诺
+  zhepaiRiqiRequired?: string //折牌日期要求
+  zhepaiRiqiPromise?: string //折牌日期承诺
+  chuyangRiqiRequired?: string //出样日期要求
+  chuyangRiqiPromise?: string //出样日期承诺
   chuHuoShuLiang?: number //出货数量
-  chuHuoRiqiRequired?: Date //出货日期要求
-  chuHuoRiqiPromise?: Date //出货日期承诺
+  chuHuoRiqiRequired?: string //出货日期要求
+  chuHuoRiqiPromise?: string //出货日期承诺
   yongTu?: string //用途
   keLaiXinxi?: string //客来信息
 
@@ -72,11 +75,11 @@ export interface IOrder {
   dingDanPingShenXinXi?: string //订单评审信息
 
   yeWuDaiBiaoFenJi?: string //业务代表/分机
-  yeWuRiqi?: Date //业务日期
+  yeWuRiqi?: string //业务日期
   shenHeRen?: string //审核人
-  shenHeRiqi?: Date //审核日期
+  shenHeRiqi?: string //审核日期
   daYinRen?: string //打印人
-  daYinRiqi?: Date //打印日期
+  daYinRiqi?: string //打印日期
 
   //表格上没有的
   orderstatus: OrderStatus //订单状态
@@ -94,13 +97,13 @@ export interface IAuditLog {
 
 // ============ 订单状态枚举 ============
 export enum OrderStatus {
-  DRAFT = 'DRAFT',
-  PENDING_REVIEW = 'PENDING_REVIEW',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  IN_PRODUCTION = 'IN_PRODUCTION',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED',
+  DRAFT = '草稿',
+  PENDING_REVIEW = '待审核',
+  APPROVED = '通过',
+  REJECTED = '驳回',
+  IN_PRODUCTION = '生产中',
+  COMPLETED = '完成',
+  CANCELLED = '取消',
 }
 
 /** 附件条目接口 */
@@ -127,80 +130,85 @@ export interface IProduct {
   zhuangDingGongYi?: string //装订工艺
   beiZhu?: string //备注
 }
+/** 统一日期处理：返回 yyyy-mm-dd */
+export function formatYMD(date: Date | string | number | null | undefined): string {
+  if (!date) return ''
+  const d = new Date(date)
+  if (isNaN(d.getTime())) return ''
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 
-/**
- * 专门用于在提交审核前初始化第一条审计日志
- */
+/** 格式化完整时间：yyyy-mm-dd HH:mm:ss */
+export function formatFullTime(date: Date): string {
+  const ymd = formatYMD(date)
+  const hms = [date.getHours(), date.getMinutes(), date.getSeconds()]
+    .map((v) => String(v).padStart(2, '0'))
+    .join(':')
+  return `${ymd} ${hms}`
+}
+
+// ============ 业务逻辑 ============
+
 export function initializeAuditLog(orderData: Partial<IOrder>, operatorName: string): void {
-  // 获取当前时间并格式化为: YYYY-MM-DD HH:mm:ss
-  const now = new Date()
-  const timeStr =
-    now.getFullYear() +
-    '-' +
-    String(now.getMonth() + 1).padStart(2, '0') +
-    '-' +
-    String(now.getDate()).padStart(2, '0') +
-    ' ' +
-    String(now.getHours()).padStart(2, '0') +
-    ':' +
-    String(now.getMinutes()).padStart(2, '0') +
-    ':' +
-    String(now.getSeconds()).padStart(2, '0')
-
   const firstLog: IAuditLog = {
-    time: timeStr,
+    time: formatFullTime(new Date()),
     operator: operatorName || '未知业务员',
-    action: 'submit', // 明确要求为 submit
+    action: 'submit',
     comment: '业务员提交订单，发起审核流程',
   }
-
-  // 初始化数组并注入
-  if (!orderData.auditLogs) {
-    orderData.auditLogs = []
-  }
+  orderData.auditLogs = orderData.auditLogs || []
   orderData.auditLogs.push(firstLog)
-
-  // 顺便变更订单状态为“待审核”
   orderData.orderstatus = OrderStatus.PENDING_REVIEW
 }
 
-/**
- * 将 IOrder 转换为发送给后端所需的 FormData
- */
-/**
- * 转换助手：将订单对象转换为可传输的 FormData
- * 解决了 File 对象不能被 JSON.stringify 的问题
- */
 export function prepareOrderFormData(orderData: Partial<IOrder>, salesmanName: string): FormData {
   const formData = new FormData()
 
-  // 1. 处理附件：提取二进制文件流
+  // 1. 附件二进制
+  orderData.attachments?.forEach((attr) => {
+    if (attr.file) formData.append('files', attr.file)
+  })
+
+  // 2. 深度清洗 (不影响原数据)
+  const cleanedPayload = JSON.parse(JSON.stringify(orderData)) as IOrder
+
+  // 3. 日期字段白名单统一清洗
+  const dateFieldKeys: (keyof IOrder)[] = [
+    'xiaZiliaodaiRiqiRequired',
+    'xiaZiliaodaiRiqiPromise',
+    'yinzhangRiqiRequired',
+    'yinzhangRiqiPromise',
+    'zhepaiRiqiRequired',
+    'zhepaiRiqiPromise',
+    'chuyangRiqiRequired',
+    'chuyangRiqiPromise',
+    'chuHuoRiqiRequired',
+    'chuHuoRiqiPromise',
+    'yeWuRiqi',
+    'shenHeRiqi',
+    'daYinRiqi',
+  ]
+
+  dateFieldKeys.forEach((key) => {
+    const value = cleanedPayload[key]
+    if (value) {
+      // 使用类型断言强制认定这个 key 对应的是 string 或 undefined
+      Object.assign(cleanedPayload, { [key]: formatYMD(value as string | Date) })
+    }
+  })
+
+  // 4. 附件元数据脱钩
   if (orderData.attachments) {
-    orderData.attachments.forEach((attr) => {
-      if (attr.file) {
-        // 'files' 是后端接收文件数组的字段名
-        formData.append('files', attr.file)
-      }
-    })
+    cleanedPayload.attachments = orderData.attachments.map((attr) => ({
+      category: attr.category,
+      fileName: attr.fileName,
+    }))
   }
 
-  // 2. 清洗数据：创建一个不包含 File 和 URL 的纯净对象用于 JSON 传输
-  // 印刷行业的订单字段非常多，我们通过 map 确保只传输元数据
-  const cleanedAttachments = (orderData.attachments || []).map((attr) => ({
-    category: attr.category,
-    fileName: attr.fileName,
-    // 注意：这里故意漏掉了 file 和 url，因为它们无法序列化
-  }))
-
-  const orderPayload = {
-    ...orderData,
-    attachments: cleanedAttachments,
-  }
-
-  // 3. 装载到 FormData
-  // 后端通常通过一个 key (如 'orderData') 接收整个 JSON 字符串
-  formData.append('orderData', JSON.stringify(orderPayload))
+  formData.append('orderData', JSON.stringify(cleanedPayload))
   formData.append('salesman', salesmanName)
-
   return formData
 }

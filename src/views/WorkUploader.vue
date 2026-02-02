@@ -23,8 +23,8 @@
         <table class="modern-table">
           <thead>
             <tr>
-              <th width="150" @click="handleSort('orderStatus')" class="sortable">
-                状态码 {{ getSortIcon('orderStatus') }}
+              <th width="150" @click="handleSort('workorderstatus')" class="sortable">
+                状态码 {{ getSortIcon('workorderstatus') }}
               </th>
               <th width="180" @click="handleSort('zhiDanShiJian')" class="sortable">
                 制单时间 {{ getSortIcon('zhiDanShiJian') }}
@@ -44,11 +44,11 @@
           <tbody>
             <tr v-for="work in processedOrders" :key="work.work_id + work.work_ver">
               <td>
-                <span :class="['status-badge', work.orderStatus]">
-                  {{ work.orderStatus }}
+                <span :class="['status-badge', work.workorderstatus]">
+                  {{ work.workorderstatus }}
                 </span>
               </td>
-              <td class="time-text">{{ formatDateTime(work.zhiDanShiJian) }}</td>
+              <td class="time-text">{{ work.zhiDanShiJian }}</td>
               <td class="bold-text">
                 {{ work.work_id }} <small class="ver-text">v{{ work.work_ver }}</small>
               </td>
@@ -71,41 +71,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { OrderStatus, type IWorkOrder } from '@/types/WorkOrder'
+import { ref, computed, onMounted } from 'vue'
+import { type IWorkOrder } from '@/types/WorkOrder'
 // 核心：导入你的创建器组件
 import WorkOrderCreator from './WorkOrderCreator.vue'
+import { findWorkOrdersByClerk } from '@/stores/request'
 
 const showCreator = ref(false)
 const searchQuery = ref<string>('')
+const workOrders = ref<IWorkOrder[]>([])
+
+//onMounted 会在组件加载完成、渲染到页面上时自动运行。
+onMounted(async () => {
+  console.log('订单上传页面初始化，正在获取 admin 的订单列表...')
+  await fetchOrdersData()
+})
+
+/**
+ * 获取订单列表的逻辑封装
+ */
+const fetchOrdersData = async () => {
+  try {
+    // 调用你在 request.ts 里写的函数，扒拉 admin 的数据
+    const data = await findWorkOrdersByClerk('admin')
+
+    // 将拿到的数组赋值给响应式变量 orders
+    // processedOrders 会根据这个数据的变化自动重新计算过滤和排序
+    workOrders.value = data
+
+    console.log('订单加载成功:', data.length, '条记录')
+  } catch (err) {
+    console.error('获取列表失败:', err)
+    // 实际项目中这里可以加个通知提示
+  }
+}
 
 type SortKey = keyof IWorkOrder
 const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
   key: 'zhiDanShiJian',
   order: 'desc',
 })
-
-// 模拟数据 (生产环境建议通过 API 获取)
-const workOrders = ref<IWorkOrder[]>([
-  {
-    work_id: 'G20260131-001',
-    work_ver: '1.0',
-    gongDanLeiXing: '正式单',
-    customer: '当纳利亚洲',
-    orderStatus: OrderStatus.IN_PRODUCTION,
-    zhiDanShiJian: new Date('2026-01-31 09:00:00'),
-    intermedia: [],
-  },
-  {
-    work_id: 'G20260131-002',
-    work_ver: '1.1',
-    gongDanLeiXing: '样板单',
-    customer: '模拟客户A',
-    orderStatus: OrderStatus.PENDING_REVIEW,
-    zhiDanShiJian: new Date('2026-01-31 10:30:00'),
-    intermedia: [],
-  },
-])
 
 // 搜索过滤与排序逻辑
 const processedOrders = computed(() => {
@@ -136,16 +141,6 @@ const handleSort = (key: SortKey) => {
 const getSortIcon = (key: SortKey) => {
   if (sortConfig.value.key !== key) return '↕️'
   return sortConfig.value.order === 'asc' ? '🔼' : '🔽'
-}
-
-const formatDateTime = (date?: Date): string => {
-  if (!date) return '-'
-  const Y = date.getFullYear()
-  const M = String(date.getMonth() + 1).padStart(2, '0')
-  const D = String(date.getDate()).padStart(2, '0')
-  const h = String(date.getHours()).padStart(2, '0')
-  const m = String(date.getMinutes()).padStart(2, '0')
-  return `${Y}-${M}-${D} ${h}:${m}`
 }
 
 const handleAction = (work: IWorkOrder): void => console.log('Action:', work.work_id)

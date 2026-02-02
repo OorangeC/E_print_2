@@ -1,15 +1,18 @@
+import type { IOrder } from '@/types/Order'
+import type { IWorkOrder } from '@/types/WorkOrder'
 import axios from 'axios'
 
 // 1. 创建实例
 const service = axios.create({
-  baseURL: 'http://localhost:3000/api', // 指向本地后端
+  baseURL: 'http://localhost:3000/api', // 这里换成你后端的真实地址
   timeout: 10000, // 10秒超时
 })
 
 // 2. 请求拦截器 (发包裹前检查一下)
 service.interceptors.request.use(
   (config) => {
-    console.log('🚀 发送请求:', config.method?.toUpperCase(), config.url, config.data)
+    // 比如：如果本地有 Token，就带上
+    // config.headers['Authorization'] = 'Bearer ' + token
     return config
   },
   (error) => Promise.reject(error),
@@ -27,5 +30,31 @@ service.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+
+/**
+ * 通过业务员姓名获取订单列表
+ * @param salesName 业务员名字
+ */
+export const findOrdersBySales = (salesName: string): Promise<IOrder[]> => {
+  return service.get('/orders/findBySales', {
+    params: { sales: salesName }, // 后端接收 string 的参数名
+  })
+}
+
+export const findOrdersByAudit = (auditName: string): Promise<IOrder[]> => {
+  return service.get('/orders/findByAudit', {
+    params: { audit: auditName }, // 后端接收 string 的参数名
+  })
+}
+export const findWorkOrdersByClerk = (clerkName: string): Promise<IWorkOrder[]> => {
+  return service.get('/workOrders/findByClerk', {
+    params: { sales: clerkName }, // 后端接收 string 的参数名
+  })
+}
+export const findWorkOrdersByAudit = (auditName: string): Promise<IWorkOrder[]> => {
+  return service.get('/workOrders/findByAudit', {
+    params: { audit: auditName }, // 后端接收 string 的参数名
+  })
+}
 
 export default service
