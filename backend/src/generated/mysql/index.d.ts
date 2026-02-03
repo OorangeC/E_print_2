@@ -1916,13 +1916,15 @@ export namespace Prisma {
   export type OrderMinAggregateOutputType = {
     orderNumber: string | null
     waixiaoFlag: boolean | null
-    cpsiaYaoqiu: string | null
+    cpsiaYaoqiu: boolean | null
     cpcQueRen: boolean | null
     dingZhiBeiZhu: string | null
     orderVer: string | null
     orderUnique: string | null
     sales: string | null
+    salesDate: string | null
     audit: string | null
+    auditDate: string | null
     xiaZiliaodaiRiqiRequired: string | null
     xiaZiliaodaiRiqiPromise: string | null
     yinzhangRiqiRequired: string | null
@@ -1998,13 +2000,15 @@ export namespace Prisma {
   export type OrderMaxAggregateOutputType = {
     orderNumber: string | null
     waixiaoFlag: boolean | null
-    cpsiaYaoqiu: string | null
+    cpsiaYaoqiu: boolean | null
     cpcQueRen: boolean | null
     dingZhiBeiZhu: string | null
     orderVer: string | null
     orderUnique: string | null
     sales: string | null
+    salesDate: string | null
     audit: string | null
+    auditDate: string | null
     xiaZiliaodaiRiqiRequired: string | null
     xiaZiliaodaiRiqiPromise: string | null
     yinzhangRiqiRequired: string | null
@@ -2086,7 +2090,9 @@ export namespace Prisma {
     orderVer: number
     orderUnique: number
     sales: number
+    salesDate: number
     audit: number
+    auditDate: number
     xiaZiliaodaiRiqiRequired: number
     xiaZiliaodaiRiqiPromise: number
     yinzhangRiqiRequired: number
@@ -2202,7 +2208,9 @@ export namespace Prisma {
     orderVer?: true
     orderUnique?: true
     sales?: true
+    salesDate?: true
     audit?: true
+    auditDate?: true
     xiaZiliaodaiRiqiRequired?: true
     xiaZiliaodaiRiqiPromise?: true
     yinzhangRiqiRequired?: true
@@ -2284,7 +2292,9 @@ export namespace Prisma {
     orderVer?: true
     orderUnique?: true
     sales?: true
+    salesDate?: true
     audit?: true
+    auditDate?: true
     xiaZiliaodaiRiqiRequired?: true
     xiaZiliaodaiRiqiPromise?: true
     yinzhangRiqiRequired?: true
@@ -2366,7 +2376,9 @@ export namespace Prisma {
     orderVer?: true
     orderUnique?: true
     sales?: true
+    salesDate?: true
     audit?: true
+    auditDate?: true
     xiaZiliaodaiRiqiRequired?: true
     xiaZiliaodaiRiqiPromise?: true
     yinzhangRiqiRequired?: true
@@ -2529,13 +2541,15 @@ export namespace Prisma {
   export type OrderGroupByOutputType = {
     orderNumber: string
     waixiaoFlag: boolean | null
-    cpsiaYaoqiu: string | null
+    cpsiaYaoqiu: boolean | null
     cpcQueRen: boolean | null
     dingZhiBeiZhu: string | null
     orderVer: string | null
     orderUnique: string | null
     sales: string | null
+    salesDate: string | null
     audit: string | null
+    auditDate: string | null
     xiaZiliaodaiRiqiRequired: string | null
     xiaZiliaodaiRiqiPromise: string | null
     yinzhangRiqiRequired: string | null
@@ -2636,7 +2650,9 @@ export namespace Prisma {
     orderVer?: boolean
     orderUnique?: boolean
     sales?: boolean
+    salesDate?: boolean
     audit?: boolean
+    auditDate?: boolean
     xiaZiliaodaiRiqiRequired?: boolean
     xiaZiliaodaiRiqiPromise?: boolean
     yinzhangRiqiRequired?: boolean
@@ -2727,7 +2743,9 @@ export namespace Prisma {
     orderVer?: boolean
     orderUnique?: boolean
     sales?: boolean
+    salesDate?: boolean
     audit?: boolean
+    auditDate?: boolean
     xiaZiliaodaiRiqiRequired?: boolean
     xiaZiliaodaiRiqiPromise?: boolean
     yinzhangRiqiRequired?: boolean
@@ -2800,7 +2818,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderNumber" | "waixiaoFlag" | "cpsiaYaoqiu" | "cpcQueRen" | "dingZhiBeiZhu" | "orderVer" | "orderUnique" | "sales" | "audit" | "xiaZiliaodaiRiqiRequired" | "xiaZiliaodaiRiqiPromise" | "yinzhangRiqiRequired" | "yinzhangRiqiPromise" | "zhepaiRiqiRequired" | "zhepaiRiqiPromise" | "chuyangRiqiRequired" | "chuyangRiqiPromise" | "chuHuoRiqiRequired" | "chuHuoRiqiPromise" | "customer" | "productName" | "customerPO" | "baoJiaDanHao" | "jiuBianMa" | "isbn" | "xiLieDanMing" | "qiTaShiBie" | "chanPinDaLei" | "ziLeiXing" | "zhuangDingFangShi" | "yongTu" | "fscType" | "fenBanShuoMing" | "genSeZhiShi" | "keLaiXinXi" | "baoLiuQianSe" | "dingDanShuLiang" | "chuYangShuLiang" | "chuYangShuoMing" | "chaoBiLiShuLiang" | "teShuLiuYangZhang" | "beiPinShuLiang" | "teShuLiuShuYang" | "zongShuLiang" | "chuHuoShuLiang" | "guigeGaoMm" | "guigeKuanMm" | "guigeHouMm" | "fuLiaoShuoMing" | "chanPinMingXiTeBieShuoMing" | "fenBanShuoMing2" | "wuLiaoShuoMing" | "yinShuaGenSeYaoQiu" | "zhuangDingShouGongYaoQiu" | "qiTa" | "zhiLiangYaoQiu" | "keHuFanKui" | "teShuYaoQiu" | "kongZhiFangFa" | "dingDanTeBieShuoMing" | "yangPinPingShenXinXi" | "dingDanPingShenXinXi" | "yeWuDaiBiaoFenJi" | "shenHeRen" | "daYinRen" | "yeWuRiqi" | "shenHeRiqi" | "daYinRiqi" | "versionNumber" | "previousOrderNumber" | "isLatestVersion" | "versionTag" | "status" | "submittedAt" | "reviewedAt" | "reviewedBy" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderNumber" | "waixiaoFlag" | "cpsiaYaoqiu" | "cpcQueRen" | "dingZhiBeiZhu" | "orderVer" | "orderUnique" | "sales" | "salesDate" | "audit" | "auditDate" | "xiaZiliaodaiRiqiRequired" | "xiaZiliaodaiRiqiPromise" | "yinzhangRiqiRequired" | "yinzhangRiqiPromise" | "zhepaiRiqiRequired" | "zhepaiRiqiPromise" | "chuyangRiqiRequired" | "chuyangRiqiPromise" | "chuHuoRiqiRequired" | "chuHuoRiqiPromise" | "customer" | "productName" | "customerPO" | "baoJiaDanHao" | "jiuBianMa" | "isbn" | "xiLieDanMing" | "qiTaShiBie" | "chanPinDaLei" | "ziLeiXing" | "zhuangDingFangShi" | "yongTu" | "fscType" | "fenBanShuoMing" | "genSeZhiShi" | "keLaiXinXi" | "baoLiuQianSe" | "dingDanShuLiang" | "chuYangShuLiang" | "chuYangShuoMing" | "chaoBiLiShuLiang" | "teShuLiuYangZhang" | "beiPinShuLiang" | "teShuLiuShuYang" | "zongShuLiang" | "chuHuoShuLiang" | "guigeGaoMm" | "guigeKuanMm" | "guigeHouMm" | "fuLiaoShuoMing" | "chanPinMingXiTeBieShuoMing" | "fenBanShuoMing2" | "wuLiaoShuoMing" | "yinShuaGenSeYaoQiu" | "zhuangDingShouGongYaoQiu" | "qiTa" | "zhiLiangYaoQiu" | "keHuFanKui" | "teShuYaoQiu" | "kongZhiFangFa" | "dingDanTeBieShuoMing" | "yangPinPingShenXinXi" | "dingDanPingShenXinXi" | "yeWuDaiBiaoFenJi" | "shenHeRen" | "daYinRen" | "yeWuRiqi" | "shenHeRiqi" | "daYinRiqi" | "versionNumber" | "previousOrderNumber" | "isLatestVersion" | "versionTag" | "status" | "submittedAt" | "reviewedAt" | "reviewedBy" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
     previousOrder?: boolean | Order$previousOrderArgs<ExtArgs>
@@ -2824,13 +2842,15 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       orderNumber: string
       waixiaoFlag: boolean | null
-      cpsiaYaoqiu: string | null
+      cpsiaYaoqiu: boolean | null
       cpcQueRen: boolean | null
       dingZhiBeiZhu: string | null
       orderVer: string | null
       orderUnique: string | null
       sales: string | null
+      salesDate: string | null
       audit: string | null
+      auditDate: string | null
       xiaZiliaodaiRiqiRequired: string | null
       xiaZiliaodaiRiqiPromise: string | null
       yinzhangRiqiRequired: string | null
@@ -3278,13 +3298,15 @@ export namespace Prisma {
   interface OrderFieldRefs {
     readonly orderNumber: FieldRef<"Order", 'String'>
     readonly waixiaoFlag: FieldRef<"Order", 'Boolean'>
-    readonly cpsiaYaoqiu: FieldRef<"Order", 'String'>
+    readonly cpsiaYaoqiu: FieldRef<"Order", 'Boolean'>
     readonly cpcQueRen: FieldRef<"Order", 'Boolean'>
     readonly dingZhiBeiZhu: FieldRef<"Order", 'String'>
     readonly orderVer: FieldRef<"Order", 'String'>
     readonly orderUnique: FieldRef<"Order", 'String'>
     readonly sales: FieldRef<"Order", 'String'>
+    readonly salesDate: FieldRef<"Order", 'String'>
     readonly audit: FieldRef<"Order", 'String'>
+    readonly auditDate: FieldRef<"Order", 'String'>
     readonly xiaZiliaodaiRiqiRequired: FieldRef<"Order", 'String'>
     readonly xiaZiliaodaiRiqiPromise: FieldRef<"Order", 'String'>
     readonly yinzhangRiqiRequired: FieldRef<"Order", 'String'>
@@ -6169,7 +6191,6 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: number | null
     renLiRequirement: number | null
     wanChengJinDu: number | null
   }
@@ -6179,7 +6200,6 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: number | null
     renLiRequirement: number | null
     wanChengJinDu: number | null
   }
@@ -6191,6 +6211,8 @@ export namespace Prisma {
     workUnique: string | null
     workClerk: string | null
     workAudit: string | null
+    clerkDate: string | null
+    auditDate: string | null
     gongSiMingCheng: string | null
     gongChengDanMingCheng: string | null
     gongDanLeiXing: string | null
@@ -6205,7 +6227,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: number | null
+    benChangFangSun: string | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6235,6 +6257,8 @@ export namespace Prisma {
     workUnique: string | null
     workClerk: string | null
     workAudit: string | null
+    clerkDate: string | null
+    auditDate: string | null
     gongSiMingCheng: string | null
     gongChengDanMingCheng: string | null
     gongDanLeiXing: string | null
@@ -6249,7 +6273,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: number | null
+    benChangFangSun: string | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6279,6 +6303,8 @@ export namespace Prisma {
     workUnique: number
     workClerk: number
     workAudit: number
+    clerkDate: number
+    auditDate: number
     gongSiMingCheng: number
     gongChengDanMingCheng: number
     gongDanLeiXing: number
@@ -6323,7 +6349,6 @@ export namespace Prisma {
     dingDanShuLiang?: true
     chuYangShu?: true
     chaoBiLi?: true
-    benChangFangSun?: true
     renLiRequirement?: true
     wanChengJinDu?: true
   }
@@ -6333,7 +6358,6 @@ export namespace Prisma {
     dingDanShuLiang?: true
     chuYangShu?: true
     chaoBiLi?: true
-    benChangFangSun?: true
     renLiRequirement?: true
     wanChengJinDu?: true
   }
@@ -6345,6 +6369,8 @@ export namespace Prisma {
     workUnique?: true
     workClerk?: true
     workAudit?: true
+    clerkDate?: true
+    auditDate?: true
     gongSiMingCheng?: true
     gongChengDanMingCheng?: true
     gongDanLeiXing?: true
@@ -6389,6 +6415,8 @@ export namespace Prisma {
     workUnique?: true
     workClerk?: true
     workAudit?: true
+    clerkDate?: true
+    auditDate?: true
     gongSiMingCheng?: true
     gongChengDanMingCheng?: true
     gongDanLeiXing?: true
@@ -6433,6 +6461,8 @@ export namespace Prisma {
     workUnique?: true
     workClerk?: true
     workAudit?: true
+    clerkDate?: true
+    auditDate?: true
     gongSiMingCheng?: true
     gongChengDanMingCheng?: true
     gongDanLeiXing?: true
@@ -6564,6 +6594,8 @@ export namespace Prisma {
     workUnique: string | null
     workClerk: string | null
     workAudit: string | null
+    clerkDate: string | null
+    auditDate: string | null
     gongSiMingCheng: string | null
     gongChengDanMingCheng: string | null
     gongDanLeiXing: string | null
@@ -6578,7 +6610,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: number | null
+    benChangFangSun: string | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6627,6 +6659,8 @@ export namespace Prisma {
     workUnique?: boolean
     workClerk?: boolean
     workAudit?: boolean
+    clerkDate?: boolean
+    auditDate?: boolean
     gongSiMingCheng?: boolean
     gongChengDanMingCheng?: boolean
     gongDanLeiXing?: boolean
@@ -6677,6 +6711,8 @@ export namespace Prisma {
     workUnique?: boolean
     workClerk?: boolean
     workAudit?: boolean
+    clerkDate?: boolean
+    auditDate?: boolean
     gongSiMingCheng?: boolean
     gongChengDanMingCheng?: boolean
     gongDanLeiXing?: boolean
@@ -6714,7 +6750,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type EngineeringOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"engineeringOrderId" | "workId" | "workVer" | "workUnique" | "workClerk" | "workAudit" | "gongSiMingCheng" | "gongChengDanMingCheng" | "gongDanLeiXing" | "caiLiao" | "chanPinLeiXing" | "zhiDanShiJian" | "dingDanXuHao" | "keHu" | "po" | "chengPinMingCheng" | "chanPinGuiGe" | "dingDanShuLiang" | "chuYangShu" | "chaoBiLi" | "benChangFangSun" | "chuYangRiqi" | "chuHuoRiqi" | "chanPinYaoQiu" | "zhiDan" | "shenHe" | "benChangNeiBuGongXu" | "appendix" | "renLiRequirement" | "yuJiGongQi" | "kaiShiShiJian" | "jieShuShiJian" | "shiFouWanGong" | "wanChengJinDu" | "reviewStatus" | "submitted_at" | "reviewedBy" | "reviewedAt" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["engineeringOrder"]>
+  export type EngineeringOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"engineeringOrderId" | "workId" | "workVer" | "workUnique" | "workClerk" | "workAudit" | "clerkDate" | "auditDate" | "gongSiMingCheng" | "gongChengDanMingCheng" | "gongDanLeiXing" | "caiLiao" | "chanPinLeiXing" | "zhiDanShiJian" | "dingDanXuHao" | "keHu" | "po" | "chengPinMingCheng" | "chanPinGuiGe" | "dingDanShuLiang" | "chuYangShu" | "chaoBiLi" | "benChangFangSun" | "chuYangRiqi" | "chuHuoRiqi" | "chanPinYaoQiu" | "zhiDan" | "shenHe" | "benChangNeiBuGongXu" | "appendix" | "renLiRequirement" | "yuJiGongQi" | "kaiShiShiJian" | "jieShuShiJian" | "shiFouWanGong" | "wanChengJinDu" | "reviewStatus" | "submitted_at" | "reviewedBy" | "reviewedAt" | "reviewComments" | "createdAt" | "updatedAt", ExtArgs["result"]["engineeringOrder"]>
   export type EngineeringOrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     materialLines?: boolean | EngineeringOrder$materialLinesArgs<ExtArgs>
     stepPlans?: boolean | EngineeringOrder$stepPlansArgs<ExtArgs>
@@ -6736,6 +6772,8 @@ export namespace Prisma {
       workUnique: string | null
       workClerk: string | null
       workAudit: string | null
+      clerkDate: string | null
+      auditDate: string | null
       gongSiMingCheng: string | null
       gongChengDanMingCheng: string | null
       gongDanLeiXing: string | null
@@ -6750,7 +6788,7 @@ export namespace Prisma {
       dingDanShuLiang: number | null
       chuYangShu: number | null
       chaoBiLi: number | null
-      benChangFangSun: number | null
+      benChangFangSun: string | null
       chuYangRiqi: string | null
       chuHuoRiqi: string | null
       chanPinYaoQiu: string | null
@@ -7149,6 +7187,8 @@ export namespace Prisma {
     readonly workUnique: FieldRef<"EngineeringOrder", 'String'>
     readonly workClerk: FieldRef<"EngineeringOrder", 'String'>
     readonly workAudit: FieldRef<"EngineeringOrder", 'String'>
+    readonly clerkDate: FieldRef<"EngineeringOrder", 'String'>
+    readonly auditDate: FieldRef<"EngineeringOrder", 'String'>
     readonly gongSiMingCheng: FieldRef<"EngineeringOrder", 'String'>
     readonly gongChengDanMingCheng: FieldRef<"EngineeringOrder", 'String'>
     readonly gongDanLeiXing: FieldRef<"EngineeringOrder", 'String'>
@@ -7163,7 +7203,7 @@ export namespace Prisma {
     readonly dingDanShuLiang: FieldRef<"EngineeringOrder", 'Int'>
     readonly chuYangShu: FieldRef<"EngineeringOrder", 'Int'>
     readonly chaoBiLi: FieldRef<"EngineeringOrder", 'Int'>
-    readonly benChangFangSun: FieldRef<"EngineeringOrder", 'Int'>
+    readonly benChangFangSun: FieldRef<"EngineeringOrder", 'String'>
     readonly chuYangRiqi: FieldRef<"EngineeringOrder", 'String'>
     readonly chuHuoRiqi: FieldRef<"EngineeringOrder", 'String'>
     readonly chanPinYaoQiu: FieldRef<"EngineeringOrder", 'String'>
@@ -13938,7 +13978,9 @@ export namespace Prisma {
     orderVer: 'orderVer',
     orderUnique: 'orderUnique',
     sales: 'sales',
+    salesDate: 'salesDate',
     audit: 'audit',
+    auditDate: 'auditDate',
     xiaZiliaodaiRiqiRequired: 'xiaZiliaodaiRiqiRequired',
     xiaZiliaodaiRiqiPromise: 'xiaZiliaodaiRiqiPromise',
     yinzhangRiqiRequired: 'yinzhangRiqiRequired',
@@ -14069,6 +14111,8 @@ export namespace Prisma {
     workUnique: 'workUnique',
     workClerk: 'workClerk',
     workAudit: 'workAudit',
+    clerkDate: 'clerkDate',
+    auditDate: 'auditDate',
     gongSiMingCheng: 'gongSiMingCheng',
     gongChengDanMingCheng: 'gongChengDanMingCheng',
     gongDanLeiXing: 'gongDanLeiXing',
@@ -14237,12 +14281,13 @@ export namespace Prisma {
 
   export const OrderOrderByRelevanceFieldEnum: {
     orderNumber: 'orderNumber',
-    cpsiaYaoqiu: 'cpsiaYaoqiu',
     dingZhiBeiZhu: 'dingZhiBeiZhu',
     orderVer: 'orderVer',
     orderUnique: 'orderUnique',
     sales: 'sales',
+    salesDate: 'salesDate',
     audit: 'audit',
+    auditDate: 'auditDate',
     xiaZiliaodaiRiqiRequired: 'xiaZiliaodaiRiqiRequired',
     xiaZiliaodaiRiqiPromise: 'xiaZiliaodaiRiqiPromise',
     yinzhangRiqiRequired: 'yinzhangRiqiRequired',
@@ -14354,6 +14399,8 @@ export namespace Prisma {
     workUnique: 'workUnique',
     workClerk: 'workClerk',
     workAudit: 'workAudit',
+    clerkDate: 'clerkDate',
+    auditDate: 'auditDate',
     gongSiMingCheng: 'gongSiMingCheng',
     gongChengDanMingCheng: 'gongChengDanMingCheng',
     gongDanLeiXing: 'gongDanLeiXing',
@@ -14364,6 +14411,7 @@ export namespace Prisma {
     po: 'po',
     chengPinMingCheng: 'chengPinMingCheng',
     chanPinGuiGe: 'chanPinGuiGe',
+    benChangFangSun: 'benChangFangSun',
     chuYangRiqi: 'chuYangRiqi',
     chuHuoRiqi: 'chuHuoRiqi',
     chanPinYaoQiu: 'chanPinYaoQiu',
@@ -14550,13 +14598,15 @@ export namespace Prisma {
     NOT?: OrderWhereInput | OrderWhereInput[]
     orderNumber?: StringFilter<"Order"> | string
     waixiaoFlag?: BoolNullableFilter<"Order"> | boolean | null
-    cpsiaYaoqiu?: StringNullableFilter<"Order"> | string | null
+    cpsiaYaoqiu?: BoolNullableFilter<"Order"> | boolean | null
     cpcQueRen?: BoolNullableFilter<"Order"> | boolean | null
     dingZhiBeiZhu?: StringNullableFilter<"Order"> | string | null
     orderVer?: StringNullableFilter<"Order"> | string | null
     orderUnique?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
+    salesDate?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
+    auditDate?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
     yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
@@ -14644,7 +14694,9 @@ export namespace Prisma {
     orderVer?: SortOrderInput | SortOrder
     orderUnique?: SortOrderInput | SortOrder
     sales?: SortOrderInput | SortOrder
+    salesDate?: SortOrderInput | SortOrder
     audit?: SortOrderInput | SortOrder
+    auditDate?: SortOrderInput | SortOrder
     xiaZiliaodaiRiqiRequired?: SortOrderInput | SortOrder
     xiaZiliaodaiRiqiPromise?: SortOrderInput | SortOrder
     yinzhangRiqiRequired?: SortOrderInput | SortOrder
@@ -14731,12 +14783,14 @@ export namespace Prisma {
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
     waixiaoFlag?: BoolNullableFilter<"Order"> | boolean | null
-    cpsiaYaoqiu?: StringNullableFilter<"Order"> | string | null
+    cpsiaYaoqiu?: BoolNullableFilter<"Order"> | boolean | null
     cpcQueRen?: BoolNullableFilter<"Order"> | boolean | null
     dingZhiBeiZhu?: StringNullableFilter<"Order"> | string | null
     orderVer?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
+    salesDate?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
+    auditDate?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
     yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
@@ -14824,7 +14878,9 @@ export namespace Prisma {
     orderVer?: SortOrderInput | SortOrder
     orderUnique?: SortOrderInput | SortOrder
     sales?: SortOrderInput | SortOrder
+    salesDate?: SortOrderInput | SortOrder
     audit?: SortOrderInput | SortOrder
+    auditDate?: SortOrderInput | SortOrder
     xiaZiliaodaiRiqiRequired?: SortOrderInput | SortOrder
     xiaZiliaodaiRiqiPromise?: SortOrderInput | SortOrder
     yinzhangRiqiRequired?: SortOrderInput | SortOrder
@@ -14908,13 +14964,15 @@ export namespace Prisma {
     NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
     orderNumber?: StringWithAggregatesFilter<"Order"> | string
     waixiaoFlag?: BoolNullableWithAggregatesFilter<"Order"> | boolean | null
-    cpsiaYaoqiu?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    cpsiaYaoqiu?: BoolNullableWithAggregatesFilter<"Order"> | boolean | null
     cpcQueRen?: BoolNullableWithAggregatesFilter<"Order"> | boolean | null
     dingZhiBeiZhu?: StringNullableWithAggregatesFilter<"Order"> | string | null
     orderVer?: StringNullableWithAggregatesFilter<"Order"> | string | null
     orderUnique?: StringNullableWithAggregatesFilter<"Order"> | string | null
     sales?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    salesDate?: StringNullableWithAggregatesFilter<"Order"> | string | null
     audit?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    auditDate?: StringNullableWithAggregatesFilter<"Order"> | string | null
     xiaZiliaodaiRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
     xiaZiliaodaiRiqiPromise?: StringNullableWithAggregatesFilter<"Order"> | string | null
     yinzhangRiqiRequired?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -15249,6 +15307,8 @@ export namespace Prisma {
     workUnique?: StringNullableFilter<"EngineeringOrder"> | string | null
     workClerk?: StringNullableFilter<"EngineeringOrder"> | string | null
     workAudit?: StringNullableFilter<"EngineeringOrder"> | string | null
+    clerkDate?: StringNullableFilter<"EngineeringOrder"> | string | null
+    auditDate?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongSiMingCheng?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongChengDanMingCheng?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongDanLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15263,7 +15323,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: IntNullableFilter<"EngineeringOrder"> | number | null
+    benChangFangSun?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15296,6 +15356,8 @@ export namespace Prisma {
     workUnique?: SortOrderInput | SortOrder
     workClerk?: SortOrderInput | SortOrder
     workAudit?: SortOrderInput | SortOrder
+    clerkDate?: SortOrderInput | SortOrder
+    auditDate?: SortOrderInput | SortOrder
     gongSiMingCheng?: SortOrderInput | SortOrder
     gongChengDanMingCheng?: SortOrderInput | SortOrder
     gongDanLeiXing?: SortOrderInput | SortOrder
@@ -15347,6 +15409,8 @@ export namespace Prisma {
     workVer?: StringNullableFilter<"EngineeringOrder"> | string | null
     workClerk?: StringNullableFilter<"EngineeringOrder"> | string | null
     workAudit?: StringNullableFilter<"EngineeringOrder"> | string | null
+    clerkDate?: StringNullableFilter<"EngineeringOrder"> | string | null
+    auditDate?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongSiMingCheng?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongChengDanMingCheng?: StringNullableFilter<"EngineeringOrder"> | string | null
     gongDanLeiXing?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15361,7 +15425,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: IntNullableFilter<"EngineeringOrder"> | number | null
+    benChangFangSun?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15394,6 +15458,8 @@ export namespace Prisma {
     workUnique?: SortOrderInput | SortOrder
     workClerk?: SortOrderInput | SortOrder
     workAudit?: SortOrderInput | SortOrder
+    clerkDate?: SortOrderInput | SortOrder
+    auditDate?: SortOrderInput | SortOrder
     gongSiMingCheng?: SortOrderInput | SortOrder
     gongChengDanMingCheng?: SortOrderInput | SortOrder
     gongDanLeiXing?: SortOrderInput | SortOrder
@@ -15446,6 +15512,8 @@ export namespace Prisma {
     workUnique?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     workClerk?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     workAudit?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    clerkDate?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    auditDate?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     gongSiMingCheng?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     gongChengDanMingCheng?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     gongDanLeiXing?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
@@ -15460,7 +15528,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
+    benChangFangSun?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chuYangRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
@@ -16058,13 +16126,15 @@ export namespace Prisma {
   export type OrderCreateInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -16145,13 +16215,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -16232,13 +16304,15 @@ export namespace Prisma {
   export type OrderUpdateInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16319,13 +16393,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16406,13 +16482,15 @@ export namespace Prisma {
   export type OrderCreateManyInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -16488,13 +16566,15 @@ export namespace Prisma {
   export type OrderUpdateManyMutationInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16569,13 +16649,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16955,6 +17037,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -16969,7 +17053,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17002,6 +17086,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -17016,7 +17102,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17049,6 +17135,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17063,7 +17151,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17096,6 +17184,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17110,7 +17200,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17143,6 +17233,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -17157,7 +17249,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17187,6 +17279,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17201,7 +17295,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17231,6 +17325,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17245,7 +17341,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18063,7 +18159,9 @@ export namespace Prisma {
     orderVer?: SortOrder
     orderUnique?: SortOrder
     sales?: SortOrder
+    salesDate?: SortOrder
     audit?: SortOrder
+    auditDate?: SortOrder
     xiaZiliaodaiRiqiRequired?: SortOrder
     xiaZiliaodaiRiqiPromise?: SortOrder
     yinzhangRiqiRequired?: SortOrder
@@ -18161,7 +18259,9 @@ export namespace Prisma {
     orderVer?: SortOrder
     orderUnique?: SortOrder
     sales?: SortOrder
+    salesDate?: SortOrder
     audit?: SortOrder
+    auditDate?: SortOrder
     xiaZiliaodaiRiqiRequired?: SortOrder
     xiaZiliaodaiRiqiPromise?: SortOrder
     yinzhangRiqiRequired?: SortOrder
@@ -18243,7 +18343,9 @@ export namespace Prisma {
     orderVer?: SortOrder
     orderUnique?: SortOrder
     sales?: SortOrder
+    salesDate?: SortOrder
     audit?: SortOrder
+    auditDate?: SortOrder
     xiaZiliaodaiRiqiRequired?: SortOrder
     xiaZiliaodaiRiqiPromise?: SortOrder
     yinzhangRiqiRequired?: SortOrder
@@ -18640,6 +18742,8 @@ export namespace Prisma {
     workUnique?: SortOrder
     workClerk?: SortOrder
     workAudit?: SortOrder
+    clerkDate?: SortOrder
+    auditDate?: SortOrder
     gongSiMingCheng?: SortOrder
     gongChengDanMingCheng?: SortOrder
     gongDanLeiXing?: SortOrder
@@ -18682,7 +18786,6 @@ export namespace Prisma {
     dingDanShuLiang?: SortOrder
     chuYangShu?: SortOrder
     chaoBiLi?: SortOrder
-    benChangFangSun?: SortOrder
     renLiRequirement?: SortOrder
     wanChengJinDu?: SortOrder
   }
@@ -18694,6 +18797,8 @@ export namespace Prisma {
     workUnique?: SortOrder
     workClerk?: SortOrder
     workAudit?: SortOrder
+    clerkDate?: SortOrder
+    auditDate?: SortOrder
     gongSiMingCheng?: SortOrder
     gongChengDanMingCheng?: SortOrder
     gongDanLeiXing?: SortOrder
@@ -18738,6 +18843,8 @@ export namespace Prisma {
     workUnique?: SortOrder
     workClerk?: SortOrder
     workAudit?: SortOrder
+    clerkDate?: SortOrder
+    auditDate?: SortOrder
     gongSiMingCheng?: SortOrder
     gongChengDanMingCheng?: SortOrder
     gongDanLeiXing?: SortOrder
@@ -18780,7 +18887,6 @@ export namespace Prisma {
     dingDanShuLiang?: SortOrder
     chuYangShu?: SortOrder
     chaoBiLi?: SortOrder
-    benChangFangSun?: SortOrder
     renLiRequirement?: SortOrder
     wanChengJinDu?: SortOrder
   }
@@ -20198,13 +20304,15 @@ export namespace Prisma {
   export type OrderCreateWithoutNextVersionsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -20284,13 +20392,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutNextVersionsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -20375,13 +20485,15 @@ export namespace Prisma {
   export type OrderCreateWithoutPreviousOrderInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -20461,13 +20573,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutPreviousOrderInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -20705,13 +20819,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutNextVersionsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20791,13 +20907,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutNextVersionsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20896,13 +21014,15 @@ export namespace Prisma {
     NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
     orderNumber?: StringFilter<"Order"> | string
     waixiaoFlag?: BoolNullableFilter<"Order"> | boolean | null
-    cpsiaYaoqiu?: StringNullableFilter<"Order"> | string | null
+    cpsiaYaoqiu?: BoolNullableFilter<"Order"> | boolean | null
     cpcQueRen?: BoolNullableFilter<"Order"> | boolean | null
     dingZhiBeiZhu?: StringNullableFilter<"Order"> | string | null
     orderVer?: StringNullableFilter<"Order"> | string | null
     orderUnique?: StringNullableFilter<"Order"> | string | null
     sales?: StringNullableFilter<"Order"> | string | null
+    salesDate?: StringNullableFilter<"Order"> | string | null
     audit?: StringNullableFilter<"Order"> | string | null
+    auditDate?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiRequired?: StringNullableFilter<"Order"> | string | null
     xiaZiliaodaiRiqiPromise?: StringNullableFilter<"Order"> | string | null
     yinzhangRiqiRequired?: StringNullableFilter<"Order"> | string | null
@@ -21253,13 +21373,15 @@ export namespace Prisma {
   export type OrderCreateWithoutOrderItemsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -21339,13 +21461,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutOrderItemsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -21488,13 +21612,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutOrderItemsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21574,13 +21700,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutOrderItemsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21891,6 +22019,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -21905,7 +22035,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -21937,6 +22067,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -21951,7 +22083,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22046,6 +22178,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22060,7 +22194,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22092,6 +22226,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22106,7 +22242,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22259,13 +22395,15 @@ export namespace Prisma {
   export type OrderCreateWithoutDocumentsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -22345,13 +22483,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutDocumentsInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -22440,6 +22580,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -22454,7 +22596,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22486,6 +22628,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -22500,7 +22644,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22544,13 +22688,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutDocumentsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22630,13 +22776,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutDocumentsInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22731,6 +22879,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22745,7 +22895,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22777,6 +22927,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22791,7 +22943,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22819,13 +22971,15 @@ export namespace Prisma {
   export type OrderCreateWithoutReviewTasksInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -22905,13 +23059,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutReviewTasksInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -23007,13 +23163,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutReviewTasksInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23093,13 +23251,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutReviewTasksInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23243,13 +23403,15 @@ export namespace Prisma {
   export type OrderCreateWithoutStepPlansInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -23329,13 +23491,15 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutStepPlansInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -23424,6 +23588,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -23438,7 +23604,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -23470,6 +23636,8 @@ export namespace Prisma {
     workUnique?: string | null
     workClerk?: string | null
     workAudit?: string | null
+    clerkDate?: string | null
+    auditDate?: string | null
     gongSiMingCheng?: string | null
     gongChengDanMingCheng?: string | null
     gongDanLeiXing?: string | null
@@ -23484,7 +23652,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: number | null
+    benChangFangSun?: string | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -23528,13 +23696,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutStepPlansInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23614,13 +23784,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutStepPlansInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23715,6 +23887,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23729,7 +23903,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23761,6 +23935,8 @@ export namespace Prisma {
     workUnique?: NullableStringFieldUpdateOperationsInput | string | null
     workClerk?: NullableStringFieldUpdateOperationsInput | string | null
     workAudit?: NullableStringFieldUpdateOperationsInput | string | null
+    clerkDate?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     gongSiMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongChengDanMingCheng?: NullableStringFieldUpdateOperationsInput | string | null
     gongDanLeiXing?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23775,7 +23951,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableIntFieldUpdateOperationsInput | number | null
+    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23824,13 +24000,15 @@ export namespace Prisma {
   export type OrderCreateManyPreviousOrderInput = {
     orderNumber: string
     waixiaoFlag?: boolean | null
-    cpsiaYaoqiu?: string | null
+    cpsiaYaoqiu?: boolean | null
     cpcQueRen?: boolean | null
     dingZhiBeiZhu?: string | null
     orderVer?: string | null
     orderUnique?: string | null
     sales?: string | null
+    salesDate?: string | null
     audit?: string | null
+    auditDate?: string | null
     xiaZiliaodaiRiqiRequired?: string | null
     xiaZiliaodaiRiqiPromise?: string | null
     yinzhangRiqiRequired?: string | null
@@ -24001,13 +24179,15 @@ export namespace Prisma {
   export type OrderUpdateWithoutPreviousOrderInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24087,13 +24267,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutPreviousOrderInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24173,13 +24355,15 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyWithoutPreviousOrderInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     waixiaoFlag?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    cpsiaYaoqiu?: NullableStringFieldUpdateOperationsInput | string | null
+    cpsiaYaoqiu?: NullableBoolFieldUpdateOperationsInput | boolean | null
     cpcQueRen?: NullableBoolFieldUpdateOperationsInput | boolean | null
     dingZhiBeiZhu?: NullableStringFieldUpdateOperationsInput | string | null
     orderVer?: NullableStringFieldUpdateOperationsInput | string | null
     orderUnique?: NullableStringFieldUpdateOperationsInput | string | null
     sales?: NullableStringFieldUpdateOperationsInput | string | null
+    salesDate?: NullableStringFieldUpdateOperationsInput | string | null
     audit?: NullableStringFieldUpdateOperationsInput | string | null
+    auditDate?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null
     xiaZiliaodaiRiqiPromise?: NullableStringFieldUpdateOperationsInput | string | null
     yinzhangRiqiRequired?: NullableStringFieldUpdateOperationsInput | string | null

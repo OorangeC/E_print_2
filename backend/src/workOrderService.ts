@@ -134,7 +134,8 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
                     biaoMianChuLi: item.biaoMianChuLi,
                     yinShuaBanShu: item.yinShuaBanShu,
                     shengChanLuJing: item.shengChanLuJing,
-                    paiBanFangShi: item.paiBanFangShi
+                    paiBanFangShi: item.paiBanFangShi,
+                    dangQianJinDu: typeof item.dangQianJinDu === 'number' ? item.dangQianJinDu : null
                 }))
             },
 

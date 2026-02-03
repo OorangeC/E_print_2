@@ -129,7 +129,7 @@ app.get('/api/orders/findById', async (req, res) => {
         const id = req.query.order_id as string;
         if (!id) return res.status(400).json({ error: 'Missing order_id parameter' });
         const result = await FindOrderByID(id);
-        if (!result) return res.status(404).json({ error: 'Order not found' });
+        if (!result) return res.status(404).json({ error: 'Order not found/findById' });
         res.json(result);
     } catch (error: any) {
         res.status(500).json({ error: error.message });

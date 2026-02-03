@@ -15,7 +15,7 @@ model Order {
   orderNumber String @id @map("order_id")
 
   waixiaoFlag   Boolean? @map("waixiao_flag") // 外销标识
-  cpsiaYaoqiu   String?  @map("cpsia_yaoqiu") // CPSIA 要求
+  cpsiaYaoqiu   Boolean? @map("cpsia_yaoqiu") // CPSIA 要求
   cpcQueRen     Boolean? @map("cpc_que_ren")
   dingZhiBeiZhu String?  @map("ding_zhi_bei_zhu")
 
@@ -23,7 +23,9 @@ model Order {
   orderVer    String? @map("order_ver")
   orderUnique String? @unique @map("order_unique")
   sales       String? @map("sales")
+  salesDate   String? @map("salesDate")
   audit       String? @map("audit")
+  auditDate   String? @map("auditDate")
 
   // ============ 排期信息 (Schedule Information) ============
   xiaZiliaodaiRiqiRequired String? @map("xia_ziliaodai_riqi_required") // 下资料袋-要求日期
@@ -213,6 +215,8 @@ model EngineeringOrder {
   workUnique String? @unique @map("work_unique")
   workClerk  String? @map("work_clerk")
   workAudit  String? @map("work_audit")
+  clerkDate  String? @map("clerkDate")
+  auditDate  String? @map("auditDate")
 
   // ============ 表头信息 ============
   gongSiMingCheng       String? @map("gong_si_ming_cheng")
@@ -232,7 +236,7 @@ model EngineeringOrder {
   dingDanShuLiang   Int?    @map("ding_dan_shu_liang")
   chuYangShu        Int?    @map("chu_yang_shu")
   chaoBiLi          Int?    @map("chao_bi_li")
-  benChangFangSun   Int?    @map("ben_chang_fang_sun")
+  benChangFangSun   String? @map("ben_chang_fang_sun")
   chuYangRiqi       String? @map("chu_yang_riqi")
   chuHuoRiqi        String? @map("chu_huo_riqi")
 

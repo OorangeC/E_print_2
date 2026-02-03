@@ -24,7 +24,7 @@ export interface IIMDTO {
     paiBanFangShi?: string;
     kaiShiRiQi?: string;
     yuQiJieShu?: string;
-    dangQianJinDu?: string;
+    dangQianJinDu?: number;
 }
 
 export interface IAuditLogDTO {
@@ -124,7 +124,7 @@ function materialLineToIMDTO(line: any): IIMDTO {
         paiBanFangShi: line.paiBanFangShi || undefined,
         kaiShiRiQi: formatDate(line.kaiShiShiJian),
         yuQiJieShu: formatDate(line.jieShuShiJian),
-        dangQianJinDu: undefined, // 暂无对应字段
+        dangQianJinDu: line.dangQianJinDu ?? undefined,
     };
 }
 
