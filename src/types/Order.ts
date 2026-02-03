@@ -5,7 +5,9 @@ export interface IOrder {
   order_unique?: string //唯一索引，在提交order报审核的时候创建，是order_id+"_"+order_ver.
   customer: string // 客户名称: 创建草稿时唯一需要明确的，这样就可以开始保存草稿了
   sales: string //业务员名称或者工号
+  salesDate?: string //订单提交日期
   audit?: string //审单员名称或者工号
+  auditDate?: string //订单过审日期
 
   // 外销与CPSIA
   cpcQueRen?: boolean //cpc确认

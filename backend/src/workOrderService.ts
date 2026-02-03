@@ -22,7 +22,9 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         work_ver,
         work_unique,
         work_clerk,
+        clerkDate,
         work_audit,
+        auditDate,
         zhiDanYuan,
         workClerk,
 
@@ -85,7 +87,9 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             workUnique,
 
             workClerk: workClerk || work_clerk || zhiDanYuan,
+            clerkDate: clerkDate || null,
             workAudit: work_audit || null,
+            auditDate: auditDate || null,
 
             // 表头信息
             gongDanLeiXing,

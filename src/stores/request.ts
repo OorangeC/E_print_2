@@ -62,13 +62,13 @@ export const findOrderByID = (orderId: string): Promise<IOrder> => {
 export const FindOrderByID = findOrderByID
 
 // 2. 根据状态查询订单列表 (如查询所有“待审核”的单子)
-export const findPendingOrders = (status: OrderStatus): Promise<IOrder[]> => {
-  return service.get('/orders/findPending', {
+export const findOrdersWithStatus = (status: OrderStatus): Promise<IOrder[]> => {
+  return service.get('/orders/status', {
     params: { orderstatus: status },
   })
 }
-// 文档命名兼容：FindPendingOrders
-export const FindPendingOrders = findPendingOrders
+// 文档命名兼容：FindOrdersWithStatus
+export const FindOrdersWithStatus = findOrdersWithStatus
 
 // 3. 修改订单状态 (审核通过、驳回)
 export const changeOrderStatusTo = (orderunique: string, status: OrderStatus) => {
@@ -101,11 +101,13 @@ export const findWorkOrderByID = (workunique: string): Promise<IWorkOrder> => {
 }
 export const FindWorkOrderByID = findWorkOrderByID
 
-// 5. 查询所有待处理的工单
-export const findPendingWorkOrders = (): Promise<IWorkOrder[]> => {
-  return service.get('/workOrders/pending')
+// 5. 按状态查询工单
+export const findWorkOrdersWithStatus = (status: string): Promise<IWorkOrder[]> => {
+  return service.get('/workOrders/findWithStatus', {
+    params: { workorderstatus: status },
+  })
 }
-export const FindPendingWorkOrders = findPendingWorkOrders
+export const FindWorkOrdersWithStatus = findWorkOrdersWithStatus
 
 // 6. 修改工单状态
 export const changeWorkOrderStatusTo = (workunique: string, status: string) => {

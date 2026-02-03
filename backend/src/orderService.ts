@@ -63,22 +63,10 @@ export async function processOrderRequest(jsonString: string, salesman: string, 
 async function createNewOrder(orderNumber: string, data: any, salesman: string, isDraft: boolean, files?: any[]) {
     const { chanPinMingXi, order_id, order_ver, order_unique, ...baseData } = data;
 
-    // 由于当前 Prisma Client 还未成功重新生成，某些在 schema 中新增的字段（如 cpcQueRen 等）
-    // 在客户端类型里仍然是"未知字段"，直接传给 create/update 会导致 Unknown argument 错误。
-    // 这里做一层白名单过滤，只把老版本模型里已有的字段传给数据库，保证创建流程可用。
+    // 只排除前端专用字段，其余字段直接传入数据库
     const {
-        cpcQueRen,
-        waixiaoFlag,
-        cpsiaYaoqiu,
-        dingZhiBeiZhu,
-        genSeZhiShi,
-        yongTu,
-        keLaiXinXi,
-        chuHuoShuLiang,
-        chuYangShuoMing,
         orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
         _convertedStatus, // 从 processOrderRequest 转换来的英文状态
-        // 其余新加字段如有需要再按需加入
         ...dbSafeData
     } = baseData;
 
@@ -141,34 +129,34 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
  * 更新已有订单
  */
 async function updateExistingOrder(orderNumber: string, data: any, isDraft: boolean, files?: any[]) {
-    // 和 createNewOrder 保持一致，把前端专用字段和新加字段剥离掉，避免 Unknown arg 错误
+    // 把前端专用字段剥离掉
     const { chanPinMingXi, order_id, order_ver, order_unique, orderNumber: _ignoredOrderNumber, ...baseData } = data;
 
+    // 只排除前端专用字段，其余字段直接传入数据库
     const {
-        cpcQueRen,
-        waixiaoFlag,
-        cpsiaYaoqiu,
-        dingZhiBeiZhu,
-        genSeZhiShi,
-        yongTu,
-        keLaiXinXi,
-        chuHuoShuLiang,
-        chuYangShuoMing,
         orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
         _convertedStatus, // 从 processOrderRequest 转换来的英文状态
         ...dbSafeData
     } = baseData;
 
-    // 确定最终的状态值：优先使用前端传入的状态，否则根据 isDraft 决定
-    const finalStatus = (_convertedStatus || (isDraft ? '草稿' : '待审核')) as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消';
+    // PATCH 语义：仅更新前端显式传入的字段（undefined 视为未传）
+    const patchData = Object.fromEntries(
+        Object.entries(dbSafeData).filter(([, value]) => value !== undefined)
+    ) as Record<string, any>;
+
+    // 状态字段：仅在前端显式传入时更新
+    if (typeof _convertedStatus === 'string') {
+        patchData.status = _convertedStatus;
+    } else if (typeof orderstatus === 'string') {
+        patchData.status = orderstatus;
+    }
 
     const updatedOrder = await sqlDB.$transaction(async (tx) => {
         // 1. 更新主表
         await tx.order.update({
             where: { orderNumber },
             data: {
-                ...dbSafeData,
-                status: finalStatus, // 使用转换后的状态或默认值
+                ...patchData,
                 updatedAt: new Date().toISOString()
             }
         });

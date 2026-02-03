@@ -10,7 +10,9 @@ export const orderBaseSchema = z.object({
     order_ver: z.string().optional(),        // 订单版本
     order_unique: z.string().optional(),     // 唯一索引
     sales: z.string().optional(),            // 业务员名称或工号
+    salesDate: z.string().optional(),        // 订单提交日期
     audit: z.string().optional(),            // 审单员名称或工号
+    auditDate: z.string().optional(),        // 订单过审日期
 
     cpcQueRen: z.boolean().optional(),
     waixiaoFlag: z.boolean().optional(),

@@ -3,7 +3,9 @@ export interface IWorkOrder {
   work_ver: string //版本号，order审核通过的时候自动创建,和order_ver相同
   work_unique: string //唯一索引，order审核通过的时候自动创建，work_id+"_"+work_ver
   work_clerk?: string //制单员名称或者工号
+  clerkDate?: string //工程单提交日期
   work_audit?: string //工程单审核员名称或者工号
+  auditDate?: string //工程单过审日期
   gongDanLeiXing?: string //工单类型
   caiLiao?: string //普通材料
   chanPinLeiXing?: string //产品类型

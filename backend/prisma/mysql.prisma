@@ -23,7 +23,9 @@ model Order {
   orderVer    String? @map("order_ver")
   orderUnique String? @unique @map("order_unique")
   sales       String? @map("sales")
+  salesDate   String? @map("salesDate")
   audit       String? @map("audit")
+  auditDate   String? @map("auditDate")
 
   // ============ 排期信息 (Schedule Information) ============
   xiaZiliaodaiRiqiRequired String?  @map("xia_ziliaodai_riqi_required") // 下资料袋-要求日期
@@ -213,6 +215,8 @@ model EngineeringOrder {
   workUnique String? @unique @map("work_unique")
   workClerk  String? @map("work_clerk")
   workAudit  String? @map("work_audit")
+  clerkDate  String? @map("clerkDate")
+  auditDate  String? @map("auditDate")
 
   // ============ 表头信息 ============
   gongSiMingCheng       String? @map("gong_si_ming_cheng")

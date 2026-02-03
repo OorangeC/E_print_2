@@ -42,7 +42,9 @@ export interface IOrderDTO {
     order_unique?: string;
     customer: string;
     sales: string;
+    salesDate?: string;
     audit?: string;
+    auditDate?: string;
 
     // 外销与CPSIA
     cpcQueRen?: boolean;
@@ -222,7 +224,9 @@ export function orderToDTO(order: any, auditLogs?: any[]): IOrderDTO {
         order_unique: order.orderUnique || `${order.orderNumber}_V1`,
         customer: order.customer || '',
         sales: order.sales || order.yeWuDaiBiaoFenJi || '',
+        salesDate: order.salesDate || undefined,
         audit: order.audit || undefined,
+        auditDate: order.auditDate || undefined,
 
         // 外销与CPSIA
         cpcQueRen: order.cpcQueRen || undefined,

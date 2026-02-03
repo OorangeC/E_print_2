@@ -46,7 +46,9 @@ export interface IWorkOrderDTO {
     work_ver: string;
     work_unique: string;
     work_clerk?: string;
+    clerkDate?: string;
     work_audit?: string;
+    auditDate?: string;
 
     // 基本信息
     gongDanLeiXing?: string;
@@ -174,7 +176,9 @@ export function workOrderToDTO(workOrder: any, auditLogs?: any[]): IWorkOrderDTO
         work_ver: workOrder.workVer || 'V1',
         work_unique: workOrder.workUnique || `${workOrder.workId}_V1`,
         work_clerk: workOrder.workClerk || undefined,
+        clerkDate: workOrder.clerkDate || undefined,
         work_audit: workOrder.workAudit || undefined,
+        auditDate: workOrder.auditDate || undefined,
 
         // 基本信息
         gongDanLeiXing: workOrder.gongDanLeiXing || undefined,
