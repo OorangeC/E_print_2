@@ -192,7 +192,14 @@
                   <!-- <span v-else class="bar-label-outside">{{ item.dangQianJinDu || 0 }}%</span> -->
                 </div>
               </td>
-              <td colspan="2"></td>
+              <td colspan="2">
+                <!-- <button
+                  v-if="props.mode === PageMode.PRODUCTION"
+                  @click="syncProgess(WorkOrderData, item)"
+                >
+                  同步进度
+                </button> -->
+              </td>
               <td></td>
             </tr>
           </tbody>
