@@ -649,7 +649,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\src\\generated\\mysql",
+      "value": "/Users/macbook/programs/personal/E_print_2/backend/src/generated/mysql",
       "fromEnvVar": null
     },
     "config": {
@@ -658,12 +658,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\xic40\\OneDrive\\Desktop\\E_print_2\\backend\\prisma\\mysql.prisma",
+    "sourceFilePath": "/Users/macbook/programs/personal/E_print_2/backend/prisma/mysql.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -677,6 +677,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

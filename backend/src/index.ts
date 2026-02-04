@@ -365,10 +365,10 @@ app.post('/api/workOrders/create', upload.array('files'), async (req, res) => {
             files: req.files?.length || 0
         });
         
-        const { workOrderJson } = req.body;
+        const { workOrderData } = req.body;
         const files = req.files as any[];
 
-        const result = await handleIncomingWorkOrder(workOrderJson, files);
+        const result = await handleIncomingWorkOrder(workOrderData, files);
         
         logAPISuccess('POST /api/workOrders/create', result);
         res.json(result);
