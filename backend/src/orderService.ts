@@ -2,6 +2,7 @@ import { sqlDB, mongoDB } from './db';
 import { draftOrderSchema, submitOrderSchema } from './schemas/orderSchema';
 import { orderToDTO, ordersToDTO } from './dto/orderDTO';
 import { logService, logServiceSuccess, logServiceError } from './utils/debugLogger';
+import { createWorkOrderFromOrder } from './workOrderService';
 
 /**
  * 后端 OrderService - 处理校验、暂存与提交
@@ -354,6 +355,19 @@ export async function UpdateOrderStatus(orderUnique: string, orderStatusText: st
         data: updateData,
         include: { orderItems: true, documents: true }
     });
+
+    // ✅ 如果状态变为"通过"，自动创建对应的工程单
+    if (orderStatusText === '通过') {
+        try {
+            logService('UpdateOrderStatus', { message: '订单审核通过，开始创建工程单' });
+            const workOrder = await createWorkOrderFromOrder(updated, auditorName);
+            logServiceSuccess('UpdateOrderStatus', `已为订单 ${orderUnique} 创建工程单 ${workOrder.work_id}`);
+        } catch (error: any) {
+            logServiceError('UpdateOrderStatus', error);
+            console.error('创建工程单失败，但订单状态已更新:', error);
+            // 不抛出错误，允许订单状态更新成功，即使工程单创建失败
+        }
+    }
 
     logServiceSuccess('UpdateOrderStatus', `已更新订单 ${orderUnique} 状态为 ${orderStatusText}，审核员: ${auditorName}`);
     

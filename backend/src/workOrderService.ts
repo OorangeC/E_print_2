@@ -20,7 +20,7 @@ export async function handleIncomingWorkOrder(jsonString: string, files?: any[])
         });
         
         const result = await createWorkOrderFromFrontend(rawData, files);
-        logServiceSuccess('handleIncomingWorkOrder', `work_id: ${result.work_id}`);
+        logServiceSuccess('handleIncomingWorkOrder', '工程单处理成功');
         return result;
     } catch (error) {
         logServiceError('handleIncomingWorkOrder', error);
@@ -111,6 +111,48 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         }
     });
 
+    // ✅ 先检查工程单是否已存在
+    const existing = await sqlDB.engineeringOrder.findUnique({
+        where: { workUnique },
+        include: { materialLines: true, documents: true }
+    });
+
+    if (existing) {
+        logService('createWorkOrderFromFrontend', { message: `工程单 ${workUnique} 已存在，更新现有工程单` });
+        
+        // 如果已存在，更新而不是创建
+        const updated = await sqlDB.engineeringOrder.update({
+            where: { workUnique },
+            data: {
+                workClerk: finalWorkClerk,
+                clerkDate: clerkDate || null,
+                workAudit: work_audit || null,
+                auditDate: auditDate || null,
+                gongDanLeiXing,
+                caiLiao,
+                chanPinLeiXing,
+                zhiDanShiJian: zhiDanShiJian || null,
+                keHu: customer,
+                po: customerPO,
+                chengPinMingCheng: productName,
+                chanPinGuiGe,
+                dingDanShuLiang,
+                chuYangShu: chuYangShuLiang,
+                chaoBiLi: chaoBiLiShuLiang,
+                benChangFangSun: benChangFangSun,
+                chuYangRiqi: chuYangRiqiRequired || null,
+                chuHuoRiqi: chuHuoRiqiRequired || null,
+                zhiDan: zhiDanYuan,
+                reviewStatus: (reviewStatus || workorderstatus || orderStatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消'
+            },
+            include: { materialLines: true, documents: true }
+        });
+        
+        logServiceSuccess('createWorkOrderFromFrontend', `已更新工程单 ${workUnique}`);
+        return workOrderToDTO(updated);
+    }
+
+    // 如果不存在，创建新的
     return await sqlDB.engineeringOrder.create({
         data: {
             // 与接口定义对齐的关键字段
@@ -317,4 +359,78 @@ export async function UpdateWorkOrderProcess(workId: string, process: number, no
 
     // 简单返回受影响条数；如需返回 DTO，可以再查一次
     return { updatedCount: updated.count };
+}
+
+/**
+ * 从订单创建工程单（订单审核通过时自动调用）
+ * @param order 已审核通过的订单对象
+ * @param auditorName 审核员名称
+ * @returns 创建的工程单 DTO
+ */
+export async function createWorkOrderFromOrder(order: any, auditorName: string = 'admin') {
+    logService('createWorkOrderFromOrder', {
+        input: { orderId: order.orderId, orderUnique: order.orderUnique, auditor: auditorName }
+    });
+
+    // 生成工程单号：order_id + "_W"
+    const workId = `${order.orderId}_W`;
+    const workVer = order.orderVer || 'V1';
+    const workUnique = `${workId}_${workVer}`;
+
+    logService('createWorkOrderFromOrder', {
+        fields: {
+            '生成的 workId': workId,
+            '生成的 workVer': workVer,
+            '生成的 workUnique': workUnique,
+            '审核员': auditorName
+        }
+    });
+
+    // ✅ 先检查工程单是否已存在
+    const existing = await sqlDB.engineeringOrder.findUnique({
+        where: { workUnique },
+        include: { materialLines: true, documents: true }
+    });
+
+    if (existing) {
+        logService('createWorkOrderFromOrder', { message: `工程单 ${workUnique} 已存在，返回现有工程单` });
+        return workOrderToDTO(existing);
+    }
+
+    // 创建工程单，继承订单数据
+    const created = await sqlDB.engineeringOrder.create({
+        data: {
+            workId,
+            workVer,
+            workUnique,
+            workClerk: auditorName, // 制单员设为审核员
+            clerkDate: new Date().toISOString(),
+            
+            // 从订单继承基本信息
+            keHu: order.customer,
+            po: order.customerPo,
+            chengPinMingCheng: order.productName,
+            dingDanShuLiang: order.dingDanShuLiang,
+            chuYangShu: order.chuYangShuLiang,
+            chaoBiLi: order.chaoBiLiShuLiang,
+            chuYangRiqi: order.chuYangRiqiRequired,
+            chuHuoRiqi: order.chuHuoRiqiRequired,
+            
+            // 默认状态为草稿
+            reviewStatus: '草稿' as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
+            
+            // 空的中间物料行和文档（后续可手动补充）
+            materialLines: {
+                create: []
+            },
+            documents: {
+                create: []
+            }
+        },
+        include: { materialLines: true, documents: true }
+    });
+
+    logServiceSuccess('createWorkOrderFromOrder', `已创建工程单 ${workId}，唯一标识: ${workUnique}`);
+    
+    return workOrderToDTO(created);
 }
