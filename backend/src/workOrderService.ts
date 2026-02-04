@@ -30,12 +30,11 @@ export async function handleIncomingWorkOrder(jsonString: string, files?: any[])
 }
 
 async function createWorkOrderFromFrontend(data: any, files?: any[]) {
-    // 兼容前端字段：workorderstatus / orderStatus / reviewStatus 都可能出现
     const {
         intermedia,
         attachments,
 
-        // --- 关键：与 IWorkOrder 对齐的字段命名 ---
+        // 标准字段
         work_id,
         work_ver,
         work_unique,
@@ -43,14 +42,9 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         clerkDate,
         work_audit,
         auditDate,
-        zhiDanYuan,
-        workClerk,
-
-        orderStatus,
         workorderstatus,
-        reviewStatus,
 
-        // 与数据库字段需要手动映射的前端字段
+        // 工单业务字段
         gongDanLeiXing,
         caiLiao,
         chanPinLeiXing,
@@ -65,9 +59,16 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         benChangFangSun,
         chuYangRiqiRequired,
         chuHuoRiqiRequired,
-        // 其余字段先忽略，后面有需要再扩展
+        // 其余字段忽略（白名单模式，防止数据注入）
         ...rest
     } = data;
+
+    //  过滤空的物料行
+    const validIntermedia = intermedia?.filter((item: any) => {
+        const hasComponent = !!(item.buJianMingCheng && item.buJianMingCheng.trim());
+        const hasMaterial = !!(item.wuLiaoMingCheng && item.wuLiaoMingCheng.trim());
+        return hasComponent || hasMaterial;
+    }) || [];
 
     // === 工程单号生成逻辑，与 IWorkOrder 注释对齐 ===
     // IWorkOrder:
@@ -98,16 +99,14 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         workUnique = `${workId}_${workVer}`;
     }
 
-    const finalWorkClerk = workClerk || work_clerk || zhiDanYuan;
-    
     logService('createWorkOrderFromFrontend', {
         fields: {
             '生成的 workId': workId,
             '生成的 workVer': workVer,
             '生成的 workUnique': workUnique,
-            '最终 workClerk': finalWorkClerk,
+            'work_clerk': work_clerk,
             'customer': customer,
-            'reviewStatus': reviewStatus || workorderstatus || orderStatus || '待审核'
+            'workorderstatus': workorderstatus || '待审核'
         }
     });
 
@@ -124,7 +123,7 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
         const updated = await sqlDB.engineeringOrder.update({
             where: { workUnique },
             data: {
-                workClerk: finalWorkClerk,
+                workClerk: work_clerk,
                 clerkDate: clerkDate || null,
                 workAudit: work_audit || null,
                 auditDate: auditDate || null,
@@ -142,8 +141,35 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
                 benChangFangSun: benChangFangSun,
                 chuYangRiqi: chuYangRiqiRequired || null,
                 chuHuoRiqi: chuHuoRiqiRequired || null,
-                zhiDan: zhiDanYuan,
-                reviewStatus: (reviewStatus || workorderstatus || orderStatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消'
+                zhiDan: work_clerk,
+                reviewStatus: (workorderstatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
+                
+                // 动态更新物料行：删除所有旧的，创建新的（已过滤空行）
+                materialLines: {
+                    deleteMany: {},
+                    create: validIntermedia.map((item: any, idx: number) => ({
+                        lineNo: item.lineNo || idx + 1,  // 前端可传入顺序，否则自动编号
+                        buJianMingCheng: item.buJianMingCheng,
+                        yinShuaYanSe: item.yinShuaYanSe,
+                        wuLiaoMiaoShu: item.wuLiaoMingCheng,
+                        pinPai: item.pinPai,
+                        caiLiaoGuiGe: item.caiLiaoGuiGe,
+                        fsc: item.FSC,
+                        kaiShu: item.kaiShu,
+                        shangJiChiCun: item.shangJiChiCun,
+                        paiBanMoSu: item.paiBanMuShu,
+                        yinChuShu: item.yinChuShu,
+                        yinSun: item.yinSun,
+                        lingLiaoShuZhang: item.lingLiaoShu,
+                        biaoMianChuLi: item.biaoMianChuLi,
+                        yinShuaBanShu: item.yinShuaBanShu,
+                        shengChanLuJing: item.shengChanLuJing,
+                        paiBanFangShi: item.paiBanFangShi,
+                        kaiShiShiJian: item.kaiShiRiQi || null,
+                        jieShuShiJian: item.yuQiJieShu || null,
+                        dangQianJinDu: typeof item.dangQianJinDu === 'number' ? item.dangQianJinDu : null
+                    }))
+                }
             },
             include: { materialLines: true, documents: true }
         });
@@ -160,7 +186,7 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             workVer,
             workUnique,
 
-            workClerk: finalWorkClerk,
+            workClerk: work_clerk,
             clerkDate: clerkDate || null,
             workAudit: work_audit || null,
             auditDate: auditDate || null,
@@ -183,16 +209,16 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             chuYangRiqi: chuYangRiqiRequired || null,
             chuHuoRiqi: chuHuoRiqiRequired || null,
 
-            // 让工单能被 FindWorkOrdersByClerk(clerkName) 查到，同时保留制单人
-            zhiDan: zhiDanYuan,
+            // 让工单能被 FindWorkOrdersByClerk(clerkName) 查到
+            zhiDan: work_clerk,
 
-            // 审批状态 - 直接使用前端传入的中文状态（数据库枚举和前端一致）
-            reviewStatus: (reviewStatus || workorderstatus || orderStatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
+            // 审批状态
+            reviewStatus: (workorderstatus || '待审核') as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
 
-            // 中间物料行
+            // 中间物料行（动态添加/删除，已过滤空行）
             materialLines: {
-                create: intermedia?.map((item: any, idx: number) => ({
-                    lineNo: idx + 1,
+                create: validIntermedia.map((item: any, idx: number) => ({
+                    lineNo: item.lineNo || idx + 1,  // 前端可传入顺序，否则自动编号
                     buJianMingCheng: item.buJianMingCheng,
                     yinShuaYanSe: item.yinShuaYanSe,
                     wuLiaoMiaoShu: item.wuLiaoMingCheng,
@@ -209,8 +235,8 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
                     yinShuaBanShu: item.yinShuaBanShu,
                     shengChanLuJing: item.shengChanLuJing,
                     paiBanFangShi: item.paiBanFangShi,
-                    kaiShiShiJian: item.kaiShiRiQi || null,  // ✅ 工序开始日期
-                    jieShuShiJian: item.yuQiJieShu || null,  // ✅ 工序预期结束日期
+                    kaiShiShiJian: item.kaiShiRiQi || null,
+                    jieShuShiJian: item.yuQiJieShu || null,
                     dangQianJinDu: typeof item.dangQianJinDu === 'number' ? item.dangQianJinDu : null
                 }))
             },
@@ -361,76 +387,3 @@ export async function UpdateWorkOrderProcess(workId: string, process: number, no
     return { updatedCount: updated.count };
 }
 
-/**
- * 从订单创建工程单（订单审核通过时自动调用）
- * @param order 已审核通过的订单对象
- * @param auditorName 审核员名称
- * @returns 创建的工程单 DTO
- */
-export async function createWorkOrderFromOrder(order: any, auditorName: string = 'admin') {
-    logService('createWorkOrderFromOrder', {
-        input: { orderId: order.orderId, orderUnique: order.orderUnique, auditor: auditorName }
-    });
-
-    // 生成工程单号：order_id + "_W"
-    const workId = `${order.orderId}_W`;
-    const workVer = order.orderVer || 'V1';
-    const workUnique = `${workId}_${workVer}`;
-
-    logService('createWorkOrderFromOrder', {
-        fields: {
-            '生成的 workId': workId,
-            '生成的 workVer': workVer,
-            '生成的 workUnique': workUnique,
-            '审核员': auditorName
-        }
-    });
-
-    // ✅ 先检查工程单是否已存在
-    const existing = await sqlDB.engineeringOrder.findUnique({
-        where: { workUnique },
-        include: { materialLines: true, documents: true }
-    });
-
-    if (existing) {
-        logService('createWorkOrderFromOrder', { message: `工程单 ${workUnique} 已存在，返回现有工程单` });
-        return workOrderToDTO(existing);
-    }
-
-    // 创建工程单，继承订单数据
-    const created = await sqlDB.engineeringOrder.create({
-        data: {
-            workId,
-            workVer,
-            workUnique,
-            workClerk: auditorName, // 制单员设为审核员
-            clerkDate: new Date().toISOString(),
-            
-            // 从订单继承基本信息
-            keHu: order.customer,
-            po: order.customerPo,
-            chengPinMingCheng: order.productName,
-            dingDanShuLiang: order.dingDanShuLiang,
-            chuYangShu: order.chuYangShuLiang,
-            chaoBiLi: order.chaoBiLiShuLiang,
-            chuYangRiqi: order.chuYangRiqiRequired,
-            chuHuoRiqi: order.chuHuoRiqiRequired,
-            
-            // 默认状态为草稿
-            reviewStatus: '草稿' as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
-            
-            // 空的中间物料行和文档（后续可手动补充）
-            materialLines: {
-                create: []
-            },
-            documents: {
-                create: []
-            }
-        },
-        include: { materialLines: true, documents: true }
-    });
-
-    logServiceSuccess('createWorkOrderFromOrder', `已创建工程单 ${workId}，唯一标识: ${workUnique}`);
-    
-    return workOrderToDTO(created);
-}

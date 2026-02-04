@@ -45,7 +45,7 @@ app.get('/api', (req, res) => {
         message: 'E-Bench API Root',
         endpoints: {
             orders: '/api/orders',
-            workOrders: '/api/work-orders',
+            workOrders: '/api/workOrders',
             health: '/api/health'
         }
     });
@@ -219,6 +219,32 @@ app.get('/api/orders/:id', async (req, res) => {
 
 // Search Routes (Must be defined BEFORE /:id)
 
+//  临时调试接口：查询所有工程单
+// app.get('/api/workOrders/all', async (req, res) => {
+//     const { logAPI, logAPISuccess } = require('./utils/debugLogger');
+//     try {
+//         logAPI('GET /api/workOrders/all', { method: 'GET' });
+//         const allWorkOrders = await sqlDB.engineeringOrder.findMany({
+//             include: { materialLines: true, documents: true },
+//             orderBy: { createdAt: 'desc' }
+//         });
+//         logAPISuccess('GET /api/workOrders/all', { count: allWorkOrders.length });
+//         res.json({
+//             total: allWorkOrders.length,
+//             workOrders: allWorkOrders.map((wo: any) => ({
+//                 workId: wo.workId,
+//                 workUnique: wo.workUnique,
+//                 workClerk: wo.workClerk,
+//                 reviewStatus: wo.reviewStatus,
+//                 keHu: wo.keHu,
+//                 createdAt: wo.createdAt
+//             }))
+//         });
+//     } catch (error: any) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
 /**
  * 根据工单状态查询工单
  * GET /api/workOrders/findWithStatus?workorderstatus=待审核
@@ -286,16 +312,6 @@ app.get('/api/workOrders/findByAudit', async (req, res) => {
     }
 });
 
-app.get('/api/work-orders/unique/:uniqueId', async (req, res) => {
-    try {
-        const result = await FindWorkOrderByID(req.params.uniqueId);
-        if (!result) return res.status(404).json({ error: 'WorkOrder not found' });
-        res.json(result);
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
 // 根据唯一索引查询工程单（前端：/workOrders/findById?work_unique=...）
 app.get('/api/workOrders/findById', async (req, res) => {
     try {
@@ -339,11 +355,11 @@ app.post('/api/workOrders/updateProcess', async (req, res) => {
     }
 });
 
-// 支持多种路径格式：/work-orders（连字符）和 /workOrders（驼峰）
-app.post(['/api/work-orders', '/api/work-orders/create', '/api/workOrders', '/api/workOrders/create'], upload.array('files'), async (req, res) => {
+// 创建/更新工程单
+app.post('/api/workOrders/create', upload.array('files'), async (req, res) => {
     const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
-        logAPI('POST /api/work-orders/create', {
+        logAPI('POST /api/workOrders/create', {
             method: 'POST',
             body: req.body,
             files: req.files?.length || 0
@@ -354,22 +370,12 @@ app.post(['/api/work-orders', '/api/work-orders/create', '/api/workOrders', '/ap
 
         const result = await handleIncomingWorkOrder(workOrderJson, files);
         
-        logAPISuccess('POST /api/work-orders/create', result);
+        logAPISuccess('POST /api/workOrders/create', result);
         res.json(result);
     } catch (error: any) {
-        logAPIError('POST /api/work-orders/create', error);
+        logAPIError('POST /api/workOrders/create', error);
         console.error('WorkOrder Error:', error);
         res.status(400).json({ error: error.message });
-    }
-});
-
-app.get('/api/work-orders/:id', async (req, res) => {
-    try {
-        const result = await getWorkOrder(req.params.id);
-        if (!result) return res.status(404).json({ error: 'WorkOrder not found' });
-        res.json(result);
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
     }
 });
 
@@ -382,5 +388,5 @@ app.use('/api', (req, res) => {
 app.listen(port, () => {
     console.log(`Backend server is running on http://localhost:${port}`);
     console.log(`- Order API: POST /api/orders & /api/orders/create`);
-    console.log(`- WorkOrder API: POST /api/work-orders & /api/work-orders/create`);
+    console.log(`- WorkOrder API: POST /api/workOrders/create`);
 });

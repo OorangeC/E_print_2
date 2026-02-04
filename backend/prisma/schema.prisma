@@ -193,6 +193,15 @@ model OrderItem {
 model EngineeringOrder {
   engineeringOrderId String @id @default(cuid()) @map("engineering_order_id")
 
+  // ============ 工程单唯一标识 ============
+  workId     String  @map("work_id")       // 工程单号
+  workVer    String  @map("work_ver")      // 版本号
+  workUnique String  @unique @map("work_unique") // 唯一索引
+  workClerk  String? @map("work_clerk")    // 制单员
+  clerkDate  String? @map("clerk_date")    // 制单日期
+  workAudit  String? @map("work_audit")    // 审核员
+  auditDate  String? @map("audit_date")    // 审核日期
+
   // ============ 表头信息 ============
   gongSiMingCheng       String? @map("gong_si_ming_cheng")
   gongChengDanMingCheng String? @map("gong_cheng_dan_ming_cheng")
@@ -244,6 +253,8 @@ model EngineeringOrder {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  @@index([workUnique])
+  @@index([workClerk])
   @@map("engineering_orders")
 }
 
@@ -275,9 +286,10 @@ model EngineeringOrderMaterialLine {
   shengChanLuJing  String?   @map("sheng_chan_lu_jing")
   paiBanFangShi    String?   @map("pai_ban_fang_shi")
 
-  kaiShiShiJian DateTime? @map("kai_shi_shi_jian")
-  shiFouDaoLiao Boolean   @default(false) @map("shi_fou_dao_liao")
-  jieShuShiJian DateTime? @map("jie_shu_shi_jian")
+  kaiShiShiJian  DateTime? @map("kai_shi_shi_jian")
+  shiFouDaoLiao  Boolean   @default(false) @map("shi_fou_dao_liao")
+  jieShuShiJian  DateTime? @map("jie_shu_shi_jian")
+  dangQianJinDu  Float?    @map("dang_qian_jin_du") // 当前进度 0-100
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
