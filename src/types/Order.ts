@@ -167,7 +167,7 @@ export function initializeAuditLog(orderData: Partial<IOrder>, operatorName: str
 
 export function prepareOrderFormData(orderData: Partial<IOrder>, salesmanName: string): FormData {
   const formData = new FormData()
-
+  orderData.salesDate = formatYMD(new Date())
   // 1. 附件二进制
   orderData.attachments?.forEach((attr) => {
     if (attr.file) formData.append('files', attr.file)

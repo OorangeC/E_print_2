@@ -113,7 +113,7 @@ import { ref, computed, onMounted } from 'vue'
 import { WorkOrderStatus, type IWorkOrder } from '@/types/WorkOrder'
 // 核心：导入你的创建器组件
 import WorkOrderInfo, { PageMode } from './WorkOrderInfo.vue'
-import request, { FindWorkOrdersWithStatus } from '@/stores/request'
+import request, { FindWorkOrdersByClerk, FindWorkOrdersWithStatus } from '@/stores/request'
 
 const activeMode = ref<PageMode>(PageMode.VIEW)
 const isUploading = ref(false)
@@ -133,13 +133,16 @@ onMounted(async () => {
 const fetchOrdersData = async () => {
   try {
     // 调用你在 request.ts 里写的函数，扒拉 admin 的数据
-    const data = await FindWorkOrdersWithStatus(WorkOrderStatus.DRAFT)
+    const [draftWorkOrder, myWorkOrder] = await Promise.all([
+      FindWorkOrdersWithStatus(WorkOrderStatus.DRAFT),
+      FindWorkOrdersByClerk('admin'),
+    ])
 
     // 将拿到的数组赋值给响应式变量 orders
     // processedOrders 会根据这个数据的变化自动重新计算过滤和排序
-    workOrders.value = data
+    workOrders.value = [...draftWorkOrder, ...myWorkOrder]
 
-    console.log('订单加载成功:', data.length, '条记录')
+    console.log('订单加载成功:', draftWorkOrder.length, '条记录')
   } catch (err) {
     console.error('获取列表失败:', err)
     // 实际项目中这里可以加个通知提示

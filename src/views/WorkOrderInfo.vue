@@ -44,7 +44,13 @@
       </div>
       <div class="button-group">
         <button class="btn btn-secondary" @click="$emit('close')">返回列表</button>
-        <button class="btn btn-primary" @click="handleSubmitOrder">提交工单</button>
+        <button
+          v-if="props.mode === PageMode.EDIT"
+          class="btn btn-primary"
+          @click="handleSubmitOrder"
+        >
+          提交工单
+        </button>
       </div>
     </div>
 
@@ -145,7 +151,7 @@
               <td><input v-model.number="item.yinShuaBanShu" type="number" /></td>
               <td><input v-model="item.shengChanLuJing" /></td>
               <td><input v-model="item.paiBanFangShi" /></td>
-              <td class="align-center">
+              <td class="align-center" v-if="props.mode === PageMode.EDIT">
                 <button class="remove-btn" @click="removeRow(index)">×</button>
               </td>
             </tr>
@@ -193,7 +199,7 @@
 
           <tfoot>
             <tr>
-              <td colspan="18" class="add-row-container">
+              <td colspan="18" class="add-row-container" v-if="props.mode === PageMode.EDIT">
                 <button class="add-row-full-btn" @click="addNewRow">+ 增加一道生产工序模块</button>
               </td>
             </tr>

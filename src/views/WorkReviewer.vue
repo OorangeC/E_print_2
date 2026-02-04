@@ -64,7 +64,7 @@
 
           <tbody>
             <tr v-for="work in processedWorks" :key="work.work_unique">
-              <td v-if="currentTab === 'REVIEWED'">
+              <td>
                 <span :class="['status-badge', work.workorderstatus]">
                   {{ work.workorderstatus }}
                 </span>
@@ -85,7 +85,8 @@
                   :class="currentTab === 'PENDING' ? 'review-btn' : 'view-btn'"
                   @click="handleView(work)"
                 >
-                  {{ currentTab === 'PENDING' ? '审核' : '查看' }}
+                  {{ work.workorderstatus === WorkOrderStatus.PENDING_REVIEW ? '审核' : '查看' }}
+                  <!-- {{ currentTab === 'PENDING' ? '审核' : '查看' }} -->
                 </button>
               </td>
             </tr>
@@ -102,7 +103,7 @@
 
     <WorkOrderInfo
       v-else
-      :mode="currentTab === 'PENDING' ? PageMode.REVIEW : PageMode.VIEW"
+      :mode="activeMode"
       :initialData="selectedOrder"
       @close="selectedOrder = null"
       @approve="handleApprove"
@@ -128,7 +129,7 @@ const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
   key: 'zhiDanShiJian',
   order: 'desc',
 })
-
+const activeMode = ref<PageMode>(PageMode.VIEW)
 // 数据源
 const pendingWorkSource = ref<IWorkOrder[]>([])
 const reviewedWorkSource = ref<IWorkOrder[]>([])
@@ -206,6 +207,23 @@ const getSortIcon = (key: SortKey) => {
 
 const handleView = (work: IWorkOrder) => {
   selectedOrder.value = work
+
+  let targetMode: PageMode
+
+  if (currentTab.value !== 'PENDING') {
+    targetMode = PageMode.VIEW
+  } else if (work.workorderstatus === WorkOrderStatus.APPROVED) {
+    targetMode = PageMode.PRODUCTION
+  } else {
+    // 这里 currentTab 已经是 'PENDING' 了
+    targetMode = PageMode.REVIEW
+  }
+
+  // 2. 将计算结果赋给 ref
+  activeMode.value = targetMode
+
+  //activeMode.value = currentTab.value === 'PENDING' ? PageMode.REVIEW : PageMode.VIEW
+  //showCreator.value = true
 }
 
 // /**
@@ -242,7 +260,7 @@ const handleApprove = async (wd: IWorkOrder) => {
   if (isUploading.value) return
   isUploading.value = true
   try {
-    await ChangeWorkOrderStatusTo(wd.work_unique, WorkOrderStatus.APPROVED)
+    await ChangeWorkOrderStatusTo(wd.work_unique, WorkOrderStatus.IN_PRODUCTION)
     selectedOrder.value = null // 关闭详情弹窗
     await fetchWorksData()
   } catch (err) {

@@ -624,8 +624,17 @@
               <td><input type="date" class="cell-input" /></td>
             </div>
           </fieldset>
-
-          <div class="mini-form-group">
+          <table class="mini-form-table">
+            <tr>
+              <td>打印人:</td>
+              <td><input class="cell-input" /></td>
+            </tr>
+            <tr>
+              <td>日期:</td>
+              <td><input type="date" class="cell-input" /></td>
+            </tr>
+          </table>
+          <!-- <div class="mini-form-group">
             <div class="form-row">
               <td>打印人:</td>
               <td><input class="cell-input" /></td>
@@ -634,7 +643,7 @@
               <td>日期:</td>
               <td><input type="date" class="cell-input" /></td>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <fieldset
