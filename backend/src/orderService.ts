@@ -328,35 +328,35 @@ export async function FindOrdersWithStatus(orderStatusText: string) {
 }
 
 // 更新订单状态（根据唯一索引 orderUnique）
-export async function UpdateOrderStatus(orderUnique: string, orderStatusText: string) {
+export async function UpdateOrderStatus(orderUnique: string, orderStatusText: string, auditorName: string = 'admin') {
+    logService('UpdateOrderStatus', { input: { orderUnique, orderStatusText, auditorName } });
+    
     // 验证是否为有效的订单状态
     const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
     if (!validStatuses.includes(orderStatusText)) {
         throw new Error(`不支持的订单状态: ${orderStatusText}`);
     }
-
-    logService('updateExistingOrder', {
-        fields: {
-            '订单号': orderNumber,
-            '更新字段数': Object.keys(patchData).length,
-            '主要字段': {
-                status: patchData.status,
-                customer: patchData.customer,
-                keLaiXinXi: patchData.keLaiXinXi,
-                daYinRiqi: patchData.daYinRiqi
-            }
-        }
-    });
+    
+    // 构建更新数据
+    const updateData: any = {
+        status: orderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
+        reviewedAt: new Date().toISOString()
+    };
+    
+    // 如果状态变为"通过"或"驳回"，设置审核员和审核日期
+    if (orderStatusText === '通过' || orderStatusText === '驳回') {
+        updateData.audit = auditorName;
+        updateData.auditDate = new Date().toISOString();
+    }
     
     const updated = await sqlDB.order.update({
         where: { orderUnique },
-        data: {
-            status: orderStatusText as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消',
-            reviewedAt: new Date().toISOString()
-        },
+        data: updateData,
         include: { orderItems: true, documents: true }
     });
 
+    logServiceSuccess('UpdateOrderStatus', `已更新订单 ${orderUnique} 状态为 ${orderStatusText}，审核员: ${auditorName}`);
+    
     // 这里简单地不写 Mongo 审计日志，后面如果需要可按订单创建时的方式补充
     return orderToDTO(updated);
 }

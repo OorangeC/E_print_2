@@ -182,7 +182,7 @@ app.post(['/api/orders', '/api/orders/create'], upload.array('files'), async (re
     }
 });
 
-// 更新订单状态（前端：/orders/updateStatus，body: { order_unique, orderstatus }）
+// 更新订单状态（前端：/orders/updateStatus，body: { order_unique, orderstatus, auditor? }）
 app.post('/api/orders/updateStatus', async (req, res) => {
     const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
@@ -191,11 +191,11 @@ app.post('/api/orders/updateStatus', async (req, res) => {
             body: req.body
         });
         
-        const { order_unique, orderstatus } = req.body;
+        const { order_unique, orderstatus, auditor } = req.body;
         if (!order_unique || !orderstatus) {
             return res.status(400).json({ error: 'Missing order_unique or orderstatus in body' });
         }
-        const result = await UpdateOrderStatus(order_unique, orderstatus);
+        const result = await UpdateOrderStatus(order_unique, orderstatus, auditor || 'admin');
         
         logAPISuccess('POST /api/orders/updateStatus', result);
         res.json(result);

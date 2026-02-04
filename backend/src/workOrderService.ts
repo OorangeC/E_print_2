@@ -167,6 +167,8 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
                     yinShuaBanShu: item.yinShuaBanShu,
                     shengChanLuJing: item.shengChanLuJing,
                     paiBanFangShi: item.paiBanFangShi,
+                    kaiShiShiJian: item.kaiShiRiQi || null,  // ✅ 工序开始日期
+                    jieShuShiJian: item.yuQiJieShu || null,  // ✅ 工序预期结束日期
                     dangQianJinDu: typeof item.dangQianJinDu === 'number' ? item.dangQianJinDu : null
                 }))
             },

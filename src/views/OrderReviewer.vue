@@ -114,6 +114,7 @@
       </div>
     </div>
     <OrderInfo
+      v-if="selectedOrder"
       :mode="activeMode"
       :initialData="selectedOrder"
       @close="selectedOrder = null"
@@ -145,36 +146,57 @@ const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
 })
 
 const handleApprove = async (fd: FormData) => {
-  console.log('正在处理审核通过并保存数据...')
+  console.log('正在处理审核通过...')
   if (isUploading.value) return
   isUploading.value = true
-  // 这里调用你的接口，如 await UpdateOrder(fd)
 
-  if (selectedOrder.value) {
-    selectedOrder.value.audit = 'admin'
-    selectedOrder.value.auditDate = formatYMD(new Date())
+  if (!selectedOrder.value) {
+    alert('没有选中的订单')
+    isUploading.value = false
+    return
   }
 
   try {
-    await request.post('/workOrders/create', fd)
-    alert('工程单已成功提交审核！')
-    //showCreator.value = false
-    fetchOrdersData() // 这里可以刷新列表
+    // 更新订单状态为"通过"
+    await request.post('/orders/updateStatus', {
+      order_unique: selectedOrder.value.order_unique,
+      orderstatus: OrderStatus.APPROVED
+    })
+    
+    alert('订单审核通过！')
+    selectedOrder.value = null
+    await fetchOrdersData() // 刷新列表
   } catch (err) {
     console.error('后端响应错误:', err)
-    alert('发送失败，请检查网络或后端服务')
+    alert('审核失败，请检查网络或后端服务')
   } finally {
     isUploading.value = false
   }
-  selectedOrder.value = null
-  await fetchOrdersData() // 刷新列表
 }
 
 // 处理驳回
-const handleReject = () => {
+const handleReject = async () => {
   console.log('订单已被驳回')
-  selectedOrder.value = null
-  fetchOrdersData()
+  
+  if (!selectedOrder.value) {
+    alert('没有选中的订单')
+    return
+  }
+
+  try {
+    // 更新订单状态为"驳回"
+    await request.post('/orders/updateStatus', {
+      order_unique: selectedOrder.value.order_unique,
+      orderstatus: OrderStatus.REJECTED
+    })
+    
+    alert('订单已驳回')
+    selectedOrder.value = null
+    await fetchOrdersData()
+  } catch (err) {
+    console.error('驳回失败:', err)
+    alert('驳回失败，请检查网络或后端服务')
+  }
 }
 
 // --- 2. 两个独立的数据源 ---
