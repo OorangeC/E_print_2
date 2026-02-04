@@ -1,6 +1,7 @@
 import { sqlDB, mongoDB } from './db';
 import { draftOrderSchema, submitOrderSchema } from './schemas/orderSchema';
 import { orderToDTO, ordersToDTO } from './dto/orderDTO';
+import { logService, logServiceSuccess, logServiceError } from './utils/debugLogger';
 
 /**
  * 后端 OrderService - 处理校验、暂存与提交
@@ -13,7 +14,21 @@ import { orderToDTO, ordersToDTO } from './dto/orderDTO';
  * @param isDraft 是否为草稿模式
  */
 export async function processOrderRequest(jsonString: string, salesman: string, isDraft: boolean, files?: any[]) {
+    logService('processOrderRequest', {
+        input: { jsonLength: jsonString?.length || 0, salesman, isDraft, filesCount: files?.length || 0 }
+    });
+    
     const rawData = JSON.parse(jsonString);
+    
+    logService('processOrderRequest解析后', {
+        fields: {
+            order_id: rawData.order_id,
+            sales: rawData.sales,
+            customer: rawData.customer,
+            keLaiXinxi: rawData.keLaiXinxi,
+            daYinRiqi: rawData.daYinRiqi
+        }
+    });
 
     // 1. 自动映射前端 order_id 为后端的 orderNumber (作为主键)
     // 如果前端未传 order_id，则自动生成唯一单号 (AUTO-timestamp-random)
@@ -67,8 +82,14 @@ async function createNewOrder(orderNumber: string, data: any, salesman: string, 
     const {
         orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
         _convertedStatus, // 从 processOrderRequest 转换来的英文状态
+        keLaiXinxi, // 前端字段名（小写 x），需要映射到数据库
         ...dbSafeData
     } = baseData;
+
+    // 字段名映射：前端 keLaiXinxi（小写 x）→ 数据库 keLaiXinXi（大写 X）
+    if (keLaiXinxi !== undefined) {
+        dbSafeData.keLaiXinXi = keLaiXinxi;
+    }
 
     // 确定最终的状态值：优先使用前端传入的状态，否则根据 isDraft 决定
     const finalStatus = (_convertedStatus || (isDraft ? '草稿' : '待审核')) as '草稿' | '待审核' | '通过' | '驳回' | '生产中' | '完成' | '取消';
@@ -136,12 +157,26 @@ async function updateExistingOrder(orderNumber: string, data: any, isDraft: bool
     const {
         orderstatus, // 前端传的是中文状态，Prisma 模型里没有这个字段，只有 status
         _convertedStatus, // 从 processOrderRequest 转换来的英文状态
+        keLaiXinxi, // 前端字段名（小写 x），需要映射到数据库
         ...dbSafeData
     } = baseData;
 
-    // PATCH 语义：仅更新前端显式传入的字段（undefined 视为未传）
+    // 字段名映射：前端 keLaiXinxi（小写 x）→ 数据库 keLaiXinXi（大写 X）
+    if (keLaiXinxi !== undefined) {
+        dbSafeData.keLaiXinXi = keLaiXinxi;
+    }
+
+    // PATCH 语义：仅更新前端显式传入的字段（undefined 视为未传，空字符串视为要清空）
     const patchData = Object.fromEntries(
-        Object.entries(dbSafeData).filter(([, value]) => value !== undefined)
+        Object.entries(dbSafeData).filter(([key, value]) => {
+            // 允许空字符串（表示清空字段），但过滤 undefined（表示未传入）
+            if (value === undefined) return false;
+            // 特殊处理：daYinRiqi 等日期字段，即使是空字符串也保存
+            if (['daYinRiqi', 'yeWuRiqi', 'shenHeRiqi'].includes(key)) {
+                return true;
+            }
+            return true;
+        })
     ) as Record<string, any>;
 
     // 状态字段：仅在前端显式传入时更新
@@ -286,6 +321,9 @@ export async function FindOrdersWithStatus(orderStatusText: string) {
         },
         include: { orderItems: true, documents: true }
     });
+    
+    logService('FindOrdersWithStatus', { dbResult: orders });
+    
     return ordersToDTO(orders);
 }
 
@@ -297,6 +335,19 @@ export async function UpdateOrderStatus(orderUnique: string, orderStatusText: st
         throw new Error(`不支持的订单状态: ${orderStatusText}`);
     }
 
+    logService('updateExistingOrder', {
+        fields: {
+            '订单号': orderNumber,
+            '更新字段数': Object.keys(patchData).length,
+            '主要字段': {
+                status: patchData.status,
+                customer: patchData.customer,
+                keLaiXinXi: patchData.keLaiXinXi,
+                daYinRiqi: patchData.daYinRiqi
+            }
+        }
+    });
+    
     const updated = await sqlDB.order.update({
         where: { orderUnique },
         data: {

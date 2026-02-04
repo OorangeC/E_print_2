@@ -67,14 +67,23 @@ app.get('/api', (req, res) => {
  * - /api/orders/status?orderstatus=草稿    => 查询所有草稿订单
  */
 app.get('/api/orders/status', async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('GET /api/orders/status', {
+            method: 'GET',
+            query: req.query
+        });
+        
         const statusText = req.query.orderstatus as string;
         if (!statusText) {
             return res.status(400).json({ error: '缺少 orderstatus 参数' });
         }
         const result = await FindOrdersWithStatus(statusText);
+        
+        logAPISuccess('GET /api/orders/status', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('GET /api/orders/status', error);
         res.status(400).json({ error: error.message });
     }
 });
@@ -91,12 +100,22 @@ app.get('/api/orders/all', async (req, res) => {
 
 // 前端使用 /findBySales，保持兼容
 app.get('/api/orders/findBySales', async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('GET /api/orders/findBySales', {
+            method: 'GET',
+            query: req.query
+        });
+        
         const sales = req.query.sales as string;
         if (!sales) return res.status(400).json({ error: 'Missing sales parameter' });
+        
         const result = await FindOrdersBySales(sales);
+        
+        logAPISuccess('GET /api/orders/findBySales', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('GET /api/orders/findBySales', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -138,15 +157,26 @@ app.get('/api/orders/findById', async (req, res) => {
 
 // 兼容 RESTful 和前端特定的 /create 路径
 app.post(['/api/orders', '/api/orders/create'], upload.array('files'), async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('POST /api/orders/create', {
+            method: 'POST',
+            body: req.body,
+            query: req.query,
+            files: req.files?.length || 0
+        });
+        
         // 前端 FormData 可能将 JSON 放在 'orderData' 字段中
         const { orderData, salesman } = req.body;
         const isDraft = req.query.isDraft === 'true';
         const files = req.files as any[];
 
         const result = await processOrderRequest(orderData, salesman, isDraft, files);
+        
+        logAPISuccess('POST /api/orders/create', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('POST /api/orders/create', error);
         console.error('Order Error:', error);
         res.status(400).json({ error: error.message });
     }
@@ -154,14 +184,23 @@ app.post(['/api/orders', '/api/orders/create'], upload.array('files'), async (re
 
 // 更新订单状态（前端：/orders/updateStatus，body: { order_unique, orderstatus }）
 app.post('/api/orders/updateStatus', async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('POST /api/orders/updateStatus', {
+            method: 'POST',
+            body: req.body
+        });
+        
         const { order_unique, orderstatus } = req.body;
         if (!order_unique || !orderstatus) {
             return res.status(400).json({ error: 'Missing order_unique or orderstatus in body' });
         }
         const result = await UpdateOrderStatus(order_unique, orderstatus);
+        
+        logAPISuccess('POST /api/orders/updateStatus', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('POST /api/orders/updateStatus', error);
         res.status(400).json({ error: error.message });
     }
 });
@@ -190,27 +229,46 @@ app.get('/api/orders/:id', async (req, res) => {
  * - /api/workOrders/findWithStatus?workorderstatus=驳回    => 查询所有已驳回工单
  */
 app.get('/api/workOrders/findWithStatus', async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('GET /api/workOrders/findWithStatus', {
+            method: 'GET',
+            query: req.query
+        });
+        
         const statusText = req.query.workorderstatus as string;
         if (!statusText) {
             return res.status(400).json({ error: '缺少 workorderstatus 参数' });
         }
         const result = await FindWorkOrdersWithStatus(statusText);
+        
+        logAPISuccess('GET /api/workOrders/findWithStatus', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('GET /api/workOrders/findWithStatus', error);
         res.status(400).json({ error: error.message });
     }
 });
 
 // 前端使用 /workOrders/findByClerk (注意: workOrders 不是 work-orders)
 app.get('/api/workOrders/findByClerk', async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('GET /api/workOrders/findByClerk', {
+            method: 'GET',
+            query: req.query
+        });
+        
         // 兼容两种参数名：旧版 sales，新版 work_clerk
         const clerk = (req.query.work_clerk as string) || (req.query.sales as string);
         if (!clerk) return res.status(400).json({ error: 'Missing work_clerk parameter' });
+        
         const result = await FindWorkOrdersByClerk(clerk);
+        
+        logAPISuccess('GET /api/workOrders/findByClerk', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('GET /api/workOrders/findByClerk', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -281,15 +339,25 @@ app.post('/api/workOrders/updateProcess', async (req, res) => {
     }
 });
 
-// 也是如此，支持前端 /work-orders 和可能出现的其他习惯
-app.post(['/api/work-orders', '/api/work-orders/create'], upload.array('files'), async (req, res) => {
+// 支持多种路径格式：/work-orders（连字符）和 /workOrders（驼峰）
+app.post(['/api/work-orders', '/api/work-orders/create', '/api/workOrders', '/api/workOrders/create'], upload.array('files'), async (req, res) => {
+    const { logAPI, logAPISuccess, logAPIError } = require('./utils/debugLogger');
     try {
+        logAPI('POST /api/work-orders/create', {
+            method: 'POST',
+            body: req.body,
+            files: req.files?.length || 0
+        });
+        
         const { workOrderJson } = req.body;
         const files = req.files as any[];
 
         const result = await handleIncomingWorkOrder(workOrderJson, files);
+        
+        logAPISuccess('POST /api/work-orders/create', result);
         res.json(result);
     } catch (error: any) {
+        logAPIError('POST /api/work-orders/create', error);
         console.error('WorkOrder Error:', error);
         res.status(400).json({ error: error.message });
     }

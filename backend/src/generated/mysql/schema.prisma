@@ -236,7 +236,7 @@ model EngineeringOrder {
   dingDanShuLiang   Int?    @map("ding_dan_shu_liang")
   chuYangShu        Int?    @map("chu_yang_shu")
   chaoBiLi          Int?    @map("chao_bi_li")
-  benChangFangSun   String? @map("ben_chang_fang_sun")
+  benChangFangSun   Float?  @map("ben_chang_fang_sun")
   chuYangRiqi       String? @map("chu_yang_riqi")
   chuHuoRiqi        String? @map("chu_huo_riqi")
 
@@ -303,7 +303,7 @@ model EngineeringOrderMaterialLine {
   kaiShiShiJian String? @map("kai_shi_shi_jian")
   shiFouDaoLiao Boolean @default(false) @map("shi_fou_dao_liao")
   jieShuShiJian String? @map("jie_shu_shi_jian")
-  dangQianJinDu String? @map("dang_qian_jin_du") // 工序当前进度 (String)
+  dangQianJinDu Float?  @map("dang_qian_jin_du") // 工序当前进度 (Float)
 
   createdAt String? @map("created_at")
   updatedAt String? @map("updated_at")

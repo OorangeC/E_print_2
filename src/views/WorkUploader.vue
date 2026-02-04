@@ -14,7 +14,7 @@
             />
           </div>
         </div>
-        <button class="primary-btn" @click="showCreator = true">
+        <button class="primary-btn" @click="openForEdit(null)">
           <span class="plus-icon">+</span> 创建工单
         </button>
       </div>
@@ -55,7 +55,30 @@
               <td>{{ work.gongDanLeiXing || '-' }}</td>
               <td class="customer-name">{{ work.customer }}</td>
               <td class="action-cell">
-                <button class="text-btn" @click="handleAction(work)">管理</button>
+                <button
+                  v-if="
+                    work.workorderstatus === WorkOrderStatus.DRAFT ||
+                    work.workorderstatus === WorkOrderStatus.REJECTED
+                  "
+                  class="text-btn edit-style"
+                  @click="openForEdit(work)"
+                >
+                  制单
+                </button>
+
+                <button
+                  v-else-if="
+                    work.workorderstatus === WorkOrderStatus.APPROVED ||
+                    work.workorderstatus === WorkOrderStatus.COMPLETED ||
+                    work.workorderstatus === WorkOrderStatus.IN_PRODUCTION ||
+                    work.workorderstatus === WorkOrderStatus.CANCELLED ||
+                    work.workorderstatus === WorkOrderStatus.PENDING_REVIEW
+                  "
+                  class="text-btn view-style"
+                  @click="openForView(work)"
+                >
+                  查看
+                </button>
               </td>
             </tr>
             <tr v-if="processedOrders.length === 0">
@@ -66,21 +89,38 @@
       </div>
     </div>
 
-    <WorkOrderCreator v-else @close="showCreator = false" />
+    <!-- <WorkOrderInfo v-else @close="showCreator = false" /> -->
+    <WorkOrderInfo
+      v-else
+      :mode="activeMode"
+      :initialData="selectedOrder"
+      @close="showCreator = false"
+      @submit="handleOrderUpload"
+    />
+
+    <!-- <OrderInfo
+      v-else
+      :mode="activeMode"
+      :initialData="selectedOrder"
+      @close="showCreator = false"
+      @submit="handleOrderUpload"
+    /> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { type IWorkOrder } from '@/types/WorkOrder'
+import { WorkOrderStatus, type IWorkOrder } from '@/types/WorkOrder'
 // 核心：导入你的创建器组件
-import WorkOrderCreator from './WorkOrderCreator.vue'
-import { FindWorkOrdersByClerk } from '@/stores/request'
+import WorkOrderInfo, { PageMode } from './WorkOrderInfo.vue'
+import request, { FindWorkOrdersByClerk } from '@/stores/request'
 
+const activeMode = ref<PageMode>(PageMode.VIEW)
+const isUploading = ref(false)
 const showCreator = ref(false)
 const searchQuery = ref<string>('')
 const workOrders = ref<IWorkOrder[]>([])
-
+const selectedOrder = ref<IWorkOrder | null>(null)
 //onMounted 会在组件加载完成、渲染到页面上时自动运行。
 onMounted(async () => {
   console.log('订单上传页面初始化，正在获取 admin 的订单列表...')
@@ -92,7 +132,7 @@ onMounted(async () => {
  */
 const fetchOrdersData = async () => {
   try {
-    // 文档接口：根据制单员姓名获取工程单数组
+    // 调用你在 request.ts 里写的函数，扒拉 admin 的数据
     const data = await FindWorkOrdersByClerk('admin')
 
     // 将拿到的数组赋值给响应式变量 orders
@@ -143,7 +183,45 @@ const getSortIcon = (key: SortKey) => {
   return sortConfig.value.order === 'asc' ? '🔼' : '🔽'
 }
 
-const handleAction = (work: IWorkOrder): void => console.log('Action:', work.work_id)
+/**
+ * 逻辑：打开编辑模式
+ * 如果是“创建工单”按钮触发，传入 null
+ * 如果是列表行触发，传入该行数据
+ */
+
+const openForEdit = (work: IWorkOrder | null = null) => {
+  activeMode.value = PageMode.EDIT
+  selectedOrder.value = work
+  showCreator.value = true
+}
+
+/**
+ * 逻辑：打开查看模式
+ */
+const openForView = (work: IWorkOrder) => {
+  activeMode.value = PageMode.VIEW
+  selectedOrder.value = work
+  showCreator.value = true
+}
+
+/**
+ * 处理订单提交
+ */
+const handleOrderUpload = async (fd: FormData) => {
+  if (isUploading.value) return
+  isUploading.value = true
+  try {
+    await request.post('/workOrders/create', fd)
+    alert('订单已成功提交审核！')
+    showCreator.value = false
+    fetchOrdersData() // 这里可以刷新列表
+  } catch (err) {
+    console.error('后端响应错误:', err)
+    alert('发送失败，请检查网络或后端服务')
+  } finally {
+    isUploading.value = false
+  }
+}
 </script>
 
 <style scoped>

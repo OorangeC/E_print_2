@@ -518,7 +518,6 @@ exports.Prisma.EngineeringOrderOrderByRelevanceFieldEnum = {
   po: 'po',
   chengPinMingCheng: 'chengPinMingCheng',
   chanPinGuiGe: 'chanPinGuiGe',
-  benChangFangSun: 'benChangFangSun',
   chuYangRiqi: 'chuYangRiqi',
   chuHuoRiqi: 'chuHuoRiqi',
   chanPinYaoQiu: 'chanPinYaoQiu',
@@ -553,7 +552,6 @@ exports.Prisma.EngineeringOrderMaterialLineOrderByRelevanceFieldEnum = {
   paiBanFangShi: 'paiBanFangShi',
   kaiShiShiJian: 'kaiShiShiJian',
   jieShuShiJian: 'jieShuShiJian',
-  dangQianJinDu: 'dangQianJinDu',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

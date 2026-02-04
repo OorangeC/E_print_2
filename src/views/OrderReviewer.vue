@@ -6,8 +6,9 @@
         @click="currentTab = 'PENDING'"
       >
         未审核订单
-
-        <span class="badge" v-if="pendingOrders.length">{{ pendingOrders.length }}</span>
+        <span class="badge" v-if="pendingOrdersSource.length">{{
+          pendingOrdersSource.length
+        }}</span>
       </div>
 
       <div
@@ -25,7 +26,6 @@
 
           <div class="search-container">
             <span class="search-icon">🔍</span>
-
             <input
               v-model="searchQuery"
               type="text"
@@ -86,7 +86,9 @@
               <td>{{ order.chuHuoRiqiRequired }}</td>
 
               <td class="action-cell">
-                <button class="view-btn" @click="handleView(order)">审核/查看</button>
+                <button class="view-btn" @click="handleView(order)">
+                  {{ currentTab === 'PENDING' ? '审核' : '查看' }}
+                </button>
               </td>
             </tr>
 
@@ -103,151 +105,188 @@
     <div v-else class="detail-container">
       <div class="header-bar">
         <button class="back-link" @click="selectedOrder = null">← 返回列表</button>
-
         <h2 class="main-title">订单详情：{{ selectedOrder.order_id }}</h2>
       </div>
 
       <div class="table-card" style="padding: 24px">
-        <p>这里是订单 [{{ selectedOrder.order_id }}] 的详细审核界面...</p>
+        <p>这里是订单 [{{ selectedOrder.order_id }}] 的详细审核/查看界面...</p>
+        <p>当前模式：{{ currentTab === 'PENDING' ? '审批流程中' : '历史记录查阅' }}</p>
       </div>
     </div>
+    <OrderInfo
+      :mode="activeMode"
+      :initialData="selectedOrder"
+      @close="selectedOrder = null"
+      @approve="handleApprove"
+      @reject="handleReject"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-
-import { type IOrder, OrderStatus } from '@/types/Order'
-import { FindOrdersByAudit } from '@/stores/request'
-
-// --- 状态定义 ---
-
+import { formatYMD, type IOrder, OrderStatus } from '@/types/Order'
+import request, { FindOrdersByAudit, FindOrdersWithStatus } from '@/stores/request'
+import OrderInfo, { PageMode } from './OrderInfo.vue' // 确保能拿到导出的 PageMode
+const activeMode = computed(() => {
+  // 如果当前在“未审核”标签，则进入“审核模式”，否则仅为“查看模式”
+  return currentTab.value === 'PENDING' ? PageMode.REVIEW : PageMode.VIEW
+})
+// --- 1. 状态定义 ---
 const currentTab = ref<'PENDING' | 'REVIEWED'>('PENDING')
-
 const searchQuery = ref<string>('')
-
 const selectedOrder = ref<IOrder | null>(null)
-
+const isUploading = ref(false)
+// 排序配置
 type SortKey = 'submitTime' | 'order_id' | 'customer' | 'chuHuoRiqiRequired' | 'orderstatus'
-
 const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
   key: 'submitTime',
-
   order: 'desc',
 })
 
-const orders = ref<IOrder[]>([]) // 数据源
-//onMounted 会在组件加载完成、渲染到页面上时自动运行。
+const handleApprove = async (fd: FormData) => {
+  console.log('正在处理审核通过并保存数据...')
+  if (isUploading.value) return
+  isUploading.value = true
+  // 这里调用你的接口，如 await UpdateOrder(fd)
+
+  if (selectedOrder.value) {
+    selectedOrder.value.audit = 'admin'
+    selectedOrder.value.auditDate = formatYMD(new Date())
+  }
+
+  try {
+    await request.post('/workOrders/create', fd)
+    alert('工程单已成功提交审核！')
+    //showCreator.value = false
+    fetchOrdersData() // 这里可以刷新列表
+  } catch (err) {
+    console.error('后端响应错误:', err)
+    alert('发送失败，请检查网络或后端服务')
+  } finally {
+    isUploading.value = false
+  }
+  selectedOrder.value = null
+  await fetchOrdersData() // 刷新列表
+}
+
+// 处理驳回
+const handleReject = () => {
+  console.log('订单已被驳回')
+  selectedOrder.value = null
+  fetchOrdersData()
+}
+
+// --- 2. 两个独立的数据源 ---
+const pendingOrdersSource = ref<IOrder[]>([]) // 对应“未审核”标签
+const reviewedOrdersSource = ref<IOrder[]>([]) // 对应“已审核”标签
+
+// 初始化加载
 onMounted(async () => {
-  console.log('订单上传页面初始化，正在获取 admin 的订单列表...')
+  console.log('正在初始化审核页面数据...')
   await fetchOrdersData()
 })
 
 /**
- * 获取订单列表的逻辑封装
+ * 分别从两个接口获取数据
  */
 const fetchOrdersData = async () => {
   try {
-    // 文档接口：根据审核员姓名获取订单数组
-    const data = await FindOrdersByAudit('admin')
+    // 逻辑 A: 获取所有待审核订单（不分审单员）
+    const pendingData = await FindOrdersWithStatus(OrderStatus.PENDING_REVIEW)
+    pendingOrdersSource.value = pendingData
 
-    // 将拿到的数组赋值给响应式变量 orders
-    // processedOrders 会根据这个数据的变化自动重新计算过滤和排序
-    orders.value = data
+    // 逻辑 B: 获取 admin 已经处理过的订单历史
+    const reviewedData = await FindOrdersByAudit('admin')
+    reviewedOrdersSource.value = reviewedData
 
-    console.log('订单加载成功:', data.length, '条记录')
+    console.log('数据同步完成：待审', pendingData.length, '条，已审', reviewedData.length, '条')
   } catch (err) {
-    console.error('获取列表失败:', err)
-    // 实际项目中这里可以加个通知提示
+    console.error('数据获取失败:', err)
   }
 }
-// 分离未审核订单用于角标显示
-// --- 核心逻辑 ---
+
+// --- 3. 核心计算属性：处理展示逻辑 ---
 
 const getFirstAuditTime = (order: IOrder): string => {
-  const logs = order.auditLogs
-
-  if (logs && logs.length > 0) {
-    const firstLog = logs[0]
-
-    if (firstLog) return firstLog.time
-  }
-
-  return '-'
+  // 如果 logs[0] 存在则取 time，否则返回 '-'
+  return order.auditLogs?.[0]?.time ?? '-'
 }
 
-const pendingOrders = computed(() =>
-  orders.value.filter((o) => o.orderstatus === OrderStatus.PENDING_REVIEW),
-)
+/**
+ * 根据当前选中的 Tab，决定对哪一个数组进行“搜索”和“排序”
+ */
 
+// 3. 排序逻辑
 const processedOrders = computed<IOrder[]>(() => {
-  // 1. 按 Tab 过滤
+  // 1. 明确 source 类型，解决 source 报错
+  const source: IOrder[] =
+    currentTab.value === 'PENDING' ? pendingOrdersSource.value : reviewedOrdersSource.value
 
-  let result = orders.value.filter((o) => {
-    if (currentTab.value === 'PENDING') {
-      return o.orderstatus === OrderStatus.PENDING_REVIEW
-    } else {
-      return o.orderstatus === OrderStatus.APPROVED || o.orderstatus === OrderStatus.REJECTED
-    }
+  if (!source) return []
+
+  // 2. 搜索过滤
+  const q = searchQuery.value.trim().toLowerCase()
+  const filtered = source.filter((o: IOrder) => {
+    if (!q) return true
+    return (
+      (o.order_id?.toLowerCase().includes(q) ?? false) ||
+      (o.customer?.toLowerCase().includes(q) ?? false)
+    )
   })
 
-  // 2. 按 搜索词 过滤
-
-  const q = searchQuery.value.toLowerCase()
-
-  if (q) {
-    result = result.filter(
-      (o) =>
-        (o.order_id?.toLowerCase().includes(q) ?? false) || o.customer.toLowerCase().includes(q),
-    )
-  }
-
-  // 3. 排序
-
+  // 3. 排序逻辑
   const { key, order: direction } = sortConfig.value
 
-  return result.slice().sort((a, b) => {
-    let valA: string | number | Date = ''
-
-    let valB: string | number | Date = ''
+  // 使用解构副本，保持原数组纯净
+  return [...filtered].sort((a: IOrder, b: IOrder) => {
+    let valA: string | number | boolean = ''
+    let valB: string | number | boolean = ''
 
     if (key === 'submitTime') {
       valA = getFirstAuditTime(a)
-
       valB = getFirstAuditTime(b)
     } else {
-      const k = key as keyof IOrder
+      /**
+       * 核心修复：使用 keyof IOrder 配合索引访问
+       * 我们明确 key 是 IOrder 的键名，从而安全地提取值
+       */
+      const field = key as keyof IOrder
 
-      const rawA = a[k]
+      // 提取值并提供默认回退，确保 valA/valB 始终是可比较的类型
+      const rawA = a[field]
+      const rawB = b[field]
 
-      const rawB = b[k]
-
-      if (rawA instanceof Date || typeof rawA === 'string' || typeof rawA === 'number') valA = rawA
-
-      if (rawB instanceof Date || typeof rawB === 'string' || typeof rawB === 'number') valB = rawB
+      // 转换为基础类型以便比较 (处理可能的 undefined/null)
+      valA =
+        typeof rawA === 'string' || typeof rawA === 'number' || typeof rawA === 'boolean'
+          ? rawA
+          : ''
+      valB =
+        typeof rawB === 'string' || typeof rawB === 'number' || typeof rawB === 'boolean'
+          ? rawB
+          : ''
     }
 
     if (valA < valB) return direction === 'asc' ? -1 : 1
-
     if (valA > valB) return direction === 'asc' ? 1 : -1
-
     return 0
   })
 })
+
+// --- 4. 交互函数 ---
 
 const handleSort = (key: SortKey) => {
   if (sortConfig.value.key === key) {
     sortConfig.value.order = sortConfig.value.order === 'asc' ? 'desc' : 'asc'
   } else {
     sortConfig.value.key = key
-
     sortConfig.value.order = 'asc'
   }
 }
 
 const getSortIcon = (key: SortKey) => {
   if (sortConfig.value.key !== key) return '↕️'
-
   return sortConfig.value.order === 'asc' ? '🔼' : '🔽'
 }
 
@@ -257,245 +296,148 @@ const handleView = (order: IOrder) => {
 </script>
 
 <style scoped>
+/* 样式部分保持不变... */
 .uploader-wrapper {
   padding: 24px;
-
   background-color: #f8fafc;
-
   min-height: 100vh;
-
   font-family: sans-serif;
 }
-
-/* Tab 样式 */
-
 .tab-header {
   display: flex;
-
   gap: 32px;
-
   margin-bottom: 24px;
-
   border-bottom: 1px solid #e2e8f0;
 }
-
 .tab-item {
   padding: 12px 4px;
-
   font-size: 16px;
-
   color: #64748b;
-
   cursor: pointer;
-
   position: relative;
-
   font-weight: 500;
 }
-
 .tab-item.active {
   color: #2563eb;
-
   font-weight: 700;
 }
-
 .tab-item.active::after {
   content: '';
-
   position: absolute;
-
   bottom: -1px;
-
   left: 0;
-
   width: 100%;
-
   height: 2px;
-
   background-color: #2563eb;
 }
-
 .badge {
   background: #ef4444;
-
   color: white;
-
   font-size: 11px;
-
   padding: 2px 6px;
-
   border-radius: 10px;
-
   margin-left: 4px;
-
   vertical-align: middle;
 }
-
 .header-bar {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   margin-bottom: 20px;
 }
-
 .title-group {
   display: flex;
-
   align-items: center;
-
   gap: 20px;
 }
-
 .main-title {
   font-size: 20px;
-
   color: #1e293b;
 }
-
 .styled-input {
   padding: 8px 12px 8px 32px;
-
   border: 1px solid #e2e8f0;
-
   border-radius: 6px;
-
   width: 280px;
-
   outline: none;
 }
-
 .search-container {
   position: relative;
 }
-
 .search-icon {
   position: absolute;
-
   left: 10px;
-
   top: 50%;
-
   transform: translateY(-50%);
-
   color: #94a3b8;
 }
-
 .table-card {
   background: white;
-
   border: 1px solid #e2e8f0;
-
   border-radius: 8px;
-
   overflow: hidden;
-
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-
 .modern-table {
   width: 100%;
-
   border-collapse: collapse;
 }
-
 .modern-table th {
   background-color: #f8fafc;
-
   padding: 14px;
-
   text-align: left;
-
   font-size: 13px;
-
   color: #64748b;
-
   cursor: pointer;
 }
-
 .modern-table td {
   padding: 14px;
-
   border-bottom: 1px solid #f1f5f9;
-
   font-size: 14px;
-
   color: #334155;
 }
-
 .time-text {
   font-family: 'Courier New', monospace;
-
   color: #64748b;
-
   font-weight: 600;
 }
-
 .bold-text {
   font-weight: 700;
-
   color: #0f172a;
 }
-
-/* 状态标签 */
-
 .status-badge {
   padding: 4px 8px;
-
   border-radius: 4px;
-
   font-size: 12px;
-
   font-weight: 600;
 }
-
 .APPROVED {
   background: #dcfce7;
-
   color: #15803d;
 }
-
 .REJECTED {
   background: #fee2e2;
-
   color: #b91c1c;
 }
-
 .view-btn {
   background: #2563eb;
-
   color: white;
-
   border: none;
-
   padding: 6px 14px;
-
   border-radius: 4px;
-
   cursor: pointer;
 }
-
 .back-link {
   background: none;
-
   border: none;
-
   color: #2563eb;
-
   cursor: pointer;
-
   font-weight: 600;
-
   margin-bottom: 16px;
 }
-
 .empty-state {
   text-align: center;
-
   padding: 40px;
-
   color: #94a3b8;
 }
 </style>

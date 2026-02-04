@@ -256,6 +256,7 @@ export function orderToDTO(order: any, auditLogs?: any[]): IOrderDTO {
         beiPinShuLiang: order.beiPinShuLiang || undefined,
         teShuLiuShuYang: order.teShuLiuShuYang || undefined,
         zongShuLiang: order.zongShuLiang || undefined,
+        chuYangShuoMing: order.chuYangShuoMing || undefined,
         zhuangDingFangShi: order.zhuangDingFangShi || undefined,
         guigeGaoMm: order.guigeGaoMm || undefined,
         guigeKuanMm: order.guigeKuanMm || undefined,

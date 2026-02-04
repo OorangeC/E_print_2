@@ -236,7 +236,7 @@ model EngineeringOrder {
   dingDanShuLiang   Int?      @map("ding_dan_shu_liang")
   chuYangShu        Int?      @map("chu_yang_shu")
   chaoBiLi          Int?      @map("chao_bi_li")
-  benChangFangSun   String?   @map("ben_chang_fang_sun")
+  benChangFangSun   Float?    @map("ben_chang_fang_sun")
   chuYangRiqi       String?  @map("chu_yang_riqi")
   chuHuoRiqi        String?  @map("chu_huo_riqi")
 

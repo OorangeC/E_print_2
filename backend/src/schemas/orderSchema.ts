@@ -37,7 +37,7 @@ export const orderBaseSchema = z.object({
     baoLiuQianSe: z.string().optional(),
     genSeZhiShi: z.string().optional(),
     yongTu: z.string().optional(),
-    keLaiXinXi: z.string().optional(),
+    keLaiXinxi: z.string().optional(),  // 客来信息（保留小写）
 
     dingDanShuLiang: z.coerce.number().int().optional(),
     chuYangShuLiang: z.coerce.number().int().optional(),

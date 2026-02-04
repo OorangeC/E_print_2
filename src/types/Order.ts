@@ -8,7 +8,6 @@ export interface IOrder {
   salesDate?: string //订单提交日期
   audit?: string //审单员名称或者工号
   auditDate?: string //订单过审日期
-
   // 外销与CPSIA
   cpcQueRen?: boolean //cpc确认
   waixiaoFlag?: boolean //是否外销
@@ -176,12 +175,6 @@ export function prepareOrderFormData(orderData: Partial<IOrder>, salesmanName: s
 
   // 2. 深度清洗 (不影响原数据)
   const cleanedPayload = JSON.parse(JSON.stringify(orderData)) as IOrder
-
-  // 2.1 确保业务员字段存在：后端会优先使用 payload.sales，其次才用 req.body.salesman
-  // 这里兜底写入，避免因为业务员未填导致订单被保存为 sales=''，从而列表查不到
-  if (!cleanedPayload.sales || !cleanedPayload.sales.trim()) {
-    cleanedPayload.sales = salesmanName
-  }
 
   // 3. 日期字段白名单统一清洗
   const dateFieldKeys: (keyof IOrder)[] = [

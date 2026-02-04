@@ -68,6 +68,7 @@ const handleLogout = () => {
             <RouterLink to="/order-uploader">订单上传</RouterLink>
             <RouterLink to="/order-reviewer">审核中心</RouterLink>
             <RouterLink to="/work-uploader">工程单上传</RouterLink>
+            <RouterLink to="/work-reviewer">工程单追踪</RouterLink>
             <!-- <RouterLink to="/dispatch-center">派单中心</RouterLink> -->
           </div>
           <div class="nav-right">

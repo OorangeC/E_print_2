@@ -1,11 +1,29 @@
 import { sqlDB } from './db';
 import { workOrderToDTO, workOrdersToDTO } from './dto/workOrderDTO';
+import { logService, logServiceSuccess, logServiceError } from './utils/debugLogger';
 
 export async function handleIncomingWorkOrder(jsonString: string, files?: any[]) {
     try {
+        logService('handleIncomingWorkOrder', {
+            input: { jsonLength: jsonString?.length || 0, filesCount: files?.length || 0 }
+        });
+        
         const rawData = JSON.parse(jsonString);
-        return await createWorkOrderFromFrontend(rawData, files);
+        
+        logService('handleIncomingWorkOrder', {
+            parsed: rawData,
+            fields: {
+                work_clerk: rawData.work_clerk,
+                workorderstatus: rawData.workorderstatus,
+                customer: rawData.customer
+            }
+        });
+        
+        const result = await createWorkOrderFromFrontend(rawData, files);
+        logServiceSuccess('handleIncomingWorkOrder', `work_id: ${result.work_id}`);
+        return result;
     } catch (error) {
+        logServiceError('handleIncomingWorkOrder', error);
         console.error('WorkOrder processing failed:', error);
         throw error;
     }
@@ -61,23 +79,37 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
     //   - 如果前端已有 work_id / work_ver / work_unique，则直接使用
     //   - 否则自动生成一个独立的工程单号，不依赖订单：
     //     WORK-YYYYMMDDHHmmss-xxx  +  版本 V1  +  唯一索引 `${workId}_V1`
-    let workId = work_id as string | undefined;
-    let workVer = work_ver as string | undefined;
-    let workUnique = work_unique as string | undefined;
+    // 生成工程单号：如果前端没传或传空字符串，自动生成
+    let workId = work_id && work_id.trim() ? work_id : undefined;
+    let workVer = work_ver && work_ver.trim() ? work_ver : undefined;
+    let workUnique = work_unique && work_unique.trim() ? work_unique : undefined;
 
-    if (!workId || !workId.trim()) {
+    if (!workId) {
         const ts = new Date().toISOString().replace(/[-:T.Z]/g, '').slice(0, 14);
         const rand = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         workId = `WORK-${ts}-${rand}`;
     }
 
-    if (!workVer || !workVer.trim()) {
+    if (!workVer) {
         workVer = 'V1';
     }
 
-    if (!workUnique || !workUnique.trim()) {
+    if (!workUnique) {
         workUnique = `${workId}_${workVer}`;
     }
+
+    const finalWorkClerk = workClerk || work_clerk || zhiDanYuan;
+    
+    logService('createWorkOrderFromFrontend', {
+        fields: {
+            '生成的 workId': workId,
+            '生成的 workVer': workVer,
+            '生成的 workUnique': workUnique,
+            '最终 workClerk': finalWorkClerk,
+            'customer': customer,
+            'reviewStatus': reviewStatus || workorderstatus || orderStatus || '待审核'
+        }
+    });
 
     return await sqlDB.engineeringOrder.create({
         data: {
@@ -86,7 +118,7 @@ async function createWorkOrderFromFrontend(data: any, files?: any[]) {
             workVer,
             workUnique,
 
-            workClerk: workClerk || work_clerk || zhiDanYuan,
+            workClerk: finalWorkClerk,
             clerkDate: clerkDate || null,
             workAudit: work_audit || null,
             auditDate: auditDate || null,
@@ -165,10 +197,30 @@ export async function getWorkOrder(id: string) {
 // ============ New Interface Search Functions ============
 
 export async function FindWorkOrdersByClerk(clerkName: string) {
+    logService('FindWorkOrdersByClerk', {
+        input: { clerkName },
+        dbQuery: { workClerk: clerkName }
+    });
+    
     const workOrders = await sqlDB.engineeringOrder.findMany({
         where: { workClerk: clerkName },
         include: { materialLines: true, documents: true }
     });
+    
+    logService('FindWorkOrdersByClerk', {
+        dbResult: workOrders
+    });
+    
+    if (workOrders.length > 0) {
+        logService('FindWorkOrdersByClerk - 第一条记录', {
+            fields: {
+                workId: workOrders[0].workId,
+                workClerk: workOrders[0].workClerk,
+                reviewStatus: workOrders[0].reviewStatus
+            }
+        });
+    }
+    
     return workOrdersToDTO(workOrders);
 }
 
@@ -201,9 +253,15 @@ export async function FindWorkOrderByID(uniqueId: string) {
  * - FindWorkOrdersWithStatus("通过") => 查询 reviewStatus = '通过' 的工单
  */
 export async function FindWorkOrdersWithStatus(workOrderStatusText: string) {
+    logService('FindWorkOrdersWithStatus', {
+        input: { workOrderStatusText },
+        dbQuery: { reviewStatus: workOrderStatusText }
+    });
+    
     // 验证是否为有效的工单状态
     const validStatuses = ['草稿', '待审核', '通过', '驳回', '生产中', '完成', '取消'];
     if (!validStatuses.includes(workOrderStatusText)) {
+        logServiceError('FindWorkOrdersWithStatus', new Error(`不支持的工单状态: ${workOrderStatusText}`));
         throw new Error(`不支持的工单状态: ${workOrderStatusText}`);
     }
     
@@ -213,6 +271,11 @@ export async function FindWorkOrdersWithStatus(workOrderStatusText: string) {
         },
         include: { materialLines: true, documents: true }
     });
+    
+    logService('FindWorkOrdersWithStatus', {
+        dbResult: workOrders
+    });
+    
     return workOrdersToDTO(workOrders);
 }
 

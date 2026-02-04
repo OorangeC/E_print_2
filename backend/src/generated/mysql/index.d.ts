@@ -6191,6 +6191,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
+    benChangFangSun: number | null
     renLiRequirement: number | null
     wanChengJinDu: number | null
   }
@@ -6200,6 +6201,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
+    benChangFangSun: number | null
     renLiRequirement: number | null
     wanChengJinDu: number | null
   }
@@ -6227,7 +6229,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: string | null
+    benChangFangSun: number | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6273,7 +6275,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: string | null
+    benChangFangSun: number | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6349,6 +6351,7 @@ export namespace Prisma {
     dingDanShuLiang?: true
     chuYangShu?: true
     chaoBiLi?: true
+    benChangFangSun?: true
     renLiRequirement?: true
     wanChengJinDu?: true
   }
@@ -6358,6 +6361,7 @@ export namespace Prisma {
     dingDanShuLiang?: true
     chuYangShu?: true
     chaoBiLi?: true
+    benChangFangSun?: true
     renLiRequirement?: true
     wanChengJinDu?: true
   }
@@ -6610,7 +6614,7 @@ export namespace Prisma {
     dingDanShuLiang: number | null
     chuYangShu: number | null
     chaoBiLi: number | null
-    benChangFangSun: string | null
+    benChangFangSun: number | null
     chuYangRiqi: string | null
     chuHuoRiqi: string | null
     chanPinYaoQiu: string | null
@@ -6788,7 +6792,7 @@ export namespace Prisma {
       dingDanShuLiang: number | null
       chuYangShu: number | null
       chaoBiLi: number | null
-      benChangFangSun: string | null
+      benChangFangSun: number | null
       chuYangRiqi: string | null
       chuHuoRiqi: string | null
       chanPinYaoQiu: string | null
@@ -7203,7 +7207,7 @@ export namespace Prisma {
     readonly dingDanShuLiang: FieldRef<"EngineeringOrder", 'Int'>
     readonly chuYangShu: FieldRef<"EngineeringOrder", 'Int'>
     readonly chaoBiLi: FieldRef<"EngineeringOrder", 'Int'>
-    readonly benChangFangSun: FieldRef<"EngineeringOrder", 'String'>
+    readonly benChangFangSun: FieldRef<"EngineeringOrder", 'Float'>
     readonly chuYangRiqi: FieldRef<"EngineeringOrder", 'String'>
     readonly chuHuoRiqi: FieldRef<"EngineeringOrder", 'String'>
     readonly chanPinYaoQiu: FieldRef<"EngineeringOrder", 'String'>
@@ -7677,6 +7681,7 @@ export namespace Prisma {
     yinSun: number | null
     lingLiaoShuZhang: number | null
     yinShuaBanShu: number | null
+    dangQianJinDu: number | null
   }
 
   export type EngineeringOrderMaterialLineSumAggregateOutputType = {
@@ -7687,6 +7692,7 @@ export namespace Prisma {
     yinSun: number | null
     lingLiaoShuZhang: number | null
     yinShuaBanShu: number | null
+    dangQianJinDu: number | null
   }
 
   export type EngineeringOrderMaterialLineMinAggregateOutputType = {
@@ -7713,7 +7719,7 @@ export namespace Prisma {
     kaiShiShiJian: string | null
     shiFouDaoLiao: boolean | null
     jieShuShiJian: string | null
-    dangQianJinDu: string | null
+    dangQianJinDu: number | null
     createdAt: string | null
     updatedAt: string | null
   }
@@ -7742,7 +7748,7 @@ export namespace Prisma {
     kaiShiShiJian: string | null
     shiFouDaoLiao: boolean | null
     jieShuShiJian: string | null
-    dangQianJinDu: string | null
+    dangQianJinDu: number | null
     createdAt: string | null
     updatedAt: string | null
   }
@@ -7786,6 +7792,7 @@ export namespace Prisma {
     yinSun?: true
     lingLiaoShuZhang?: true
     yinShuaBanShu?: true
+    dangQianJinDu?: true
   }
 
   export type EngineeringOrderMaterialLineSumAggregateInputType = {
@@ -7796,6 +7803,7 @@ export namespace Prisma {
     yinSun?: true
     lingLiaoShuZhang?: true
     yinShuaBanShu?: true
+    dangQianJinDu?: true
   }
 
   export type EngineeringOrderMaterialLineMinAggregateInputType = {
@@ -7996,7 +8004,7 @@ export namespace Prisma {
     kaiShiShiJian: string | null
     shiFouDaoLiao: boolean
     jieShuShiJian: string | null
-    dangQianJinDu: string | null
+    dangQianJinDu: number | null
     createdAt: string | null
     updatedAt: string | null
     _count: EngineeringOrderMaterialLineCountAggregateOutputType | null
@@ -8118,7 +8126,7 @@ export namespace Prisma {
       kaiShiShiJian: string | null
       shiFouDaoLiao: boolean
       jieShuShiJian: string | null
-      dangQianJinDu: string | null
+      dangQianJinDu: number | null
       createdAt: string | null
       updatedAt: string | null
     }, ExtArgs["result"]["engineeringOrderMaterialLine"]>
@@ -8515,7 +8523,7 @@ export namespace Prisma {
     readonly kaiShiShiJian: FieldRef<"EngineeringOrderMaterialLine", 'String'>
     readonly shiFouDaoLiao: FieldRef<"EngineeringOrderMaterialLine", 'Boolean'>
     readonly jieShuShiJian: FieldRef<"EngineeringOrderMaterialLine", 'String'>
-    readonly dangQianJinDu: FieldRef<"EngineeringOrderMaterialLine", 'String'>
+    readonly dangQianJinDu: FieldRef<"EngineeringOrderMaterialLine", 'Float'>
     readonly createdAt: FieldRef<"EngineeringOrderMaterialLine", 'String'>
     readonly updatedAt: FieldRef<"EngineeringOrderMaterialLine", 'String'>
   }
@@ -14411,7 +14419,6 @@ export namespace Prisma {
     po: 'po',
     chengPinMingCheng: 'chengPinMingCheng',
     chanPinGuiGe: 'chanPinGuiGe',
-    benChangFangSun: 'benChangFangSun',
     chuYangRiqi: 'chuYangRiqi',
     chuHuoRiqi: 'chuHuoRiqi',
     chanPinYaoQiu: 'chanPinYaoQiu',
@@ -14449,7 +14456,6 @@ export namespace Prisma {
     paiBanFangShi: 'paiBanFangShi',
     kaiShiShiJian: 'kaiShiShiJian',
     jieShuShiJian: 'jieShuShiJian',
-    dangQianJinDu: 'dangQianJinDu',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -15323,7 +15329,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: StringNullableFilter<"EngineeringOrder"> | string | null
+    benChangFangSun?: FloatNullableFilter<"EngineeringOrder"> | number | null
     chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15425,7 +15431,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: StringNullableFilter<"EngineeringOrder"> | string | null
+    benChangFangSun?: FloatNullableFilter<"EngineeringOrder"> | number | null
     chuYangRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableFilter<"EngineeringOrder"> | string | null
@@ -15528,7 +15534,7 @@ export namespace Prisma {
     dingDanShuLiang?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chuYangShu?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chaoBiLi?: IntNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
-    benChangFangSun?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
+    benChangFangSun?: FloatNullableWithAggregatesFilter<"EngineeringOrder"> | number | null
     chuYangRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chuHuoRiqi?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
     chanPinYaoQiu?: StringNullableWithAggregatesFilter<"EngineeringOrder"> | string | null
@@ -15578,7 +15584,7 @@ export namespace Prisma {
     kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
     jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    dangQianJinDu?: FloatNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     engineeringOrder?: XOR<EngineeringOrderScalarRelationFilter, EngineeringOrderWhereInput>
@@ -15645,7 +15651,7 @@ export namespace Prisma {
     kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
     jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    dangQianJinDu?: FloatNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     engineeringOrder?: XOR<EngineeringOrderScalarRelationFilter, EngineeringOrderWhereInput>
@@ -15713,7 +15719,7 @@ export namespace Prisma {
     kaiShiShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolWithAggregatesFilter<"EngineeringOrderMaterialLine"> | boolean
     jieShuShiJian?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
-    dangQianJinDu?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
+    dangQianJinDu?: FloatNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | number | null
     createdAt?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
     updatedAt?: StringNullableWithAggregatesFilter<"EngineeringOrderMaterialLine"> | string | null
   }
@@ -17053,7 +17059,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17102,7 +17108,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17151,7 +17157,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17200,7 +17206,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17249,7 +17255,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -17295,7 +17301,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17341,7 +17347,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17386,7 +17392,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
     engineeringOrder: EngineeringOrderCreateNestedOneWithoutMaterialLinesInput
@@ -17417,7 +17423,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -17444,7 +17450,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneRequiredWithoutMaterialLinesNestedInput
@@ -17475,7 +17481,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -17504,7 +17510,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -17531,7 +17537,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -17560,7 +17566,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -18786,6 +18792,7 @@ export namespace Prisma {
     dingDanShuLiang?: SortOrder
     chuYangShu?: SortOrder
     chaoBiLi?: SortOrder
+    benChangFangSun?: SortOrder
     renLiRequirement?: SortOrder
     wanChengJinDu?: SortOrder
   }
@@ -18887,6 +18894,7 @@ export namespace Prisma {
     dingDanShuLiang?: SortOrder
     chuYangShu?: SortOrder
     chaoBiLi?: SortOrder
+    benChangFangSun?: SortOrder
     renLiRequirement?: SortOrder
     wanChengJinDu?: SortOrder
   }
@@ -18954,6 +18962,7 @@ export namespace Prisma {
     yinSun?: SortOrder
     lingLiaoShuZhang?: SortOrder
     yinShuaBanShu?: SortOrder
+    dangQianJinDu?: SortOrder
   }
 
   export type EngineeringOrderMaterialLineMaxOrderByAggregateInput = {
@@ -19022,6 +19031,7 @@ export namespace Prisma {
     yinSun?: SortOrder
     lingLiaoShuZhang?: SortOrder
     yinShuaBanShu?: SortOrder
+    dangQianJinDu?: SortOrder
   }
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -21262,7 +21272,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
     engineeringOrder: EngineeringOrderCreateNestedOneWithoutMaterialLinesInput
@@ -21291,7 +21301,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -21365,7 +21375,7 @@ export namespace Prisma {
     kaiShiShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     shiFouDaoLiao?: BoolFilter<"EngineeringOrderMaterialLine"> | boolean
     jieShuShiJian?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
-    dangQianJinDu?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
+    dangQianJinDu?: FloatNullableFilter<"EngineeringOrderMaterialLine"> | number | null
     createdAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
     updatedAt?: StringNullableFilter<"EngineeringOrderMaterialLine"> | string | null
   }
@@ -21860,7 +21870,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
     material?: MaterialCreateNestedOneWithoutEngineeringLinesInput
@@ -21889,7 +21899,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -22035,7 +22045,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22083,7 +22093,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22194,7 +22204,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22242,7 +22252,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22596,7 +22606,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22644,7 +22654,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -22895,7 +22905,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22943,7 +22953,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23604,7 +23614,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -23652,7 +23662,7 @@ export namespace Prisma {
     dingDanShuLiang?: number | null
     chuYangShu?: number | null
     chaoBiLi?: number | null
-    benChangFangSun?: string | null
+    benChangFangSun?: number | null
     chuYangRiqi?: string | null
     chuHuoRiqi?: string | null
     chanPinYaoQiu?: string | null
@@ -23903,7 +23913,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23951,7 +23961,7 @@ export namespace Prisma {
     dingDanShuLiang?: NullableIntFieldUpdateOperationsInput | number | null
     chuYangShu?: NullableIntFieldUpdateOperationsInput | number | null
     chaoBiLi?: NullableIntFieldUpdateOperationsInput | number | null
-    benChangFangSun?: NullableStringFieldUpdateOperationsInput | string | null
+    benChangFangSun?: NullableFloatFieldUpdateOperationsInput | number | null
     chuYangRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chuHuoRiqi?: NullableStringFieldUpdateOperationsInput | string | null
     chanPinYaoQiu?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24578,7 +24588,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -24668,7 +24678,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     engineeringOrder?: EngineeringOrderUpdateOneRequiredWithoutMaterialLinesNestedInput
@@ -24697,7 +24707,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -24725,7 +24735,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -24753,7 +24763,7 @@ export namespace Prisma {
     kaiShiShiJian?: string | null
     shiFouDaoLiao?: boolean
     jieShuShiJian?: string | null
-    dangQianJinDu?: string | null
+    dangQianJinDu?: number | null
     createdAt?: string | null
     updatedAt?: string | null
   }
@@ -24800,7 +24810,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
     material?: MaterialUpdateOneWithoutEngineeringLinesNestedInput
@@ -24829,7 +24839,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -24857,7 +24867,7 @@ export namespace Prisma {
     kaiShiShiJian?: NullableStringFieldUpdateOperationsInput | string | null
     shiFouDaoLiao?: BoolFieldUpdateOperationsInput | boolean
     jieShuShiJian?: NullableStringFieldUpdateOperationsInput | string | null
-    dangQianJinDu?: NullableStringFieldUpdateOperationsInput | string | null
+    dangQianJinDu?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableStringFieldUpdateOperationsInput | string | null
   }

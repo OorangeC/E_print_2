@@ -64,7 +64,7 @@ export interface IWorkOrderDTO {
     dingDanShuLiang?: number;
     chuYangShuLiang?: number;
     chaoBiLiShuLiang?: number;
-    benChangFangSun?: string;
+    benChangFangSun?: number;
     chuYangRiqiRequired?: string;
     chuHuoRiqiRequired?: string;
 
@@ -194,7 +194,7 @@ export function workOrderToDTO(workOrder: any, auditLogs?: any[]): IWorkOrderDTO
         dingDanShuLiang: workOrder.dingDanShuLiang || undefined,
         chuYangShuLiang: workOrder.chuYangShu || undefined,
         chaoBiLiShuLiang: workOrder.chaoBiLi || undefined,
-        benChangFangSun: workOrder.benChangFangSun?.toString() || undefined,
+        benChangFangSun: workOrder.benChangFangSun || undefined,
         chuYangRiqiRequired: formatDate(workOrder.chuYangRiqi),
         chuHuoRiqiRequired: formatDate(workOrder.chuHuoRiqi),
 
