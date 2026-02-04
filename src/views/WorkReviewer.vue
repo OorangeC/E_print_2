@@ -161,8 +161,8 @@ const fetchWorksData = async () => {
 
     // 2. 获取已经结束
     const [completeData, cancelData] = await Promise.all([
-      FindWorkOrdersWithStatus(WorkOrderStatus.PENDING_REVIEW),
-      FindWorkOrdersWithStatus(WorkOrderStatus.IN_PRODUCTION),
+      FindWorkOrdersWithStatus(WorkOrderStatus.COMPLETED),
+      FindWorkOrdersWithStatus(WorkOrderStatus.CANCELLED),
     ])
 
     //const reviewedData = await FindWorkOrdersByAudit('admin')
