@@ -212,7 +212,7 @@ const handleView = (work: IWorkOrder) => {
 
   if (work.workorderstatus === WorkOrderStatus.PENDING_REVIEW) {
     targetMode = PageMode.REVIEW
-  } else if (work.workorderstatus === WorkOrderStatus.APPROVED) {
+  } else if (work.workorderstatus === WorkOrderStatus.IN_PRODUCTION) {
     targetMode = PageMode.PRODUCTION
   } else {
     targetMode = PageMode.VIEW
