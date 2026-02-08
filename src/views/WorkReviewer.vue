@@ -64,7 +64,7 @@
 
           <tbody>
             <tr v-for="work in processedWorks" :key="work.work_unique">
-              <td v-if="currentTab === 'REVIEWED'">
+              <td>
                 <span :class="['status-badge', work.workorderstatus]">
                   {{ work.workorderstatus }}
                 </span>
@@ -85,7 +85,8 @@
                   :class="currentTab === 'PENDING' ? 'review-btn' : 'view-btn'"
                   @click="handleView(work)"
                 >
-                  {{ currentTab === 'PENDING' ? '审核' : '查看' }}
+                  {{ work.workorderstatus === WorkOrderStatus.PENDING_REVIEW ? '审核' : '查看' }}
+                  <!-- {{ currentTab === 'PENDING' ? '审核' : '查看' }} -->
                 </button>
               </td>
             </tr>
@@ -102,7 +103,7 @@
 
     <WorkOrderInfo
       v-else
-      :mode="currentTab === 'PENDING' ? PageMode.REVIEW : PageMode.VIEW"
+      :mode="activeMode"
       :initialData="selectedOrder"
       @close="selectedOrder = null"
       @approve="handleApprove"
@@ -115,11 +116,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { type IWorkOrder, WorkOrderStatus } from '@/types/WorkOrder'
 import WorkOrderInfo, { PageMode } from './WorkOrderInfo.vue'
-import {
-  FindWorkOrdersWithStatus,
-  FindWorkOrdersByAudit,
-  ChangeWorkOrderStatusTo,
-} from '@/stores/request'
+import { FindWorkOrdersWithStatus, ChangeWorkOrderStatusTo } from '@/stores/request'
 
 // --- 状态定义 ---
 const currentTab = ref<'PENDING' | 'REVIEWED'>('PENDING')
@@ -132,7 +129,7 @@ const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
   key: 'zhiDanShiJian',
   order: 'desc',
 })
-
+const activeMode = ref<PageMode>(PageMode.VIEW)
 // 数据源
 const pendingWorkSource = ref<IWorkOrder[]>([])
 const reviewedWorkSource = ref<IWorkOrder[]>([])
@@ -140,16 +137,36 @@ const reviewedWorkSource = ref<IWorkOrder[]>([])
 onMounted(async () => {
   await fetchWorksData()
 })
-
+// export enum WorkOrderStatus {
+//   DRAFT = '草稿',
+//   PENDING_REVIEW = '待审核',
+//   APPROVED = '通过',
+//   REJECTED = '驳回',
+//   IN_PRODUCTION = '生产中',
+//   COMPLETED = '完成',
+//   CANCELLED = '取消',
+// }
 const fetchWorksData = async () => {
   try {
     // 1. 获取全厂待审核工单
-    const pendingData = await FindWorkOrdersWithStatus(WorkOrderStatus.PENDING_REVIEW)
-    pendingWorkSource.value = pendingData
+    const [pendingData, approveData, productionData] = await Promise.all([
+      FindWorkOrdersWithStatus(WorkOrderStatus.PENDING_REVIEW),
+      FindWorkOrdersWithStatus(WorkOrderStatus.APPROVED),
+      FindWorkOrdersWithStatus(WorkOrderStatus.IN_PRODUCTION),
+    ])
 
-    // 2. 获取当前用户（admin）已审工单历史
-    const reviewedData = await FindWorkOrdersByAudit('admin')
-    reviewedWorkSource.value = reviewedData
+    // 2. 将结果合并后赋值给待办池
+    // 这样你的 pendingWorkSource 就会包含这两种状态的所有工单
+    pendingWorkSource.value = [...pendingData, ...approveData, ...productionData]
+
+    // 2. 获取已经结束
+    const [completeData, cancelData] = await Promise.all([
+      FindWorkOrdersWithStatus(WorkOrderStatus.COMPLETED),
+      FindWorkOrdersWithStatus(WorkOrderStatus.CANCELLED),
+    ])
+
+    //const reviewedData = await FindWorkOrdersByAudit('admin')
+    reviewedWorkSource.value = [...completeData, ...cancelData]
   } catch (err) {
     console.error('工单数据获取失败:', err)
   }
@@ -190,6 +207,31 @@ const getSortIcon = (key: SortKey) => {
 
 const handleView = (work: IWorkOrder) => {
   selectedOrder.value = work
+
+  let targetMode: PageMode
+
+  if (work.workorderstatus === WorkOrderStatus.PENDING_REVIEW) {
+    targetMode = PageMode.REVIEW
+  } else if (work.workorderstatus === WorkOrderStatus.IN_PRODUCTION) {
+    targetMode = PageMode.PRODUCTION
+  } else {
+    targetMode = PageMode.VIEW
+  }
+
+  // if (currentTab.value !== 'PENDING') {
+  //   targetMode = PageMode.VIEW
+  // } else if (work.workorderstatus === WorkOrderStatus.APPROVED) {
+  //   targetMode = PageMode.PRODUCTION
+  // } else {
+  //   // 这里 currentTab 已经是 'PENDING' 了
+  //   targetMode = PageMode.REVIEW
+  // }
+
+  // 2. 将计算结果赋给 ref
+  activeMode.value = targetMode
+
+  //activeMode.value = currentTab.value === 'PENDING' ? PageMode.REVIEW : PageMode.VIEW
+  //showCreator.value = true
 }
 
 // /**
@@ -226,7 +268,9 @@ const handleApprove = async (wd: IWorkOrder) => {
   if (isUploading.value) return
   isUploading.value = true
   try {
-    await ChangeWorkOrderStatusTo(wd.work_unique, WorkOrderStatus.APPROVED)
+    await ChangeWorkOrderStatusTo(wd.work_unique, WorkOrderStatus.IN_PRODUCTION)
+    selectedOrder.value = null // 关闭详情弹窗
+    await fetchWorksData()
   } catch (err) {
     console.error('后端响应错误:', err)
     alert('发送失败，请检查网络或后端服务')
@@ -239,6 +283,8 @@ const handleReject = async (wd: IWorkOrder) => {
   isUploading.value = true
   try {
     await ChangeWorkOrderStatusTo(wd.work_unique, WorkOrderStatus.REJECTED)
+    selectedOrder.value = null // 关闭详情弹窗
+    await fetchWorksData()
   } catch (err) {
     console.error('后端响应错误:', err)
     alert('发送失败，请检查网络或后端服务')

@@ -107,7 +107,7 @@ export function formatFullTime(date: Date): string {
 
 // ============ 业务逻辑 ============
 
-export function initializeAuditLog(orderData: Partial<IWorkOrder>): void {
+export function addAuditLog(orderData: Partial<IWorkOrder>): void {
   const firstLog: IAuditLog = {
     time: formatFullTime(new Date()),
     operator: orderData.work_clerk || '未知业务员',
@@ -116,7 +116,7 @@ export function initializeAuditLog(orderData: Partial<IWorkOrder>): void {
   }
   orderData.auditLogs = orderData.auditLogs || []
   orderData.auditLogs.push(firstLog)
-  orderData.workorderstatus = WorkOrderStatus.PENDING_REVIEW
+  //
 }
 
 /**
@@ -154,9 +154,9 @@ export const prepareWorkOrderForSubmit = (rawOrder: Partial<IWorkOrder>): FormDa
     })
   }
 
-  // 5. 将清洗后的 JSON 数据塞进 FormData
-  // 后端从 'workOrderJson' 字段接收工程单数据
-  formData.append('workOrderJson', JSON.stringify(orderCopy))
+  // 5. 【关键缺失】：将清洗后的 JSON 数据也塞进 FormData
+  // 后端通常需要从 'orderData' 字段解析字符串化的 JSON
+  formData.append('workOrderData', JSON.stringify(orderCopy))
 
   return formData
 }

@@ -44,7 +44,13 @@
       </div>
       <div class="button-group">
         <button class="btn btn-secondary" @click="$emit('close')">返回列表</button>
-        <button class="btn btn-primary" @click="handleSubmitOrder">提交工单</button>
+        <button
+          v-if="props.mode === PageMode.EDIT"
+          class="btn btn-primary"
+          @click="handleSubmitOrder"
+        >
+          提交工单
+        </button>
       </div>
     </div>
 
@@ -145,7 +151,7 @@
               <td><input v-model.number="item.yinShuaBanShu" type="number" /></td>
               <td><input v-model="item.shengChanLuJing" /></td>
               <td><input v-model="item.paiBanFangShi" /></td>
-              <td class="align-center">
+              <td class="align-center" v-if="props.mode === PageMode.EDIT">
                 <button class="remove-btn" @click="removeRow(index)">×</button>
               </td>
             </tr>
@@ -186,14 +192,21 @@
                   <!-- <span v-else class="bar-label-outside">{{ item.dangQianJinDu || 0 }}%</span> -->
                 </div>
               </td>
-              <td colspan="2"></td>
+              <td colspan="2">
+                <!-- <button
+                  v-if="props.mode === PageMode.PRODUCTION"
+                  @click="syncProgess(WorkOrderData, item)"
+                >
+                  同步进度
+                </button> -->
+              </td>
               <td></td>
             </tr>
           </tbody>
 
           <tfoot>
             <tr>
-              <td colspan="18" class="add-row-container">
+              <td colspan="18" class="add-row-container" v-if="props.mode === PageMode.EDIT">
                 <button class="add-row-full-btn" @click="addNewRow">+ 增加一道生产工序模块</button>
               </td>
             </tr>
@@ -234,17 +247,25 @@
 
       <div class="audit-info-footer">
         <div class="auditlog-related">
-          <td>制单员:</td>
-          <td><input v-model="WorkOrderData.work_clerk" class="cell-input" /></td>
-          <td>时间：</td>
-          <td><input type="date" v-model="WorkOrderData.zhiDanShiJian" class="cell-input" /></td>
+          <div>制单员:</div>
+          <div><input v-model="WorkOrderData.work_clerk" class="cell-input" /></div>
+          <div>时间：</div>
+          <div><input type="date" v-model="WorkOrderData.zhiDanShiJian" class="cell-input" /></div>
         </div>
-        <fieldset :disabled="props.mode !== PageMode.REVIEW" class="auditlog-related">
-          <td>审核员:</td>
-          <td><input v-model="WorkOrderData.work_audit" class="cell-input" /></td>
-          <td>时间：</td>
-          <td><input type="date" class="cell-input" /></td>
-        </fieldset>
+        <div class="auditlog-related">
+          <div>审核员:</div>
+          <div>
+            <input
+              :disabled="props.mode !== PageMode.REVIEW"
+              v-model="WorkOrderData.work_audit"
+              class="cell-input"
+            />
+          </div>
+          <div>时间：</div>
+          <div>
+            <input :disabled="props.mode !== PageMode.REVIEW" type="date" class="cell-input" />
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -265,8 +286,9 @@ import {
   type IIM,
   type IWorkOrder,
   WorkOrderStatus,
+  formatFullTime,
   formatYMD,
-  initializeAuditLog,
+  addAuditLog,
   prepareWorkOrderForSubmit,
 } from '@/types/WorkOrder'
 
@@ -406,7 +428,9 @@ const onFileSelected = (e: Event, index: number) => {
 const handleSubmitOrder = async () => {
   if (!WorkOrderData.customer) return alert('请填写客户')
   WorkOrderData.work_unique = WorkOrderData.work_id + '_' + WorkOrderData.work_ver
-  initializeAuditLog(WorkOrderData)
+  WorkOrderData.workorderstatus = WorkOrderStatus.PENDING_REVIEW
+  WorkOrderData.clerkDate = formatFullTime(new Date())
+  addAuditLog(WorkOrderData)
   emit('submit', prepareWorkOrderForSubmit(WorkOrderData))
 }
 
@@ -448,7 +472,27 @@ const handleApprove = () => {
   }
 }
 
-const handleReject = () => {}
+const handleReject = () => {
+  if (!auditRemark.value.trim()) {
+    alert('拒绝订单时请填写审核意见')
+    return
+  }
+  if (!confirm(`确定要通过该工程单吗？`)) return
+  try {
+    // 构造审核数据
+    const auditPayload = {
+      orderId: WorkOrderData.work_unique,
+      passed: true,
+      remark: auditRemark.value,
+      auditor: 'admin', // 或者当前登录用户
+    }
+
+    emit('reject', WorkOrderData)
+  } catch (err) {
+    console.error('审核操作失败', err)
+    alert('操作失败，请重试')
+  }
+}
 </script>
 
 <style scoped>

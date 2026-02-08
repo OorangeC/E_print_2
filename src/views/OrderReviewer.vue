@@ -77,8 +77,8 @@
                 </span>
               </td>
 
-              <td class="time-text">{{ getFirstAuditTime(order) }}</td>
-
+              <td class="time-text">{{ order.salesDate }}</td>
+              <!-- <td class="time-text">{{ getFirstAuditTime(order) }}</td> -->
               <td class="bold-text">{{ order.order_id || '未分配' }}</td>
 
               <td class="customer-name">{{ order.customer }}</td>
@@ -127,7 +127,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { formatYMD, type IOrder, OrderStatus } from '@/types/Order'
-import request, { FindOrdersByAudit, FindOrdersWithStatus } from '@/stores/request'
+import request, {
+  ChangeOrderStatusTo,
+  FindOrdersByAudit,
+  FindOrdersWithStatus,
+} from '@/stores/request'
 import OrderInfo, { PageMode } from './OrderInfo.vue' // 确保能拿到导出的 PageMode
 const activeMode = computed(() => {
   // 如果当前在“未审核”标签，则进入“审核模式”，否则仅为“查看模式”
@@ -146,60 +150,64 @@ const sortConfig = ref<{ key: SortKey; order: 'asc' | 'desc' }>({
 })
 
 const handleApprove = async (fd: FormData) => {
-  console.log('正在处理审核通过...')
+  console.log('正在处理审核通过并保存数据...')
   if (isUploading.value) return
   isUploading.value = true
+  // 这里调用你的接口，如 await UpdateOrder(fd)
 
-  if (!selectedOrder.value) {
-    alert('没有选中的订单')
-    isUploading.value = false
+  if (!selectedOrder.value) return
+
+  // 关键点：先把 ID 存起来，防止在 await 期间 selectedOrder 被意外清空
+  const targetId = selectedOrder.value.order_unique
+  if (!targetId) {
+    alert('订单唯一标识缺失，无法更新状态')
     return
   }
 
+  if (selectedOrder.value) {
+    selectedOrder.value.audit = 'admin'
+    selectedOrder.value.auditDate = formatYMD(new Date())
+  }
+
   try {
-    // 更新订单状态为"通过"
-    await request.post('/orders/updateStatus', {
-      order_unique: selectedOrder.value.order_unique,
-      orderstatus: OrderStatus.APPROVED
-    })
-    
-    alert('订单审核通过！')
-    selectedOrder.value = null
-    await fetchOrdersData() // 刷新列表
+    await request.post('/workOrders/create', fd)
+    alert('工程单已成功提交审核！')
+    //showCreator.value = false
 
-    
+    await ChangeOrderStatusTo(targetId, OrderStatus.APPROVED)
 
+    fetchOrdersData() // 这里可以刷新列表
   } catch (err) {
     console.error('后端响应错误:', err)
-    alert('审核失败，请检查网络或后端服务')
+    alert('发送失败，请检查网络或后端服务')
   } finally {
     isUploading.value = false
   }
+  selectedOrder.value = null
+  await fetchOrdersData() // 刷新列表
 }
 
 // 处理驳回
 const handleReject = async () => {
   console.log('订单已被驳回')
-  
-  if (!selectedOrder.value) {
-    alert('没有选中的订单')
+
+  if (isUploading.value || !selectedOrder.value) return
+
+  // 关键点：先把 ID 存起来，防止在 await 期间 selectedOrder 被意外清空
+  const targetId = selectedOrder.value.order_unique
+  if (!targetId) {
+    alert('订单唯一标识缺失，无法更新状态')
     return
   }
 
   try {
-    // 更新订单状态为"驳回"
-    await request.post('/orders/updateStatus', {
-      order_unique: selectedOrder.value.order_unique,
-      orderstatus: OrderStatus.REJECTED
-    })
-    
-    alert('订单已驳回')
-    selectedOrder.value = null
-    await fetchOrdersData()
+    await ChangeOrderStatusTo(targetId, OrderStatus.REJECTED)
   } catch (err) {
-    console.error('驳回失败:', err)
-    alert('驳回失败，请检查网络或后端服务')
+    console.error('后端响应错误:', err)
+    alert('发送失败，请检查网络或后端服务')
   }
+  selectedOrder.value = null
+  await fetchOrdersData()
 }
 
 // --- 2. 两个独立的数据源 ---

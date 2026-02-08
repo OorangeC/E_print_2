@@ -54,9 +54,9 @@ export const FindOrderByID = (orderId: string): Promise<IOrder> => {
   })
 }
 
-// 2. 根据状态查询订单列表 (如查询所有"待审核"的单子)
+// 2. 根据状态查询订单列表 (如查询所有“待审核”的单子)
 export const FindOrdersWithStatus = (status: OrderStatus): Promise<IOrder[]> => {
-  return service.get('/orders/status', {  // 修复：改为 /orders/status
+  return service.get('/orders/status', {
     params: { orderstatus: status },
   })
 }

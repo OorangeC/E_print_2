@@ -153,7 +153,7 @@ export function formatFullTime(date: Date): string {
 
 // ============ 业务逻辑 ============
 
-export function initializeAuditLog(orderData: Partial<IOrder>, operatorName: string): void {
+export function addAuditLog(orderData: Partial<IOrder>, operatorName: string): void {
   const firstLog: IAuditLog = {
     time: formatFullTime(new Date()),
     operator: operatorName || '未知业务员',
@@ -162,12 +162,11 @@ export function initializeAuditLog(orderData: Partial<IOrder>, operatorName: str
   }
   orderData.auditLogs = orderData.auditLogs || []
   orderData.auditLogs.push(firstLog)
-  orderData.orderstatus = OrderStatus.PENDING_REVIEW
 }
 
 export function prepareOrderFormData(orderData: Partial<IOrder>, salesmanName: string): FormData {
   const formData = new FormData()
-
+  orderData.salesDate = formatFullTime(new Date())
   // 1. 附件二进制
   orderData.attachments?.forEach((attr) => {
     if (attr.file) formData.append('files', attr.file)

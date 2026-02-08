@@ -605,27 +605,38 @@
         <div class="triple-grid-container">
           <fieldset :disabled="props.mode !== PageMode.EDIT" class="mini-form-group">
             <div class="form-row">
-              <td>业务代表:</td>
-              <td><input v-model="orderData.sales" class="cell-input" /></td>
+              <div>业务代表:</div>
+              <div><input v-model="orderData.sales" class="cell-input" /></div>
             </div>
             <div class="form-row">
-              <td>日期:</td>
-              <td><input type="date" class="cell-input" /></td>
+              <div>日期:</div>
+              <div><input type="date" class="cell-input" /></div>
             </div>
           </fieldset>
 
           <fieldset :disabled="props.mode !== PageMode.REVIEW" class="mini-form-group">
             <div class="form-row">
-              <td>审核人:</td>
-              <td><input v-model="orderData.audit" class="cell-input" /></td>
+              <div>审核人:</div>
+              <div><input v-model="orderData.audit" class="cell-input" /></div>
             </div>
             <div class="form-row">
-              <td>日期:</td>
-              <td><input type="date" class="cell-input" /></td>
+              <div>日期:</div>
+              <div><input type="date" class="cell-input" /></div>
             </div>
           </fieldset>
-
-          <div class="mini-form-group">
+          <table class="mini-form-table">
+            <tbody>
+              <tr>
+                <td>打印人:</td>
+                <td><input class="cell-input" /></td>
+              </tr>
+              <tr>
+                <td>日期:</td>
+                <td><input type="date" class="cell-input" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <div class="mini-form-group">
             <div class="form-row">
               <td>打印人:</td>
               <td><input class="cell-input" /></td>
@@ -634,7 +645,7 @@
               <td>日期:</td>
               <td><input type="date" class="cell-input" /></td>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <fieldset
@@ -695,7 +706,7 @@ import {
   type IOrder,
   type IAttachment,
   prepareOrderFormData,
-  initializeAuditLog,
+  addAuditLog,
   formatFullTime,
 } from '@/types/Order'
 import { prepareWorkOrderForSubmit, WorkOrderStatus, type IWorkOrder } from '@/types/WorkOrder'
@@ -945,8 +956,9 @@ const handleSubmitOrder = async () => {
     )
     //定义唯一索引
     orderData.order_unique = orderData.order_id + '_' + orderData.order_ver
+    orderData.orderstatus = OrderStatus.PENDING_REVIEW
     // 依然在子组件完成日志初始化和数据封装，因为子组件最清楚表单结构
-    initializeAuditLog(orderData, salesman.value)
+    addAuditLog(orderData, salesman.value)
     const fd = prepareOrderFormData(orderData, salesman.value)
 
     // 发射给父组件
@@ -958,8 +970,8 @@ const handleSubmitOrder = async () => {
 
 // 审核通过或者拒绝
 const handleAudit = async (isPass: boolean) => {
-  if (!isPass && !auditRemark.value.trim()) {
-    alert('拒绝订单时请填写审核意见')
+  if (!auditRemark.value.trim()) {
+    alert('请填写审核意见')
     return
   }
 
@@ -983,6 +995,8 @@ const handleAudit = async (isPass: boolean) => {
 
     if (isPass) {
       const newWorkOrder = reactive<IWorkOrder>(createWorkOrderFromOrder(orderData) as IWorkOrder)
+      orderData.orderstatus = OrderStatus.APPROVED
+      addAuditLog(orderData, salesman.value)
       const fd = prepareWorkOrderForSubmit(newWorkOrder)
       emit('approve', fd)
     } else {
